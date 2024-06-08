@@ -1,0 +1,122 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql" // 或者你使用的其他数据库类型
+  url      = env("DATABASE_URL")
+}
+
+model Staff {
+  id            Int      @id @default(autoincrement())
+  code          String
+  police_number String
+  name          String
+  position      String
+  department    String
+  contact       String
+  vehicle       String?
+  created_at    DateTime @default(now())
+  updated_at    DateTime @updatedAt
+}
+
+model DutyManagement {
+  id            Int      @id @default(autoincrement())
+  code          String
+  police_number String
+  name          String
+  position      String
+  department    String
+  contact       String
+  vehicle       String?
+  created_at    DateTime @default(now())
+  updated_at    DateTime @updatedAt
+}
+
+model Vehicle {
+  id           Int       @id @default(autoincrement())
+  code         String
+  plate_number String
+  vehicle_type String
+  brand_model  String
+  status       String
+  usage_status String
+  department   String?
+  user_id      Int?
+  borrow_time  DateTime?
+  return_time  DateTime?
+  created_at   DateTime  @default(now())
+  updated_at   DateTime  @updatedAt
+}
+
+model PatrolTeam {
+  id         Int      @id @default(autoincrement())
+  team_name  String
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+}
+
+model PatrolVehicleAssignment {
+  id             Int      @id @default(autoincrement())
+  patrol_team_id Int
+  vehicle_id     Int
+  created_at     DateTime @default(now())
+  updated_at     DateTime @updatedAt
+}
+
+model PatrolSchedule {
+  id             Int      @id @default(autoincrement())
+  patrol_team_id Int
+  schedule_date  DateTime
+  shift_type     String
+  created_at     DateTime @default(now())
+  updated_at     DateTime @updatedAt
+}
+
+model PatrolStaffAssignment {
+  id                 Int      @id @default(autoincrement())
+  patrol_schedule_id Int
+  staff_id           Int
+  created_at         DateTime @default(now())
+  updated_at         DateTime @updatedAt
+}
+
+model WorkFocus {
+  id         Int      @id @default(autoincrement())
+  focus_date DateTime
+  content    String
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+}
+
+model IncidentAnalysis {
+  id                Int      @id @default(autoincrement())
+  incident_number   String
+  receiver          String
+  report_time       DateTime
+  contact_number    String
+  reporter          String
+  incident_category String
+  report_source     String
+  incident_location String
+  incident_details  String
+  incident_status   String
+  response_time     DateTime
+  created_at        DateTime @default(now())
+  updated_at        DateTime @updatedAt
+}
+
+model RecentDuties {
+  id         Int      @id @default(autoincrement())
+  duty_date  DateTime
+  duty_type  String
+  content    String
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+}
