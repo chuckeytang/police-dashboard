@@ -9,7 +9,7 @@ generator client {
 }
 
 datasource db {
-  provider = "mysql" // 或者你使用的其他数据库类型
+  provider = "mysql" 
   url      = env("DATABASE_URL")
 }
 
