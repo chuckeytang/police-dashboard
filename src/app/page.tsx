@@ -1,42 +1,80 @@
-"use client";
+import * as React from "react";
+import { Container, Grid, Paper, Typography, Box } from "@mui/material";
 
-import React, { useState } from 'react';
-import axios from 'axios';
-import Link from 'next/link';
-
-const Home: React.FC = () => {
-  const [name, setName] = useState('');
-  const [value, setValue] = useState(0);
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    try {
-      await axios.post('/api/storeData', { name, value });
-      alert('Data stored successfully');
-    } catch (error) {
-      alert('Failed to store data');
-    }
-  };
-
+const Dashboard = () => {
   return (
-    <div>
-      <h1>Store Data</h1>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label>Name: </label>
-          <input type="text" value={name} onChange={(e) => setName(e.target.value)} required />
-        </div>
-        <div>
-          <label>Value: </label>
-          <input type="number" value={value} onChange={(e) => setValue(Number(e.target.value))} required />
-        </div>
-        <button type="submit">Submit</button>
-      </form>
-      <Link legacyBehavior href="/dashboard">
-        <a>Go to Dashboard</a>
-      </Link>
-    </div>
+    <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
+      <Typography variant="h4" align="center" gutterBottom>
+        定海派出所
+      </Typography>
+      <Grid container spacing={3}>
+        {/* 左侧面板 */}
+        <Grid item xs={12} md={4}>
+          <Paper
+            sx={{
+              p: 2,
+              display: "flex",
+              flexDirection: "column",
+              height: "100%",
+            }}
+          >
+            <Typography variant="h6">勤务管理</Typography>
+            {/* Add your content here */}
+          </Paper>
+          <Paper sx={{ p: 2, display: "flex", flexDirection: "column", mt: 2 }}>
+            <Typography variant="h6">街面巡逻</Typography>
+            {/* Add your content here */}
+          </Paper>
+          <Paper sx={{ p: 2, display: "flex", flexDirection: "column", mt: 2 }}>
+            <Typography variant="h6">工作重点</Typography>
+            {/* Add your content here */}
+          </Paper>
+        </Grid>
+
+        {/* 中间地图 */}
+        <Grid item xs={12} md={4}>
+          <Box
+            sx={{
+              p: 2,
+              height: "100%",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <img
+              src="/source/bg.jpg"
+              alt="地图"
+              style={{ maxWidth: "100%", maxHeight: "100%" }}
+            />
+          </Box>
+        </Grid>
+
+        {/* 右侧面板 */}
+        <Grid item xs={12} md={4}>
+          <Paper
+            sx={{
+              p: 2,
+              display: "flex",
+              flexDirection: "column",
+              height: "100%",
+            }}
+          >
+            <Typography variant="h6">警情分析</Typography>
+            {/* Add your content here */}
+          </Paper>
+          <Paper sx={{ p: 2, display: "flex", flexDirection: "column", mt: 2 }}>
+            <Typography variant="h6">近期勤务</Typography>
+            {/* Add your content here */}
+          </Paper>
+          <Paper sx={{ p: 2, display: "flex", flexDirection: "column", mt: 2 }}>
+            <Typography variant="h6">民警-警情</Typography>
+            {/* Add your content here */}
+          </Paper>
+        </Grid>
+      </Grid>
+    </Container>
   );
 };
 
-export default Home;
+export default Dashboard;
