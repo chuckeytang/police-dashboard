@@ -27,6 +27,7 @@ const StaffDetail = () => {
     if (id) {
       const fetchStaff = async () => {
         const res = await fetch(`/api/staff/${id}`); // Assuming you have an API endpoint to fetch a staff by ID
+        console.log("res:" + res);
         const data = await res.json();
         setStaff(data);
         setLoading(false);
@@ -42,7 +43,7 @@ const StaffDetail = () => {
     <div className="p-4">
       <h1 className="text-2xl font-bold mb-4">人员详情</h1>
       {staff && (
-        <>
+        <div className="grid grid-cols-2 gap-2">
           <p>
             <strong>编号:</strong> {staff.code}
           </p>
@@ -69,7 +70,7 @@ const StaffDetail = () => {
               返回
             </a>
           </Link>
-        </>
+        </div>
       )}
     </div>
   );

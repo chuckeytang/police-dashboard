@@ -7,7 +7,7 @@ import {
 } from "react-admin";
 import { stringify } from "query-string";
 
-const apiUrl = "/api/staff";
+const apiUrl = "/api"; // 基础API URL
 const httpClient = fetchUtils.fetchJson;
 
 const dataProvider: DataProvider = {
@@ -21,7 +21,7 @@ const dataProvider: DataProvider = {
       _end: page * perPage,
       ...params.filter,
     };
-    const url = `${apiUrl}/search?${stringify(query)}`;
+    const url = `${apiUrl}/${resource}/search?${stringify(query)}`;
     const { json } = await httpClient(url);
     return {
       data: json,
@@ -30,13 +30,17 @@ const dataProvider: DataProvider = {
   },
 
   getOne: async (resource, params) =>
-    httpClient(`${apiUrl}/${params.id}`).then(({ json }) => ({ data: json })),
+    httpClient(`${apiUrl}/${resource}/getOne?id=${params.id}`).then(
+      ({ json }) => ({
+        data: json,
+      })
+    ),
 
   getMany: async (resource, params) => {
     const query = {
       id: params.ids,
     };
-    const url = `${apiUrl}?${stringify(query)}`;
+    const url = `${apiUrl}/${resource}?${stringify(query)}`;
     const { json } = await httpClient(url);
     return { data: json };
   },
@@ -52,7 +56,7 @@ const dataProvider: DataProvider = {
       [params.target]: params.id,
       ...params.filter,
     };
-    const url = `${apiUrl}?${stringify(query)}`;
+    const url = `${apiUrl}/${resource}?${stringify(query)}`;
     const { json } = await httpClient(url);
     return {
       data: json,
@@ -61,7 +65,7 @@ const dataProvider: DataProvider = {
   },
 
   update: async (resource, params) =>
-    httpClient(`${apiUrl}/update`, {
+    httpClient(`${apiUrl}/${resource}/update`, {
       method: "PUT",
       body: JSON.stringify(params.data),
     }).then(({ json }) => ({ data: json })),
@@ -70,7 +74,7 @@ const dataProvider: DataProvider = {
     const query = {
       id: params.ids,
     };
-    const url = `${apiUrl}?${stringify(query)}`;
+    const url = `${apiUrl}/${resource}?${stringify(query)}`;
     const { json } = await httpClient(url, {
       method: "PUT",
       body: JSON.stringify(params.data),
@@ -82,7 +86,7 @@ const dataProvider: DataProvider = {
     resource: string,
     params: CreateParams
   ) => {
-    const url = `${apiUrl}/add`;
+    const url = `${apiUrl}/${resource}/add`;
     const options = {
       method: "POST",
       body: JSON.stringify(params.data),
@@ -95,7 +99,7 @@ const dataProvider: DataProvider = {
   },
 
   delete: async (resource, params) =>
-    httpClient(`${apiUrl}/delete`, {
+    httpClient(`${apiUrl}/${resource}/delete`, {
       method: "DELETE",
       body: JSON.stringify(params),
     }).then(({ json }) => ({ data: json })),
@@ -104,7 +108,7 @@ const dataProvider: DataProvider = {
     const query = {
       id: params.ids,
     };
-    const url = `${apiUrl}/deleteMany`;
+    const url = `${apiUrl}/${resource}/deleteMany`;
     const { json } = await httpClient(url, {
       method: "DELETE",
       body: JSON.stringify({ ids: params.ids }),

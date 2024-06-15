@@ -1,15 +1,9 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
 }
 
 datasource db {
-  provider = "mysql" 
+  provider = "mysql"
   url      = env("DATABASE_URL")
 }
 
@@ -22,8 +16,11 @@ model Staff {
   department    String
   contact       String
   vehicle       String?
+  skills        Json
   created_at    DateTime @default(now())
   updated_at    DateTime @updatedAt
+  Team          Team[]   @relation("TeamLeader")
+  teams         Team[]   @relation("TeamMembers")
 }
 
 model DutyManagement {
@@ -119,4 +116,25 @@ model RecentDuties {
   content    String
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
+}
+
+model Team {
+  id         Int       @id @default(autoincrement())
+  team_name  String
+  leader_id  Int
+  created_at DateTime  @default(now())
+  updated_at DateTime  @updatedAt
+  leader     Staff     @relation("TeamLeader", fields: [leader_id], references: [id])
+  members    Staff[]   @relation("TeamMembers")
+  Schedule   Schedule[]
+}
+
+model Schedule {
+  id           Int      @id @default(autoincrement())
+  team_id      Int
+  schedule_date DateTime
+  shift_type    String
+  created_at   DateTime @default(now())
+  updated_at   DateTime @default(now()) @updatedAt
+  team         Team     @relation(fields: [team_id], references: [id])
 }
