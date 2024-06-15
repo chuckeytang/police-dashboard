@@ -1,5 +1,5 @@
 import React from "react";
-import ScheduleManagement from "@/components/ScheduleManagement";
+import ScheduleManagement from "@/components/schedule/ScheduleManagement";
 
 const ScheduleManagementPage = () => {
   return (

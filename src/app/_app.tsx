@@ -1,4 +1,6 @@
+import "react-big-calendar/lib/css/react-big-calendar.css";
 import "tailwindcss/tailwind.css";
+
 import * as React from "react";
 import { AppProps } from "next/app";
 import { ThemeProvider, createTheme } from "@mui/material/styles";

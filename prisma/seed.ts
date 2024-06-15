@@ -1,4 +1,5 @@
 import { PrismaClient } from "@prisma/client";
+import { addDays, startOfMonth, endOfMonth } from "date-fns";
 
 const prisma = new PrismaClient();
 
@@ -29,6 +30,34 @@ async function main() {
   });
 
   console.log({ team1, team2 });
+
+  // 获取当前月份的第一天和最后一天
+  const today = new Date();
+  const firstDayOfMonth = startOfMonth(today);
+  const lastDayOfMonth = endOfMonth(today);
+
+  // 生成本月的排班数据
+  let currentDate = firstDayOfMonth;
+  let isTeam1DayShift = true;
+
+  while (currentDate <= lastDayOfMonth) {
+    await prisma.schedule.create({
+      data: {
+        schedule_date: currentDate,
+        day_team: {
+          connect: { id: isTeam1DayShift ? team1.id : team2.id },
+        },
+        night_team: {
+          connect: { id: isTeam1DayShift ? team2.id : team1.id },
+        },
+      },
+    });
+
+    // 切换班次
+    isTeam1DayShift = !isTeam1DayShift;
+    // 日期加1
+    currentDate = addDays(currentDate, 1);
+  }
 }
 
 main()

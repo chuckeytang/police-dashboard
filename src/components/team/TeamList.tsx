@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import "tailwindcss/tailwind.css";
 
 import {
   List,
@@ -98,7 +97,7 @@ const TeamList = () => {
     <div className="flex">
       <div className="border-r border-gray-200 p-4">
         <div className="flex justify-between items-center mb-4">
-          <div style={{ display: "inline" }}>班级目录 </div>
+          <div style={{ display: "inline" }}>班组目录 </div>
           <Button variant="contained" color="primary" size="small">
             <Link href="/team/add" passHref>
               <div className="text-white">+</div>
