@@ -9,6 +9,10 @@ import StaffCreate from "@/components/staff/StaffCreate";
 import TeamList from "@/components/team/TeamList";
 import ScheduleTable from "@/components/schedule/ScheduleTable"; // 导入 ScheduleTable
 import { JSX, ReactNode, useState } from "react";
+import VehicleList from "@/components/vehicle/VehicleList";
+import VehicleShow from "@/components/vehicle/VehicleShow";
+import VehicleEdit from "@/components/vehicle/VehicleEdit";
+import VehicleCreate from "@/components/vehicle/VehicleCreate";
 
 interface CustomMenuItemProps {
   primaryText: string;
@@ -53,11 +57,12 @@ const CustomMenu = () => {
           </div>
         )}
       </CustomMenuItem>
-      <CustomMenuItem primaryText="其他管理" onClick={handleOtherClick}>
+      <CustomMenuItem primaryText="街面巡逻" onClick={handleOtherClick}>
         {otherOpen && (
           <div className="flex flex-col pl-4">
-            <Menu.Item to="/other/option1" primaryText="选项一" />
-            <Menu.Item to="/other/option2" primaryText="选项二" />
+            <Menu.Item to="/vehicle/vehicle" primaryText="车辆录入" />
+            <Menu.Item to="/vehicle/patrolteam" primaryText="巡逻勤组" />
+            <Menu.Item to="/vehicle/patrolschedule" primaryText="巡逻排班" />
           </div>
         )}
       </CustomMenuItem>
@@ -80,7 +85,13 @@ const AdminPage = () => (
     />
     <Resource name="personnel/team" list={TeamList} />
     <Resource name="personnel/schedule" list={ScheduleTable} />{" "}
-    {/* 新增排班表 */}
+    <Resource
+      name="vehicle/vehicle"
+      list={VehicleList}
+      show={VehicleShow}
+      edit={VehicleEdit}
+      create={VehicleCreate}
+    />
   </Admin>
 );
 

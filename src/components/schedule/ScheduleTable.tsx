@@ -1,7 +1,14 @@
 import React, { useState } from "react";
 import { List, useListContext, Loading } from "react-admin";
-import { Calendar, dateFnsLocalizer } from "react-big-calendar";
-import { format, parse, startOfWeek, getDay } from "date-fns";
+import { Calendar, dateFnsLocalizer, Views } from "react-big-calendar";
+import {
+  format,
+  parse,
+  startOfWeek,
+  getDay,
+  addMonths,
+  subMonths,
+} from "date-fns";
 import { zhCN } from "date-fns/locale";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import {
@@ -19,11 +26,12 @@ const locales = {
 };
 
 const localizer = dateFnsLocalizer({
-  format: (date: any, formatStr: string, options: any) =>
+  format: (date: Date, formatStr: string, options: any) =>
     format(date, formatStr, { locale: zhCN }),
   parse: (dateStr: string, formatStr: string, options: any) =>
     parse(dateStr, formatStr, new Date(), { locale: zhCN }),
-  startOfWeek: (date: any, options: any) => startOfWeek(date, { locale: zhCN }),
+  startOfWeek: (date: Date, options: any) =>
+    startOfWeek(date, { locale: zhCN }),
   getDay,
   locales,
 });
@@ -50,7 +58,6 @@ const CustomEvent = ({ event }: { event: any }) => (
     {event.desc && <span> - {event.desc}</span>}
   </div>
 );
-
 const ScheduleList = () => {
   const { data, isLoading, error } = useListContext<Schedule>();
 
@@ -76,30 +83,42 @@ const ScheduleList = () => {
     ])
     .flat();
 
+  const lastScheduledDate =
+    data.length > 0 ? new Date(data[data.length - 1].schedule_date) : null;
+  const nextDay = lastScheduledDate
+    ? new Date(lastScheduledDate.setDate(lastScheduledDate.getDate() + 1))
+    : null;
+
+  if (nextDay) {
+    events.push(
+      {
+        title: `添加早班班组`,
+        start: nextDay,
+        end: nextDay,
+        allDay: true,
+        desc: "早班",
+      },
+      {
+        title: `添加晚班班组`,
+        start: nextDay,
+        end: nextDay,
+        allDay: true,
+        desc: "晚班",
+      }
+    );
+  }
+
   return (
     <div className="flex">
-      {/* <div className="w-1/4 border-r border-gray-200 p-4">
-        <div className="flex justify-between items-center mb-4">
-          <div>班组目录</div>
-        </div>
-        <MuiList>
-          {data.map((schedule) => (
-            <ListItem key={schedule.id}>
-              <ListItemText primary={`早班: ${schedule.day_team.team_name}`} />
-              <ListItemText
-                primary={`晚班: ${schedule.night_team.team_name}`}
-              />
-            </ListItem>
-          ))}
-        </MuiList>
-      </div> */}
       <div className="w-full p-2">
         <Calendar
           localizer={localizer}
           events={events}
           startAccessor="start"
           endAccessor="end"
+          views={[Views.MONTH]}
           style={{ height: 700 }}
+          step={60}
           components={{
             event: CustomEvent,
           }}
@@ -130,7 +149,7 @@ const ScheduleTable = () => {
           onChange={(date) => setSelectedDate(date)}
           slotProps={{ textField: { variant: "outlined" } }} // 使用 slotProps 替代 renderInput
         />
-        <List filter={filter}>
+        <List filter={filter} pagination={false}>
           <ScheduleList />
         </List>
       </div>

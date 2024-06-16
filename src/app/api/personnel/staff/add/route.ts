@@ -17,6 +17,7 @@ export async function POST(req: NextRequest) {
         department,
         contact,
         vehicle,
+        skills: [],
       },
     });
     return NextResponse.json(newStaff, { status: 201 });
