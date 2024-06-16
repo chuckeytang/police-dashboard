@@ -1,9 +1,23 @@
 import { PrismaClient, Staff } from "@prisma/client";
 import { addDays, startOfMonth, endOfMonth } from "date-fns";
+import mysql from "mysql2/promise";
 
 const prisma = new PrismaClient();
 
 async function main() {
+  // 连接 MySQL 服务器（不指定数据库）
+  const connection = await mysql.createConnection({
+    host: "localhost",
+    user: "root",
+    password: "casino123", // 使用你设置的 MySQL root 用户密码
+  });
+
+  // 创建数据库（如果不存在）
+  await connection.query(`CREATE DATABASE IF NOT EXISTS police_dashboard`);
+
+  // 断开连接
+  await connection.end();
+
   // 清空相关表的数据
   await prisma.teamMember.deleteMany({});
   await prisma.schedule.deleteMany({});
