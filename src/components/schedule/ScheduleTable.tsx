@@ -78,14 +78,9 @@ const ScheduleList = () => {
 
   return (
     <div className="flex">
-      <div className="w-1/4 border-r border-gray-200 p-4">
+      {/* <div className="w-1/4 border-r border-gray-200 p-4">
         <div className="flex justify-between items-center mb-4">
           <div>班组目录</div>
-          <Button variant="contained" color="primary" size="small">
-            <a href="/team/add" className="text-white">
-              +
-            </a>
-          </Button>
         </div>
         <MuiList>
           {data.map((schedule) => (
@@ -97,8 +92,8 @@ const ScheduleList = () => {
             </ListItem>
           ))}
         </MuiList>
-      </div>
-      <div className="w-3/4 p-4">
+      </div> */}
+      <div className="w-full p-2">
         <Calendar
           localizer={localizer}
           events={events}

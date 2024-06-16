@@ -8,7 +8,7 @@ datasource db {
 }
 
 model Staff {
-  id            Int      @id @default(autoincrement())
+  id            Int       @id @default(autoincrement())
   code          String
   police_number String
   name          String
@@ -17,10 +17,30 @@ model Staff {
   contact       String
   vehicle       String?
   skills        Json
-  created_at    DateTime @default(now())
-  updated_at    DateTime @updatedAt
-  Team          Team[]   @relation("TeamLeader")
-  teams         Team[]   @relation("TeamMembers")
+  created_at    DateTime  @default(now())
+  updated_at    DateTime  @updatedAt
+  Team          Team[]    @relation("TeamLeader")
+  TeamMembers   TeamMember[]
+}
+
+model Team {
+  id         Int          @id @default(autoincrement())
+  team_name  String
+  leader_id  Int?
+  created_at DateTime     @default(now())
+  updated_at DateTime     @updatedAt
+  leader     Staff?       @relation("TeamLeader", fields: [leader_id], references: [id])
+  TeamMembers TeamMember[]
+  day_schedules    Schedule[] @relation("DayTeam")
+  night_schedules  Schedule[] @relation("NightTeam")
+}
+
+model TeamMember {
+  id        Int    @id @default(autoincrement())
+  team_id   Int
+  staff_id  Int
+  team      Team   @relation(fields: [team_id], references: [id])
+  staff     Staff  @relation(fields: [staff_id], references: [id])
 }
 
 model DutyManagement {
@@ -127,16 +147,4 @@ model Schedule {
   updated_at     DateTime @default(now()) @updatedAt
   day_team       Team     @relation("DayTeam", fields: [day_team_id], references: [id])
   night_team     Team     @relation("NightTeam", fields: [night_team_id], references: [id])
-}
-
-model Team {
-  id         Int       @id @default(autoincrement())
-  team_name  String
-  leader_id  Int
-  created_at DateTime  @default(now())
-  updated_at DateTime  @updatedAt
-  leader     Staff     @relation("TeamLeader", fields: [leader_id], references: [id])
-  members    Staff[]   @relation("TeamMembers")
-  day_schedules    Schedule[] @relation("DayTeam")
-  night_schedules  Schedule[] @relation("NightTeam")
 }

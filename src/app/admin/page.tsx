@@ -8,20 +8,62 @@ import StaffEdit from "@/components/staff/StaffEdit";
 import StaffCreate from "@/components/staff/StaffCreate";
 import TeamList from "@/components/team/TeamList";
 import ScheduleTable from "@/components/schedule/ScheduleTable"; // 导入 ScheduleTable
-import { JSX } from "react";
+import { JSX, ReactNode, useState } from "react";
 
-const CustomMenu = () => (
-  <Menu>
-    <Menu.DashboardItem />
-    <Menu.Item to="/personnel" primaryText="勤务管理">
-      <div className="flex flex-col">
-        <Menu.Item to="/personnel/staff" primaryText="人员录入" />
-        <Menu.Item to="/personnel/schedule" primaryText="排班表" />
-        <Menu.Item to="/personnel/team" primaryText="排班管理" />
-      </div>
-    </Menu.Item>
-  </Menu>
-);
+interface CustomMenuItemProps {
+  primaryText: string;
+  children: ReactNode;
+  onClick: () => void;
+}
+
+const CustomMenuItem = ({
+  primaryText,
+  children,
+  onClick,
+}: CustomMenuItemProps) => {
+  return (
+    <div>
+      <Menu.Item to="#" primaryText={primaryText} onClick={onClick} />
+      {children}
+    </div>
+  );
+};
+
+const CustomMenu = () => {
+  const [personnelOpen, setPersonnelOpen] = useState(false);
+  const [otherOpen, setOtherOpen] = useState(false);
+
+  const handlePersonnelClick = () => {
+    setPersonnelOpen(!personnelOpen);
+  };
+
+  const handleOtherClick = () => {
+    setOtherOpen(!otherOpen);
+  };
+
+  return (
+    <Menu>
+      <Menu.DashboardItem />
+      <CustomMenuItem primaryText="勤务管理" onClick={handlePersonnelClick}>
+        {personnelOpen && (
+          <div className="flex flex-col pl-4">
+            <Menu.Item to="/personnel/staff" primaryText="人员录入" />
+            <Menu.Item to="/personnel/schedule" primaryText="排班表" />
+            <Menu.Item to="/personnel/team" primaryText="排班管理" />
+          </div>
+        )}
+      </CustomMenuItem>
+      <CustomMenuItem primaryText="其他管理" onClick={handleOtherClick}>
+        {otherOpen && (
+          <div className="flex flex-col pl-4">
+            <Menu.Item to="/other/option1" primaryText="选项一" />
+            <Menu.Item to="/other/option2" primaryText="选项二" />
+          </div>
+        )}
+      </CustomMenuItem>
+    </Menu>
+  );
+};
 
 const MyLayout = (props: LayoutProps) => (
   <Layout {...props} menu={CustomMenu} />
