@@ -24,6 +24,9 @@ async function main() {
   await prisma.team.deleteMany({});
   await prisma.staff.deleteMany({});
   await prisma.vehicle.deleteMany({});
+  await prisma.patrolVehicleAssignment.deleteMany({});
+  await prisma.patrolStaffAssignment.deleteMany({});
+  await prisma.patrolTeam.deleteMany({});
 
   // 创建20个staff记录
   const staffData = [
@@ -294,7 +297,7 @@ async function main() {
     }
   }
 
-  console.log({ team1, team2, team3 });
+  console.log("勤务组创建完成");
 
   // 获取当前月份的第一天和最后一天
   const today = new Date();
@@ -586,6 +589,41 @@ async function main() {
   );
 
   const vehicles = await Promise.all(vehiclePromises);
+
+  // 创建巡逻团队并分配车辆和成员
+  for (let i = 1; i <= 3; i++) {
+    const patrolTeam = await prisma.patrolTeam.create({
+      data: {
+        team_name: `巡逻组${i}`,
+      },
+    });
+
+    // 分配车辆
+    const vehicle = vehicles[i - 1]; // 假设车辆从1开始
+    await prisma.patrolVehicleAssignment.create({
+      data: {
+        patrol_team_id: patrolTeam.id,
+        vehicle_id: vehicle.id,
+      },
+    });
+
+    // 分配成员并分配班次
+    const members = getRandomMembers(staffs);
+    const shifts = ["早班", "中班", "晚班"];
+    for (const shift of shifts) {
+      for (const member of members) {
+        await prisma.patrolStaffAssignment.create({
+          data: {
+            patrol_team_id: patrolTeam.id,
+            staff_id: member.id,
+            shift: shift,
+          },
+        });
+      }
+    }
+  }
+
+  console.log("巡逻组创建完成");
 }
 
 main()

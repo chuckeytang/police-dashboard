@@ -13,6 +13,7 @@ import VehicleList from "@/components/vehicle/VehicleList";
 import VehicleShow from "@/components/vehicle/VehicleShow";
 import VehicleEdit from "@/components/vehicle/VehicleEdit";
 import VehicleCreate from "@/components/vehicle/VehicleCreate";
+import PatrolTeamList from "@/components/patrolteam/PatrolTeamList";
 
 interface CustomMenuItemProps {
   primaryText: string;
@@ -84,7 +85,7 @@ const AdminPage = () => (
       create={StaffCreate}
     />
     <Resource name="personnel/team" list={TeamList} />
-    <Resource name="personnel/schedule" list={ScheduleTable} />{" "}
+    <Resource name="personnel/schedule" list={ScheduleTable} />
     <Resource
       name="vehicle/vehicle"
       list={VehicleList}
@@ -92,6 +93,8 @@ const AdminPage = () => (
       edit={VehicleEdit}
       create={VehicleCreate}
     />
+    <Resource name="vehicle/patrolteam" list={PatrolTeamList} />
+    <Resource name="vehicle/patrolschedule" list={ScheduleTable} />
   </Admin>
 );
 

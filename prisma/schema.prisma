@@ -21,6 +21,7 @@ model Staff {
   updated_at    DateTime  @updatedAt
   Team          Team[]    @relation("TeamLeader")
   TeamMembers   TeamMember[]
+  PatrolStaffAssignments PatrolStaffAssignment[]
 }
 
 model Team {
@@ -43,19 +44,6 @@ model TeamMember {
   staff     Staff  @relation(fields: [staff_id], references: [id])
 }
 
-model DutyManagement {
-  id            Int      @id @default(autoincrement())
-  code          String
-  police_number String
-  name          String
-  position      String
-  department    String
-  contact       String
-  vehicle       String?
-  created_at    DateTime @default(now())
-  updated_at    DateTime @updatedAt
-}
-
 model Vehicle {
   id           Int       @id @default(autoincrement())
   code         String
@@ -70,6 +58,7 @@ model Vehicle {
   return_time  DateTime?
   created_at   DateTime  @default(now())
   updated_at   DateTime  @updatedAt
+  PatrolVehicleAssignments PatrolVehicleAssignment[]
 }
 
 model PatrolTeam {
@@ -77,6 +66,8 @@ model PatrolTeam {
   team_name  String
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
+  PatrolVehicleAssignments PatrolVehicleAssignment[]
+  PatrolStaffAssignments PatrolStaffAssignment[]
 }
 
 model PatrolVehicleAssignment {
@@ -85,6 +76,32 @@ model PatrolVehicleAssignment {
   vehicle_id     Int
   created_at     DateTime @default(now())
   updated_at     DateTime @updatedAt
+  patrol_team    PatrolTeam @relation(fields: [patrol_team_id], references: [id])
+  vehicle        Vehicle @relation(fields: [vehicle_id], references: [id])
+}
+
+model PatrolStaffAssignment {
+  id                 Int      @id @default(autoincrement())
+  patrol_team_id     Int
+  staff_id           Int
+  shift              String   // 用于标识早班、中班或晚班
+  created_at         DateTime @default(now())
+  updated_at         DateTime @updatedAt
+  patrol_team        PatrolTeam @relation(fields: [patrol_team_id], references: [id])
+  staff              Staff @relation(fields: [staff_id], references: [id])
+}
+
+model DutyManagement {
+  id            Int      @id @default(autoincrement())
+  code          String
+  police_number String
+  name          String
+  position      String
+  department    String
+  contact       String
+  vehicle       String?
+  created_at    DateTime @default(now())
+  updated_at    DateTime @updatedAt
 }
 
 model PatrolSchedule {
@@ -96,13 +113,6 @@ model PatrolSchedule {
   updated_at     DateTime @updatedAt
 }
 
-model PatrolStaffAssignment {
-  id                 Int      @id @default(autoincrement())
-  patrol_schedule_id Int
-  staff_id           Int
-  created_at         DateTime @default(now())
-  updated_at         DateTime @updatedAt
-}
 
 model WorkFocus {
   id         Int      @id @default(autoincrement())

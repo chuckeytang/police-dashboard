@@ -14,3 +14,25 @@ export interface Team {
   leader: Staff;
   members: Staff[];
 }
+
+export interface PatrolTeam {
+  id: number;
+  team_name: string;
+  created_at: Date;
+  updated_at: Date;
+  vehicle: Vehicle | null; // 确保 vehicle 是可以为空的
+  members: Array<PatrolStaffAssignment>;
+}
+
+export interface Vehicle {
+  id: number;
+  plate_number: string;
+  vehicle_type: string;
+  brand_model: string;
+}
+
+export interface PatrolStaffAssignment {
+  id: number;
+  staff: Staff;
+  shift: string;
+}
