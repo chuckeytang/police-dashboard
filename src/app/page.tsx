@@ -1,6 +1,11 @@
 import * as React from "react";
 import { Container, Grid, Paper, Typography, Box, Button, List, ListItem, ListItemText,Table,TableBody,TableHead,TableCell,TableRow, 
-  TableContainer,Select,FormControl,InputLabel,MenuItem } from "@mui/material";
+  TableContainer,Select,FormControl,InputLabel,MenuItem, 
+  colors} from "@mui/material";
+import { PiPoliceCarFill } from "react-icons/pi";
+import { GrSchedule } from "react-icons/gr";
+import { HiMiniBuildingLibrary } from "react-icons/hi2";
+
 
 const Dashboard = () => {
   return (
@@ -84,35 +89,35 @@ const Dashboard = () => {
               </TableHead>
             <TableBody>
               <TableRow>
-                <TableCell sx={{ borderBottom: 'none', padding: '4px',color: 'white',textOverflow: 'ellipsis', maxWidth: '50px', minWidth: '50px',whiteSpace: 'nowrap', overflow: 'hidden', }}></TableCell>
+                <TableCell sx={{ borderBottom: 'none', padding: '4px',color: 'white',textOverflow: 'ellipsis', maxWidth: '50px', minWidth: '50px',whiteSpace: 'nowrap', overflow: 'hidden', }}><PiPoliceCarFill fontSize={20}/></TableCell>
                 <TableCell sx={{ borderBottom: 'none', padding: '4px',color: 'lightblue',textOverflow: 'ellipsis', maxWidth: '50px',minWidth: '50px', whiteSpace: 'nowrap', overflow: 'hidden', }}>0490</TableCell>
                 <TableCell sx={{ borderBottom: 'none', padding: '4px',color: 'white',textOverflow: 'ellipsis', maxWidth: '80px',minWidth: '80px', whiteSpace: 'nowrap', overflow: 'hidden',fontWeight:"bold",textAlign:"center"}}>张三 李四</TableCell>
                 <TableCell sx={{ borderBottom: 'none', padding: '4px',color: 'white',textOverflow: 'ellipsis', maxWidth: '80px',minWidth: '80px', whiteSpace: 'nowrap', overflow: 'hidden',fontWeight:"bold",textAlign:"center"}}>张三 李四</TableCell>
                 <TableCell sx={{ borderBottom: 'none', padding: '4px',color: 'white',textOverflow: 'ellipsis', maxWidth: '80px',minWidth: '80px', whiteSpace: 'nowrap', overflow: 'hidden',fontWeight:"bold",textAlign:"center"}}>张三 李四</TableCell>
               </TableRow>
               <TableRow>
-                <TableCell sx={{ borderBottom: 'none', padding: '4px',color: 'white',textOverflow: 'ellipsis', maxWidth: '50px', minWidth: '50px',whiteSpace: 'nowrap', overflow: 'hidden', }}></TableCell>
+                <TableCell sx={{ borderBottom: 'none', padding: '4px',color: 'white',textOverflow: 'ellipsis', maxWidth: '50px', minWidth: '50px',whiteSpace: 'nowrap', overflow: 'hidden', }}><PiPoliceCarFill fontSize={20}/></TableCell>
                 <TableCell sx={{ borderBottom: 'none', padding: '4px',color: 'lightblue',textOverflow: 'ellipsis', maxWidth: '50px',minWidth: '50px', whiteSpace: 'nowrap', overflow: 'hidden', }}>0490</TableCell>
                 <TableCell sx={{ borderBottom: 'none', padding: '4px',color: 'white',textOverflow: 'ellipsis', maxWidth: '80px',minWidth: '80px', whiteSpace: 'nowrap', overflow: 'hidden',fontWeight:"bold",textAlign:"center"}}>张三 李四</TableCell>
                 <TableCell sx={{ borderBottom: 'none', padding: '4px',color: 'white',textOverflow: 'ellipsis', maxWidth: '80px',minWidth: '80px', whiteSpace: 'nowrap', overflow: 'hidden',fontWeight:"bold",textAlign:"center"}}>张三 李四</TableCell>
                 <TableCell sx={{ borderBottom: 'none', padding: '4px',color: 'white',textOverflow: 'ellipsis', maxWidth: '80px',minWidth: '80px', whiteSpace: 'nowrap', overflow: 'hidden',fontWeight:"bold",textAlign:"center"}}>张三 李四</TableCell>
               </TableRow>
               <TableRow>
-                <TableCell sx={{ borderBottom: 'none', padding: '4px',color: 'white',textOverflow: 'ellipsis', maxWidth: '50px', minWidth: '50px',whiteSpace: 'nowrap', overflow: 'hidden', }}></TableCell>
+                <TableCell sx={{ borderBottom: 'none', padding: '4px',color: 'white',textOverflow: 'ellipsis', maxWidth: '50px', minWidth: '50px',whiteSpace: 'nowrap', overflow: 'hidden', }}><PiPoliceCarFill fontSize={20}/></TableCell>
                 <TableCell sx={{ borderBottom: 'none', padding: '4px',color: 'lightblue',textOverflow: 'ellipsis', maxWidth: '50px',minWidth: '50px', whiteSpace: 'nowrap', overflow: 'hidden', }}>0490</TableCell>
                 <TableCell sx={{ borderBottom: 'none', padding: '4px',color: 'white',textOverflow: 'ellipsis', maxWidth: '80px',minWidth: '80px', whiteSpace: 'nowrap', overflow: 'hidden',fontWeight:"bold",textAlign:"center"}}>张三 李四</TableCell>
                 <TableCell sx={{ borderBottom: 'none', padding: '4px',color: 'white',textOverflow: 'ellipsis', maxWidth: '80px',minWidth: '80px', whiteSpace: 'nowrap', overflow: 'hidden',fontWeight:"bold",textAlign:"center"}}>张三 李四</TableCell>
                 <TableCell sx={{ borderBottom: 'none', padding: '4px',color: 'white',textOverflow: 'ellipsis', maxWidth: '80px',minWidth: '80px', whiteSpace: 'nowrap', overflow: 'hidden',fontWeight:"bold",textAlign:"center"}}>张三 李四</TableCell>
               </TableRow>
               <TableRow>
-                <TableCell sx={{ borderBottom: 'none', padding: '4px',color: 'white',textOverflow: 'ellipsis', maxWidth: '50px', minWidth: '50px',whiteSpace: 'nowrap', overflow: 'hidden', }}></TableCell>
+                <TableCell sx={{ borderBottom: 'none', padding: '4px',color: 'white',textOverflow: 'ellipsis', maxWidth: '50px', minWidth: '50px',whiteSpace: 'nowrap', overflow: 'hidden', }}><PiPoliceCarFill fontSize={20}/></TableCell>
                 <TableCell sx={{ borderBottom: 'none', padding: '4px',color: 'lightblue',textOverflow: 'ellipsis', maxWidth: '50px',minWidth: '50px', whiteSpace: 'nowrap', overflow: 'hidden', }}>0490</TableCell>
                 <TableCell sx={{ borderBottom: 'none', padding: '4px',color: 'white',textOverflow: 'ellipsis', maxWidth: '80px',minWidth: '80px', whiteSpace: 'nowrap', overflow: 'hidden',fontWeight:"bold",textAlign:"center"}}>张三 李四</TableCell>
                 <TableCell sx={{ borderBottom: 'none', padding: '4px',color: 'white',textOverflow: 'ellipsis', maxWidth: '80px',minWidth: '80px', whiteSpace: 'nowrap', overflow: 'hidden',fontWeight:"bold",textAlign:"center"}}>张三 李四</TableCell>
                 <TableCell sx={{ borderBottom: 'none', padding: '4px',color: 'white',textOverflow: 'ellipsis', maxWidth: '80px',minWidth: '80px', whiteSpace: 'nowrap', overflow: 'hidden',fontWeight:"bold",textAlign:"center"}}>张三 李四</TableCell>
               </TableRow>
               <TableRow>
-                <TableCell sx={{ borderBottom: 'none', padding: '4px',color: 'white',textOverflow: 'ellipsis', maxWidth: '50px', minWidth: '50px',whiteSpace: 'nowrap', overflow: 'hidden', }}></TableCell>
+                <TableCell sx={{ borderBottom: 'none', padding: '4px',color: 'white',textOverflow: 'ellipsis', maxWidth: '50px', minWidth: '50px',whiteSpace: 'nowrap', overflow: 'hidden', }}><PiPoliceCarFill fontSize={20}/></TableCell>
                 <TableCell sx={{ borderBottom: 'none', padding: '4px',color: 'lightblue',textOverflow: 'ellipsis', maxWidth: '50px',minWidth: '50px', whiteSpace: 'nowrap', overflow: 'hidden', }}>0490</TableCell>
                 <TableCell sx={{ borderBottom: 'none', padding: '4px',color: 'white',textOverflow: 'ellipsis', maxWidth: '80px',minWidth: '80px', whiteSpace: 'nowrap', overflow: 'hidden',fontWeight:"bold",textAlign:"center"}}>张三 李四</TableCell>
                 <TableCell sx={{ borderBottom: 'none', padding: '4px',color: 'white',textOverflow: 'ellipsis', maxWidth: '80px',minWidth: '80px', whiteSpace: 'nowrap', overflow: 'hidden',fontWeight:"bold",textAlign:"center"}}>张三 李四</TableCell>
@@ -174,7 +179,8 @@ const Dashboard = () => {
         {/* 中间地图 */}
         
         <Grid item xs={12} md={4}>
-          <Typography variant="h4" align="center" gutterBottom>
+          <Typography variant="h4" align="center" gutterBottom color="white">
+          <HiMiniBuildingLibrary color="white"/>
             定海派出所
           </Typography>
           <Box
@@ -332,6 +338,10 @@ const Dashboard = () => {
           boxShadow: "none",border: "2px solid white",color: "white", height: "30vh",}}>
             <Box sx={{ display: "flex", alignItems: "center" }}>
               <Typography variant="h6">民警-警情</Typography>
+              <Button variant="contained" color="primary" sx={{ ml: 'auto' }}>
+                时间
+                <GrSchedule fontSize={20}/>
+              </Button>
             </Box>
             {/* Add your content here */}
             <TableContainer component={Paper} sx= {{ backgroundColor: 'transparent', marginTop: '10px',overflow: 'hidden',minWidth: '100%',boxShadow: "none",}}>
