@@ -178,10 +178,12 @@ const Dashboard = () => {
 
         {/* 中间地图 */}
         
-        <Grid item xs={12} md={4}>
+        <Grid item xs={12} md={4} sx={{backgroundColor: 'lightblue'}}>
           <Typography variant="h4" align="center" gutterBottom color="white">
+          <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 1 }}>
           <HiMiniBuildingLibrary color="white"/>
             定海派出所
+          </Box>
           </Typography>
           <Box
           component="img"
@@ -215,6 +217,7 @@ const Dashboard = () => {
           >
             <Box sx={{ display: "flex", alignItems: "center" }}>
               <Typography variant="h6">警情分析</Typography>
+              <Box sx={{ml:4}}>
               <FormControl sx={{ minWidth: 120,ml:"center", }} size="small" >
               <InputLabel id="select-label" sx={{ color: 'white' }}>警情类型</InputLabel>
               <Select labelId="select-label" label="选择选项"
@@ -227,6 +230,7 @@ const Dashboard = () => {
                 <MenuItem value={5}>Weekly</MenuItem>
               </Select>
               </FormControl>
+              </Box>
               <Button variant="contained" color="primary" sx={{ ml: 'auto' }}>
                 编辑
               </Button>
@@ -340,7 +344,7 @@ const Dashboard = () => {
               <Typography variant="h6">民警-警情</Typography>
               <Button variant="contained" color="primary" sx={{ ml: 'auto' }}>
                 时间
-                <GrSchedule fontSize={20}/>
+                <Box sx={{ ml: 2}}><GrSchedule fontSize={20}/></Box>
               </Button>
             </Box>
             {/* Add your content here */}
