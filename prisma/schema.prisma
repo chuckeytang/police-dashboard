@@ -8,7 +8,7 @@ datasource db {
 }
 
 model Staff {
-  id            Int      @id @default(autoincrement())
+  id            Int       @id @default(autoincrement())
   code          String
   police_number String
   name          String
@@ -17,23 +17,31 @@ model Staff {
   contact       String
   vehicle       String?
   skills        Json
-  created_at    DateTime @default(now())
-  updated_at    DateTime @updatedAt
-  Team          Team[]   @relation("TeamLeader")
-  teams         Team[]   @relation("TeamMembers")
+  created_at    DateTime  @default(now())
+  updated_at    DateTime  @updatedAt
+  Team          Team[]    @relation("TeamLeader")
+  TeamMembers   TeamMember[]
+  PatrolStaffAssignments PatrolStaffAssignment[]
 }
 
-model DutyManagement {
-  id            Int      @id @default(autoincrement())
-  code          String
-  police_number String
-  name          String
-  position      String
-  department    String
-  contact       String
-  vehicle       String?
-  created_at    DateTime @default(now())
-  updated_at    DateTime @updatedAt
+model Team {
+  id         Int          @id @default(autoincrement())
+  team_name  String
+  leader_id  Int?
+  created_at DateTime     @default(now())
+  updated_at DateTime     @updatedAt
+  leader     Staff?       @relation("TeamLeader", fields: [leader_id], references: [id])
+  TeamMembers TeamMember[]
+  day_schedules    Schedule[] @relation("DayTeam")
+  night_schedules  Schedule[] @relation("NightTeam")
+}
+
+model TeamMember {
+  id        Int    @id @default(autoincrement())
+  team_id   Int
+  staff_id  Int
+  team      Team   @relation(fields: [team_id], references: [id])
+  staff     Staff  @relation(fields: [staff_id], references: [id])
 }
 
 model Vehicle {
@@ -50,6 +58,7 @@ model Vehicle {
   return_time  DateTime?
   created_at   DateTime  @default(now())
   updated_at   DateTime  @updatedAt
+  PatrolVehicleAssignments PatrolVehicleAssignment[]
 }
 
 model PatrolTeam {
@@ -57,6 +66,8 @@ model PatrolTeam {
   team_name  String
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
+  PatrolVehicleAssignments PatrolVehicleAssignment[]
+  PatrolStaffAssignments PatrolStaffAssignment[]
 }
 
 model PatrolVehicleAssignment {
@@ -65,6 +76,32 @@ model PatrolVehicleAssignment {
   vehicle_id     Int
   created_at     DateTime @default(now())
   updated_at     DateTime @updatedAt
+  patrol_team    PatrolTeam @relation(fields: [patrol_team_id], references: [id])
+  vehicle        Vehicle @relation(fields: [vehicle_id], references: [id])
+}
+
+model PatrolStaffAssignment {
+  id                 Int      @id @default(autoincrement())
+  patrol_team_id     Int
+  staff_id           Int
+  shift              String   // 用于标识早班、中班或晚班
+  created_at         DateTime @default(now())
+  updated_at         DateTime @updatedAt
+  patrol_team        PatrolTeam @relation(fields: [patrol_team_id], references: [id])
+  staff              Staff @relation(fields: [staff_id], references: [id])
+}
+
+model DutyManagement {
+  id            Int      @id @default(autoincrement())
+  code          String
+  police_number String
+  name          String
+  position      String
+  department    String
+  contact       String
+  vehicle       String?
+  created_at    DateTime @default(now())
+  updated_at    DateTime @updatedAt
 }
 
 model PatrolSchedule {
@@ -76,13 +113,6 @@ model PatrolSchedule {
   updated_at     DateTime @updatedAt
 }
 
-model PatrolStaffAssignment {
-  id                 Int      @id @default(autoincrement())
-  patrol_schedule_id Int
-  staff_id           Int
-  created_at         DateTime @default(now())
-  updated_at         DateTime @updatedAt
-}
 
 model WorkFocus {
   id         Int      @id @default(autoincrement())
@@ -118,23 +148,13 @@ model RecentDuties {
   updated_at DateTime @updatedAt
 }
 
-model Team {
-  id         Int       @id @default(autoincrement())
-  team_name  String
-  leader_id  Int
-  created_at DateTime  @default(now())
-  updated_at DateTime  @updatedAt
-  leader     Staff     @relation("TeamLeader", fields: [leader_id], references: [id])
-  members    Staff[]   @relation("TeamMembers")
-  Schedule   Schedule[]
-}
-
 model Schedule {
-  id           Int      @id @default(autoincrement())
-  team_id      Int
-  schedule_date DateTime
-  shift_type    String
-  created_at   DateTime @default(now())
-  updated_at   DateTime @default(now()) @updatedAt
-  team         Team     @relation(fields: [team_id], references: [id])
+  id             Int      @id @default(autoincrement())
+  day_team_id    Int
+  night_team_id  Int
+  schedule_date  DateTime
+  created_at     DateTime @default(now())
+  updated_at     DateTime @default(now()) @updatedAt
+  day_team       Team     @relation("DayTeam", fields: [day_team_id], references: [id])
+  night_team     Team     @relation("NightTeam", fields: [night_team_id], references: [id])
 }

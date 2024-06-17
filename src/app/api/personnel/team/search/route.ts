@@ -1,3 +1,4 @@
+// pages/api/team/search.ts
 import { NextRequest, NextResponse } from "next/server";
 import { PrismaClient } from "@prisma/client";
 
@@ -8,10 +9,20 @@ export async function GET(req: NextRequest) {
     const teams = await prisma.team.findMany({
       include: {
         leader: true,
-        members: true,
+        TeamMembers: {
+          include: {
+            staff: true,
+          },
+        },
       },
     });
-    return NextResponse.json(teams, { status: 200 });
+
+    const formattedTeams = teams.map((team) => ({
+      ...team,
+      members: team.TeamMembers.map((tm) => tm.staff),
+    }));
+
+    return NextResponse.json(formattedTeams, { status: 200 });
   } catch (error) {
     console.error("Error fetching teams:", error);
     return NextResponse.json(
