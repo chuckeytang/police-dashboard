@@ -28,7 +28,7 @@ const Dashboard = () => {
           <Grid container spacing={2} sx={{ zIndex: 3, padding: 2 }}>
           <Grid item xs={4}>
           {/* 勤务管理 */}
-          <Paper className="animate__animated animate__bounce" sx={{ p: 2, display: "flex", flexDirection: "column", mt: 2, backgroundColor: "#003366", boxShadow: "none", border: "2px solid #1e3a8a", color: "white", width: "100%", marginLeft: 1,zIndex: 3 }}>
+          <Paper className="animate__animated animate__zoomInLeft" sx={{ p: 2, display: "flex", flexDirection: "column", mt: 2, backgroundColor: "#003366", boxShadow: "none", border: "2px solid #1e3a8a", color: "white", width: "100%", marginLeft: 1,zIndex: 3 }}>
           <Box sx={{ display: "flex", alignItems: "center" }}>
             <Typography variant="h6">勤务管理</Typography>
             <Typography sx={{ ml: 2, fontSize: '1rem' }}>今日备勤等级:</Typography>
@@ -71,7 +71,7 @@ const Dashboard = () => {
         </Paper>
 
         {/* 街面巡逻 */}
-        <Paper className="animate__animated animate__bounce" sx={{ p: 2, display: "flex", flexDirection: "column", mt: 2, backgroundColor: "#003366", boxShadow: "none", border: "2px solid #1e3a8a", color: "white", width: "100%", marginLeft: 1,zIndex: 3, }}>
+        <Paper className="animate__animated animate__zoomInLeft" sx={{ p: 2, display: "flex", flexDirection: "column", mt: 2, backgroundColor: "#003366", boxShadow: "none", border: "2px solid #1e3a8a", color: "white", width: "100%", marginLeft: 1,zIndex: 3, }}>
           <Box sx={{ display: "flex", alignItems: "center" }}>
             <Typography variant="h6">街面巡逻</Typography>
             <Typography sx={{ ml: 2, fontSize: '1rem' }}>今日备勤车辆:</Typography>
@@ -131,7 +131,7 @@ const Dashboard = () => {
         </Paper>
 
         {/* 工作重点 */}
-        <Paper className="animate__animated animate__bounce" sx={{ p: 2, display: "flex", flexDirection: "column", mt: 2, backgroundColor: "#003366", boxShadow: "none", border: "2px solid #1e3a8a", color: "white", width: "100%", marginLeft: 1,zIndex: 3 }}>
+        <Paper className="animate__animated animate__zoomInLeft" sx={{ p: 2, display: "flex", flexDirection: "column", mt: 2, backgroundColor: "#003366", boxShadow: "none", border: "2px solid #1e3a8a", color: "white", width: "100%", marginLeft: 1,zIndex: 3 }}>
           <Box sx={{ display: "flex", alignItems: "center" }}>
             <Typography variant="h6">工作重点</Typography>
             <Button variant="contained" color="primary" sx={{ ml: 'auto' }}>
@@ -179,9 +179,9 @@ const Dashboard = () => {
         </Grid>
 
         <Grid item xs={8}>
-                    {/* 居中显示的文本 */}
-                    <Typography
-                    className="animate__animated animate__bounce animate__flash " // 添加动画类
+             {/* 居中显示的文本 */}
+            <Typography
+            className="animate__animated animate__fadeIn " // 添加动画类
             variant="h4"
             sx={{
               position: "absolute",
@@ -195,7 +195,7 @@ const Dashboard = () => {
             定海派出所
           </Typography>
         <Box
-         className="animate__animated animate__bounce animate__flash"
+         className="animate__animated animate__fadeIn"
           component="img"
           src="/source/bg.jpg" // 替换为你的图片URL
           alt="map"
@@ -212,7 +212,7 @@ const Dashboard = () => {
         >
       </Box>
 
-      <Paper className="animate__animated animate__bounce "
+      <Paper className="animate__animated animate__zoomInUp "
             sx={{
               p: 2,
               display: "flex",
