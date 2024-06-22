@@ -14,6 +14,7 @@ import VehicleShow from "@/components/vehicle/VehicleShow";
 import VehicleEdit from "@/components/vehicle/VehicleEdit";
 import VehicleCreate from "@/components/vehicle/VehicleCreate";
 import PatrolTeamList from "@/components/patrolteam/PatrolTeamList";
+import PatrolTeamListWrapper from "@/components/patrolteam/PatrolTeamList";
 
 interface CustomMenuItemProps {
   primaryText: string;
@@ -78,15 +79,6 @@ const MyLayout = (props: LayoutProps) => (
 const AdminPage = () => (
   <Admin dataProvider={dataProvider} layout={MyLayout}>
     <Resource
-      name="personnel/staff"
-      list={StaffList}
-      show={StaffShow}
-      edit={StaffEdit}
-      create={StaffCreate}
-    />
-    <Resource name="personnel/team" list={TeamList} />
-    <Resource name="personnel/schedule" list={ScheduleTable} />
-    <Resource
       name="vehicle/vehicle"
       list={VehicleList}
       show={VehicleShow}
@@ -95,6 +87,15 @@ const AdminPage = () => (
     />
     <Resource name="vehicle/patrolteam" list={PatrolTeamList} />
     <Resource name="vehicle/patrolschedule" list={ScheduleTable} />
+    <Resource
+      name="personnel/staff"
+      list={StaffList}
+      show={StaffShow}
+      edit={StaffEdit}
+      create={StaffCreate}
+    />
+    <Resource name="personnel/team" list={TeamList} />
+    <Resource name="personnel/schedule" list={ScheduleTable} />
   </Admin>
 );
 

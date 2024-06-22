@@ -20,7 +20,7 @@ export interface PatrolTeam {
   team_name: string;
   created_at: Date;
   updated_at: Date;
-  vehicle: Vehicle | null; // 确保 vehicle 是可以为空的
+  vehicle: Vehicle | null;
   members: Array<PatrolStaffAssignment>;
 }
 

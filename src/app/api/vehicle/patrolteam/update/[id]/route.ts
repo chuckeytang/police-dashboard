@@ -2,6 +2,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { PrismaClient } from "@prisma/client";
 import { URL } from "url";
+import { connect } from "http2";
 
 const prisma = new PrismaClient();
 
@@ -11,31 +12,41 @@ export async function PATCH(req: NextRequest) {
   const data = await req.json();
 
   try {
-    // 更新巡逻组
+    const updateData = {
+      PatrolVehicleAssignments: data.vehicle_id
+        ? {
+            deleteMany: {}, // 清空现有的车辆分配
+            create: {
+              vehicle: {
+                connect: { id: Number(data.vehicle_id) },
+              },
+            },
+          }
+        : undefined,
+      PatrolStaffAssignments: data.members
+        ? {
+            deleteMany: {}, // 清空现有的员工分配
+            create: data.members.map(
+              (member: { id: number; shift: string }) => ({
+                staff: {
+                  connect: { id: Number(data.staff_id) },
+                },
+                shift: member.shift,
+              })
+            ),
+          }
+        : undefined,
+    };
+
+    console.log(
+      "Updating patrol team with data:",
+      JSON.stringify(updateData, null, 2)
+    );
+
+    // 执行更新操作
     await prisma.patrolTeam.update({
       where: { id: Number(id) },
-      data: {
-        ...data,
-        PatrolVehicleAssignments: data.vehicle_id
-          ? {
-              deleteMany: {},
-              create: {
-                vehicle_id: data.vehicle_id,
-              },
-            }
-          : undefined,
-        PatrolStaffAssignments: data.members
-          ? {
-              deleteMany: {},
-              create: data.members.map(
-                (member: { id: number; shift: string }) => ({
-                  staff_id: member.id,
-                  shift: member.shift,
-                })
-              ),
-            }
-          : undefined,
-      },
+      data: updateData,
     });
 
     // 获取更新后的巡逻组信息，包括车辆和成员
@@ -58,7 +69,7 @@ export async function PATCH(req: NextRequest) {
     // 格式化成员信息
     const members = updatedPatrolTeam
       ? updatedPatrolTeam.PatrolStaffAssignments.map((psa) => ({
-          ...psa.staff,
+          ...psa,
           shift: psa.shift,
         }))
       : [];
@@ -75,7 +86,7 @@ export async function PATCH(req: NextRequest) {
   } catch (error) {
     console.error("Error updating patrol team:", error);
     return NextResponse.json(
-      { error: "Failed to update patrol team" },
+      { error: "Failed to update patrol team" + error },
       { status: 500 }
     );
   }

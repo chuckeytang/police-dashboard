@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { useListContext } from "react-admin";
+import { List, useListContext } from "react-admin";
 import {
-  List,
   Card,
   CardContent,
   TextField,
@@ -152,7 +151,7 @@ const PatrolTeamDetails = ({
               {members
                 .filter((member) => member.shift === shift)
                 .map((member) => (
-                  <Grid item xs={12} sm={6} md={4} key={member.staff.id}>
+                  <Grid item xs={12} sm={6} md={4} key={member.id}>
                     <Card variant="outlined">
                       <CardContent>
                         <p>
@@ -286,7 +285,7 @@ const PatrolTeamList = () => {
           )}
         </MuiList>
       </div>
-      <div className="flex-1 p-4">
+      <div className="flex p-4">
         <PatrolTeamDetails
           team={selectedTeam}
           onTeamUpdate={(updatedTeam) => {

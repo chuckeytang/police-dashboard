@@ -28,7 +28,7 @@ export async function GET(req: NextRequest) {
           ? team.PatrolVehicleAssignments[0].vehicle
           : null,
       members: team.PatrolStaffAssignments.map((psa) => ({
-        ...psa.staff,
+        ...psa,
         shift: psa.shift,
       })),
     }));

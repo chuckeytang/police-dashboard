@@ -37,7 +37,7 @@ export async function PATCH(req: NextRequest) {
 
     const members = updatedPatrolTeam
       ? updatedPatrolTeam.PatrolStaffAssignments.map((psa) => ({
-          ...psa.staff,
+          ...psa,
           shift: psa.shift,
         }))
       : [];
