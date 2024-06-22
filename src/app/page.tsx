@@ -24,29 +24,45 @@ import {
 import { PiPoliceCarFill } from "react-icons/pi";
 import { GrSchedule } from "react-icons/gr";
 import { HiMiniBuildingLibrary } from "react-icons/hi2";
+import { motion } from "framer-motion";
+import "animate.css";
 
 const Dashboard = () => {
   return (
-    <Container sx={{ width: "100vw", height: "100vh", padding: 0 }}>
-      <Grid
-        container
-        spacing={3}
-        alignItems="flex-start"
-        justifyContent="flex-start"
-      >
-        {/* 左侧面板 */}
-        <Grid item xs={12} md={4}>
+    <Container
+      maxWidth={false}
+      sx={{ padding: 0, margin: 0, position: "relative" }}
+    >
+      {/* 背景层 */}
+      <Box
+        sx={{
+          position: "fixed",
+          top: 0,
+          left: 0,
+          width: "100%",
+          height: "100%",
+          backgroundColor: "#001f3f", // 夜蓝色
+          zIndex: -1, // 设置较低的 zIndex 确保背景在最底层
+        }}
+      />
+
+      <Grid container spacing={2} sx={{ zIndex: 3, padding: 2 }}>
+        <Grid item xs={3}>
+          {/* 勤务管理 */}
           <Paper
+            className="animate__animated animate__zoomInLeft"
             sx={{
               p: 2,
               display: "flex",
               flexDirection: "column",
-              height: "30vh",
-              backgroundColor: "rgba(255,255,255,0.0)",
+              mt: 2,
+              backgroundColor: "#003366",
               boxShadow: "none",
-              border: "2px solid white",
+              border: "2px solid #1e3a8a",
               color: "white",
-              overflow: "hidden",
+              width: "100%",
+              marginLeft: 1,
+              zIndex: 3,
             }}
           >
             <Box sx={{ display: "flex", alignItems: "center" }}>
@@ -67,6 +83,7 @@ const Dashboard = () => {
                 overflow: "hidden",
                 minWidth: "100%",
                 boxShadow: "none",
+                zIndex: 3,
               }}
             >
               <TableHead>
@@ -294,19 +311,23 @@ const Dashboard = () => {
                 </TableRow>
               </TableBody>
             </TableContainer>
-            {/* Add your content here */}
           </Paper>
+
+          {/* 街面巡逻 */}
           <Paper
+            className="animate__animated animate__zoomInLeft"
             sx={{
               p: 2,
               display: "flex",
               flexDirection: "column",
               mt: 2,
-              backgroundColor: "rgba(255,255,255,0.0)",
+              backgroundColor: "#003366",
               boxShadow: "none",
-              border: "2px solid white",
+              border: "2px solid #1e3a8a",
               color: "white",
-              height: "30vh",
+              width: "100%",
+              marginLeft: 1,
+              zIndex: 3,
             }}
           >
             <Box sx={{ display: "flex", alignItems: "center" }}>
@@ -327,6 +348,7 @@ const Dashboard = () => {
                 overflow: "hidden",
                 minWidth: "100%",
                 boxShadow: "none",
+                zIndex: 3,
               }}
             >
               <TableHead>
@@ -798,19 +820,23 @@ const Dashboard = () => {
                 </TableRow>
               </TableBody>
             </TableContainer>
-            {/* Add your content here */}
           </Paper>
+
+          {/* 工作重点 */}
           <Paper
+            className="animate__animated animate__zoomInLeft"
             sx={{
               p: 2,
               display: "flex",
               flexDirection: "column",
               mt: 2,
-              backgroundColor: "rgba(255,255,255,0.0)",
+              backgroundColor: "#003366",
               boxShadow: "none",
-              border: "2px solid white",
+              border: "2px solid #1e3a8a",
               color: "white",
-              height: "30vh",
+              width: "100%",
+              marginLeft: 1,
+              zIndex: 3,
             }}
           >
             <Box sx={{ display: "flex", alignItems: "center" }}>
@@ -819,7 +845,7 @@ const Dashboard = () => {
                 编辑
               </Button>
             </Box>
-            {/* Add your content here */}
+
             <TableContainer
               component={Paper}
               sx={{
@@ -828,6 +854,7 @@ const Dashboard = () => {
                 overflow: "hidden",
                 minWidth: "100%",
                 boxShadow: "none",
+                zIndex: 3,
               }}
             >
               <TableHead>
@@ -1108,49 +1135,53 @@ const Dashboard = () => {
           </Paper>
         </Grid>
 
-        {/* 中间地图 */}
-
-        <Grid item xs={12} md={4} sx={{ backgroundColor: "lightblue" }}>
-          <Typography variant="h4" align="center" gutterBottom color="white">
-            <Box
-              sx={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                gap: 1,
-              }}
-            >
-              <HiMiniBuildingLibrary color="white" />
-              定海派出所
-            </Box>
+        <Grid item xs={6}>
+          {/* 居中显示的文本 */}
+          <Typography
+            className="animate__animated animate__fadeIn " // 添加动画类
+            variant="h4"
+            sx={{
+              position: "absolute",
+              top: 0,
+              left: "50%",
+              transform: "translate(-50%,50%)", // 调整文本位置到图片上方
+              zIndex: 1, // 确保文本在图片之上
+              color: "white", // 文本颜色为白色
+              display: "flex",
+            }}
+          >
+            <HiMiniBuildingLibrary />
+            定海派出所
           </Typography>
           <Box
+            className="animate__animated animate__fadeIn"
             component="img"
-            src="/source/bg.jpg"
-            alt="地图"
+            src="/source/bg.jpg" // 替换为你的图片URL
+            alt="map"
             sx={{
-              position: "fixed",
-              top: 0,
-              left: 0,
-              width: "100vw",
-              height: "100vh",
+              width: "100%", // 图片宽度，占容器的80%
+              height: "100%", // 保持图片的原始比例
+              maxWidth: "960px", // 最大宽度限制，避免图片过大
+              maxHeight: "440px", // 最大高度限制，保持16:9比例
+              borderRadius: 2, // 圆角
               zIndex: -1,
+              boxShadow: "none",
             }}
-          />
-        </Grid>
+            mt={4}
+          ></Box>
 
-        {/* 右侧面板 */}
-        <Grid item xs={12} md={4}>
           <Paper
+            className="animate__animated animate__zoomInUp "
             sx={{
               p: 2,
               display: "flex",
               flexDirection: "column",
-              height: "30vh",
-              backgroundColor: "rgba(255,255,255,0.0)",
+              height: "35vh",
+              backgroundColor: "#003366",
               boxShadow: "none",
-              border: "2px solid white",
+              border: "2px solid #1e3a8a",
               color: "white",
+              marginTop: 3,
             }}
           >
             <Box sx={{ display: "flex", alignItems: "center" }}>
@@ -1172,10 +1203,7 @@ const Dashboard = () => {
                     }}
                     MenuProps={{
                       PaperProps: {
-                        sx: {
-                          backgroundColor: "rgba(255,255,255,0.8)",
-                          color: "black",
-                        },
+                        sx: { backgroundColor: "#003366", color: "black" },
                       },
                     }}
                   >
@@ -1200,6 +1228,7 @@ const Dashboard = () => {
                 overflow: "hidden",
                 minWidth: "100%",
                 boxShadow: "none",
+                width: "100%",
               }}
             >
               <TableHead>
@@ -1210,11 +1239,11 @@ const Dashboard = () => {
                       padding: "2px",
                       color: "#7DF9FF",
                       textOverflow: "ellipsis",
-                      maxWidth: "55px",
-                      minWidth: "55px",
+                      maxWidth: "16.4%",
+                      minWidth: "16.4%",
                       whiteSpace: "nowrap",
                       overflow: "hidden",
-                      fontSize: "0.75rem",
+                      paddingRight: "10px",
                     }}
                   >
                     报警时间
@@ -1225,11 +1254,11 @@ const Dashboard = () => {
                       padding: "2px",
                       color: "#7DF9FF",
                       textOverflow: "ellipsis",
-                      maxWidth: "55px",
-                      minWidth: "55px",
+                      maxWidth: "16.4%",
+                      minWidth: "16.4%",
                       whiteSpace: "nowrap",
                       overflow: "hidden",
-                      fontSize: "0.75rem",
+                      paddingRight: "10px",
                     }}
                   >
                     警情类型
@@ -1240,12 +1269,12 @@ const Dashboard = () => {
                       padding: "2px",
                       color: "#7DF9FF",
                       textOverflow: "ellipsis",
-                      maxWidth: "80px",
-                      minWidth: "80px",
+                      maxWidth: "23.8%",
+                      minWidth: "23.8%",
                       whiteSpace: "nowrap",
                       overflow: "hidden",
-                      fontSize: "0.75rem",
                       textAlign: "auto",
+                      paddingRight: "10px",
                     }}
                   >
                     案由
@@ -1256,12 +1285,12 @@ const Dashboard = () => {
                       padding: "2px",
                       color: "#7DF9FF",
                       textOverflow: "ellipsis",
-                      maxWidth: "90px",
-                      minWidth: "90px",
+                      maxWidth: "26.8%",
+                      minWidth: "26.8%",
                       whiteSpace: "nowrap",
                       overflow: "hidden",
-                      fontSize: "0.75rem",
                       textAlign: "auto",
+                      paddingRight: "10px",
                     }}
                   >
                     详情
@@ -1272,12 +1301,12 @@ const Dashboard = () => {
                       padding: "2px",
                       color: "#7DF9FF",
                       textOverflow: "ellipsis",
-                      maxWidth: "55px",
-                      minWidth: "55px",
+                      maxWidth: "16.4%",
+                      minWidth: "16.4%",
                       whiteSpace: "nowrap",
                       overflow: "hidden",
-                      fontSize: "0.75rem",
                       textAlign: "center",
+                      paddingRight: "10px",
                     }}
                   >
                     责任民警
@@ -1292,12 +1321,12 @@ const Dashboard = () => {
                       padding: "2px",
                       color: "white",
                       textOverflow: "ellipsis",
-                      maxWidth: "55px",
-                      minWidth: "55px",
+                      maxWidth: "16.4%",
+                      minWidth: "16.4%",
                       whiteSpace: "nowrap",
                       overflow: "hidden",
-                      fontSize: "0.6rem",
                       paddingY: "4px",
+                      paddingRight: "10px",
                     }}
                   >
                     2024-01-01
@@ -1308,12 +1337,12 @@ const Dashboard = () => {
                       padding: "2px",
                       color: "white",
                       textOverflow: "ellipsis",
-                      maxWidth: "55px",
-                      minWidth: "55px",
+                      maxWidth: "16.4%",
+                      minWidth: "16.4%",
                       whiteSpace: "nowrap",
                       overflow: "hidden",
-                      fontSize: "0.6rem",
                       paddingY: "4px",
+                      paddingRight: "10px",
                     }}
                   >
                     报警类
@@ -1324,13 +1353,13 @@ const Dashboard = () => {
                       padding: "2px",
                       color: "white",
                       textOverflow: "ellipsis",
-                      maxWidth: "80px",
-                      minWidth: "80px",
+                      maxWidth: "23.8%",
+                      minWidth: "23.8%",
                       whiteSpace: "nowrap",
                       overflow: "hidden",
-                      fontSize: "0.6rem",
                       textAlign: "auto",
                       paddingY: "4px",
+                      paddingRight: "10px",
                     }}
                   >
                     侵犯人身安全
@@ -1341,13 +1370,13 @@ const Dashboard = () => {
                       padding: "2px",
                       color: "white",
                       textOverflow: "ellipsis",
-                      maxWidth: "90px",
-                      minWidth: "90px",
+                      maxWidth: "26.8%",
+                      minWidth: "26.8%",
                       whiteSpace: "nowrap",
                       overflow: "hidden",
-                      fontSize: "0.6rem",
                       textAlign: "auto",
                       paddingY: "4px",
+                      paddingRight: "10px",
                     }}
                   >
                     A侵犯B人身安全,人身安全
@@ -1358,13 +1387,13 @@ const Dashboard = () => {
                       padding: "2px",
                       color: "white",
                       textOverflow: "ellipsis",
-                      maxWidth: "55px",
-                      minWidth: "55px",
+                      maxWidth: "16.4%",
+                      minWidth: "16.4%",
                       whiteSpace: "nowrap",
                       overflow: "hidden",
-                      fontSize: "0.6rem",
                       textAlign: "center",
                       paddingY: "4px",
+                      paddingRight: "10px",
                     }}
                   >
                     张三
@@ -1377,12 +1406,12 @@ const Dashboard = () => {
                       padding: "2px",
                       color: "white",
                       textOverflow: "ellipsis",
-                      maxWidth: "55px",
-                      minWidth: "55px",
+                      maxWidth: "16.4%",
+                      minWidth: "16.4%",
                       whiteSpace: "nowrap",
                       overflow: "hidden",
-                      fontSize: "0.6rem",
                       paddingY: "4px",
+                      paddingRight: "10px",
                     }}
                   >
                     2024-01-01
@@ -1393,12 +1422,12 @@ const Dashboard = () => {
                       padding: "2px",
                       color: "white",
                       textOverflow: "ellipsis",
-                      maxWidth: "55px",
-                      minWidth: "55px",
+                      maxWidth: "16.4%",
+                      minWidth: "16.4%",
                       whiteSpace: "nowrap",
                       overflow: "hidden",
-                      fontSize: "0.6rem",
                       paddingY: "4px",
+                      paddingRight: "10px",
                     }}
                   >
                     报警类
@@ -1409,13 +1438,13 @@ const Dashboard = () => {
                       padding: "2px",
                       color: "white",
                       textOverflow: "ellipsis",
-                      maxWidth: "80px",
-                      minWidth: "80px",
+                      maxWidth: "23.8%",
+                      minWidth: "23.8%",
                       whiteSpace: "nowrap",
                       overflow: "hidden",
-                      fontSize: "0.6rem",
                       textAlign: "auto",
                       paddingY: "4px",
+                      paddingRight: "10px",
                     }}
                   >
                     侵犯人身安全
@@ -1426,13 +1455,13 @@ const Dashboard = () => {
                       padding: "2px",
                       color: "white",
                       textOverflow: "ellipsis",
-                      maxWidth: "90px",
-                      minWidth: "90px",
+                      maxWidth: "26.8%",
+                      minWidth: "26.8%",
                       whiteSpace: "nowrap",
                       overflow: "hidden",
-                      fontSize: "0.6rem",
                       textAlign: "auto",
                       paddingY: "4px",
+                      paddingRight: "10px",
                     }}
                   >
                     A侵犯B人身安全,人身安全
@@ -1443,13 +1472,13 @@ const Dashboard = () => {
                       padding: "2px",
                       color: "white",
                       textOverflow: "ellipsis",
-                      maxWidth: "55px",
-                      minWidth: "55px",
+                      maxWidth: "16.4%",
+                      minWidth: "16.4%",
                       whiteSpace: "nowrap",
                       overflow: "hidden",
-                      fontSize: "0.6rem",
                       textAlign: "center",
                       paddingY: "4px",
+                      paddingRight: "10px",
                     }}
                   >
                     张三
@@ -1462,12 +1491,12 @@ const Dashboard = () => {
                       padding: "2px",
                       color: "white",
                       textOverflow: "ellipsis",
-                      maxWidth: "55px",
-                      minWidth: "55px",
+                      maxWidth: "16.4%",
+                      minWidth: "16.4%",
                       whiteSpace: "nowrap",
                       overflow: "hidden",
-                      fontSize: "0.6rem",
                       paddingY: "4px",
+                      paddingRight: "10px",
                     }}
                   >
                     2024-01-01
@@ -1478,12 +1507,12 @@ const Dashboard = () => {
                       padding: "2px",
                       color: "white",
                       textOverflow: "ellipsis",
-                      maxWidth: "55px",
-                      minWidth: "55px",
+                      maxWidth: "16.4%",
+                      minWidth: "16.4%",
                       whiteSpace: "nowrap",
                       overflow: "hidden",
-                      fontSize: "0.6rem",
                       paddingY: "4px",
+                      paddingRight: "10px",
                     }}
                   >
                     报警类
@@ -1494,13 +1523,13 @@ const Dashboard = () => {
                       padding: "2px",
                       color: "white",
                       textOverflow: "ellipsis",
-                      maxWidth: "80px",
-                      minWidth: "80px",
+                      maxWidth: "23.8%",
+                      minWidth: "23.8%",
                       whiteSpace: "nowrap",
                       overflow: "hidden",
-                      fontSize: "0.6rem",
                       textAlign: "auto",
                       paddingY: "4px",
+                      paddingRight: "10px",
                     }}
                   >
                     侵犯人身安全
@@ -1511,13 +1540,13 @@ const Dashboard = () => {
                       padding: "2px",
                       color: "white",
                       textOverflow: "ellipsis",
-                      maxWidth: "90px",
-                      minWidth: "90px",
+                      maxWidth: "26.8%",
+                      minWidth: "26.8%",
                       whiteSpace: "nowrap",
                       overflow: "hidden",
-                      fontSize: "0.6rem",
                       textAlign: "auto",
                       paddingY: "4px",
+                      paddingRight: "10px",
                     }}
                   >
                     A侵犯B人身安全,人身安全
@@ -1528,13 +1557,13 @@ const Dashboard = () => {
                       padding: "2px",
                       color: "white",
                       textOverflow: "ellipsis",
-                      maxWidth: "55px",
-                      minWidth: "55px",
+                      maxWidth: "16.4%",
+                      minWidth: "16.4%",
                       whiteSpace: "nowrap",
                       overflow: "hidden",
-                      fontSize: "0.6rem",
                       textAlign: "center",
                       paddingY: "4px",
+                      paddingRight: "10px",
                     }}
                   >
                     张三
@@ -1547,12 +1576,12 @@ const Dashboard = () => {
                       padding: "2px",
                       color: "white",
                       textOverflow: "ellipsis",
-                      maxWidth: "55px",
-                      minWidth: "55px",
+                      maxWidth: "16.4%",
+                      minWidth: "16.4%",
                       whiteSpace: "nowrap",
                       overflow: "hidden",
-                      fontSize: "0.6rem",
                       paddingY: "4px",
+                      paddingRight: "10px",
                     }}
                   >
                     2024-01-01
@@ -1563,12 +1592,12 @@ const Dashboard = () => {
                       padding: "2px",
                       color: "white",
                       textOverflow: "ellipsis",
-                      maxWidth: "55px",
-                      minWidth: "55px",
+                      maxWidth: "16.4%",
+                      minWidth: "16.4%",
                       whiteSpace: "nowrap",
                       overflow: "hidden",
-                      fontSize: "0.6rem",
                       paddingY: "4px",
+                      paddingRight: "10px",
                     }}
                   >
                     报警类
@@ -1579,13 +1608,13 @@ const Dashboard = () => {
                       padding: "2px",
                       color: "white",
                       textOverflow: "ellipsis",
-                      maxWidth: "80px",
-                      minWidth: "80px",
+                      maxWidth: "23.8%",
+                      minWidth: "23.8%",
                       whiteSpace: "nowrap",
                       overflow: "hidden",
-                      fontSize: "0.6rem",
                       textAlign: "auto",
                       paddingY: "4px",
+                      paddingRight: "10px",
                     }}
                   >
                     侵犯人身安全
@@ -1596,13 +1625,13 @@ const Dashboard = () => {
                       padding: "2px",
                       color: "white",
                       textOverflow: "ellipsis",
-                      maxWidth: "90px",
-                      minWidth: "90px",
+                      maxWidth: "26.8%",
+                      minWidth: "26.8%",
                       whiteSpace: "nowrap",
                       overflow: "hidden",
-                      fontSize: "0.6rem",
                       textAlign: "auto",
                       paddingY: "4px",
+                      paddingRight: "10px",
                     }}
                   >
                     A侵犯B人身安全,人身安全
@@ -1613,13 +1642,13 @@ const Dashboard = () => {
                       padding: "2px",
                       color: "white",
                       textOverflow: "ellipsis",
-                      maxWidth: "55px",
-                      minWidth: "55px",
+                      maxWidth: "16.4%",
+                      minWidth: "16.4%",
                       whiteSpace: "nowrap",
                       overflow: "hidden",
-                      fontSize: "0.6rem",
                       textAlign: "center",
                       paddingY: "4px",
+                      paddingRight: "10px",
                     }}
                   >
                     张三
@@ -1632,12 +1661,12 @@ const Dashboard = () => {
                       padding: "2px",
                       color: "white",
                       textOverflow: "ellipsis",
-                      maxWidth: "55px",
-                      minWidth: "55px",
+                      maxWidth: "16.4%",
+                      minWidth: "16.4%",
                       whiteSpace: "nowrap",
                       overflow: "hidden",
-                      fontSize: "0.6rem",
                       paddingY: "4px",
+                      paddingRight: "10px",
                     }}
                   >
                     2024-01-01
@@ -1648,12 +1677,12 @@ const Dashboard = () => {
                       padding: "2px",
                       color: "white",
                       textOverflow: "ellipsis",
-                      maxWidth: "55px",
-                      minWidth: "55px",
+                      maxWidth: "16.4%",
+                      minWidth: "16.4%",
                       whiteSpace: "nowrap",
                       overflow: "hidden",
-                      fontSize: "0.6rem",
                       paddingY: "4px",
+                      paddingRight: "10px",
                     }}
                   >
                     报警类
@@ -1664,13 +1693,13 @@ const Dashboard = () => {
                       padding: "2px",
                       color: "white",
                       textOverflow: "ellipsis",
-                      maxWidth: "80px",
-                      minWidth: "80px",
+                      maxWidth: "23.8%",
+                      minWidth: "23.8%",
                       whiteSpace: "nowrap",
                       overflow: "hidden",
-                      fontSize: "0.6rem",
                       textAlign: "auto",
                       paddingY: "4px",
+                      paddingRight: "10px",
                     }}
                   >
                     侵犯人身安全
@@ -1681,13 +1710,13 @@ const Dashboard = () => {
                       padding: "2px",
                       color: "white",
                       textOverflow: "ellipsis",
-                      maxWidth: "90px",
-                      minWidth: "90px",
+                      maxWidth: "26.8%",
+                      minWidth: "26.8%",
                       whiteSpace: "nowrap",
                       overflow: "hidden",
-                      fontSize: "0.6rem",
                       textAlign: "auto",
                       paddingY: "4px",
+                      paddingRight: "10px",
                     }}
                   >
                     A侵犯B人身安全,人身安全
@@ -1698,13 +1727,13 @@ const Dashboard = () => {
                       padding: "2px",
                       color: "white",
                       textOverflow: "ellipsis",
-                      maxWidth: "55px",
-                      minWidth: "55px",
+                      maxWidth: "16.4%",
+                      minWidth: "16.4%",
                       whiteSpace: "nowrap",
                       overflow: "hidden",
-                      fontSize: "0.6rem",
                       textAlign: "center",
                       paddingY: "4px",
+                      paddingRight: "10px",
                     }}
                   >
                     张三
@@ -1717,12 +1746,12 @@ const Dashboard = () => {
                       padding: "2px",
                       color: "white",
                       textOverflow: "ellipsis",
-                      maxWidth: "55px",
-                      minWidth: "55px",
+                      maxWidth: "16.4%",
+                      minWidth: "16.4%",
                       whiteSpace: "nowrap",
                       overflow: "hidden",
-                      fontSize: "0.6rem",
                       paddingY: "4px",
+                      paddingRight: "10px",
                     }}
                   >
                     2024-01-01
@@ -1733,12 +1762,12 @@ const Dashboard = () => {
                       padding: "2px",
                       color: "white",
                       textOverflow: "ellipsis",
-                      maxWidth: "55px",
-                      minWidth: "55px",
+                      maxWidth: "16.4%",
+                      minWidth: "16.4%",
                       whiteSpace: "nowrap",
                       overflow: "hidden",
-                      fontSize: "0.6rem",
                       paddingY: "4px",
+                      paddingRight: "10px",
                     }}
                   >
                     报警类
@@ -1749,13 +1778,13 @@ const Dashboard = () => {
                       padding: "2px",
                       color: "white",
                       textOverflow: "ellipsis",
-                      maxWidth: "80px",
-                      minWidth: "80px",
+                      maxWidth: "23.8%",
+                      minWidth: "23.8%",
                       whiteSpace: "nowrap",
                       overflow: "hidden",
-                      fontSize: "0.6rem",
                       textAlign: "auto",
                       paddingY: "4px",
+                      paddingRight: "10px",
                     }}
                   >
                     侵犯人身安全
@@ -1766,13 +1795,13 @@ const Dashboard = () => {
                       padding: "2px",
                       color: "white",
                       textOverflow: "ellipsis",
-                      maxWidth: "90px",
-                      minWidth: "90px",
+                      maxWidth: "26.8%",
+                      minWidth: "26.8%",
                       whiteSpace: "nowrap",
                       overflow: "hidden",
-                      fontSize: "0.6rem",
                       textAlign: "auto",
                       paddingY: "4px",
+                      paddingRight: "10px",
                     }}
                   >
                     A侵犯B人身安全,人身安全
@@ -1783,13 +1812,13 @@ const Dashboard = () => {
                       padding: "2px",
                       color: "white",
                       textOverflow: "ellipsis",
-                      maxWidth: "55px",
-                      minWidth: "55px",
+                      maxWidth: "16.4%",
+                      minWidth: "16.4%",
                       whiteSpace: "nowrap",
                       overflow: "hidden",
-                      fontSize: "0.6rem",
                       textAlign: "center",
                       paddingY: "4px",
+                      paddingRight: "10px",
                     }}
                   >
                     张三
@@ -1798,17 +1827,20 @@ const Dashboard = () => {
               </TableBody>
             </TableContainer>
           </Paper>
+        </Grid>
+        <Grid item xs={3}>
           <Paper
+            className="animate__animated animate__zoomInRight "
             sx={{
               p: 2,
               display: "flex",
               flexDirection: "column",
               mt: 2,
-              backgroundColor: "rgba(255,255,255,0.0)",
+              backgroundColor: "#003366",
               boxShadow: "none",
-              border: "2px solid white",
+              border: "2px solid #1e3a8a",
               color: "white",
-              height: "30vh",
+              height: "63vh",
             }}
           >
             <Box sx={{ display: "flex", alignItems: "center" }}>
@@ -1826,6 +1858,7 @@ const Dashboard = () => {
                 overflow: "hidden",
                 minWidth: "100%",
                 boxShadow: "none",
+                Width: "100%",
               }}
             >
               <TableHead>
@@ -2141,15 +2174,17 @@ const Dashboard = () => {
               </TableBody>
             </TableContainer>
           </Paper>
+
           <Paper
+            className="animate__animated animate__zoomInRight "
             sx={{
               p: 2,
               display: "flex",
               flexDirection: "column",
               mt: 2,
-              backgroundColor: "rgba(255,255,255,0.0)",
+              backgroundColor: "#003366",
               boxShadow: "none",
-              border: "2px solid white",
+              border: "2px solid #1e3a8a",
               color: "white",
               height: "30vh",
             }}
