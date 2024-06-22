@@ -21,10 +21,13 @@ import {
   DialogContentText,
   DialogTitle,
   TextField,
+  InputLabel,
+  IconButton,
 } from "@mui/material";
 import Link from "next/link";
 import axios from "axios";
 import { Staff, Team } from "@/types";
+import DeleteIcon from "@mui/icons-material/Delete"; // 需要添加这个导入
 
 const TeamDetails = ({
   team,
@@ -93,6 +96,23 @@ const TeamDetails = ({
     }
   };
 
+  const handleDeleteMember = async (memberId: number) => {
+    if (!team) return;
+
+    try {
+      const response = await axios.patch(
+        `/api/personnel/team/update/${team.id}/deleteMember`,
+        {
+          member_id: memberId,
+        }
+      );
+      onTeamUpdate(response.data);
+      setMembers(response.data.members); // 更新 members 列表
+    } catch (error) {
+      console.error("Failed to delete member:", error);
+    }
+  };
+
   if (!team) {
     return <p>请选择一个班级以查看详细信息</p>;
   }
@@ -148,12 +168,22 @@ const TeamDetails = ({
             <Grid item xs={12} sm={6} md={4} key={member.id}>
               <Card variant="outlined">
                 <CardContent>
-                  <p>
-                    {member.name} ({member.police_number})
-                  </p>
-                  <p>{member.position}</p>
-                  <p>{member.department}</p>
-                  <p>{member.contact}</p>
+                  <div className="flex justify-between">
+                    <div>
+                      <p>
+                        {member.name} ({member.police_number})
+                      </p>
+                      <p>{member.position}</p>
+                      <p>{member.department}</p>
+                      <p>{member.contact}</p>
+                    </div>
+                    <IconButton
+                      aria-label="delete"
+                      onClick={() => handleDeleteMember(member.id)}
+                    >
+                      <DeleteIcon />
+                    </IconButton>
+                  </div>
                 </CardContent>
               </Card>
             </Grid>

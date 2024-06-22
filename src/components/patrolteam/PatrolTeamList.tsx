@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { List, useListContext } from "react-admin";
+import { IconButton } from "@mui/material";
+import DeleteIcon from "@mui/icons-material/Delete";
 import {
   Card,
   CardContent,
@@ -79,6 +81,23 @@ const PatrolTeamDetails = ({
     }
   };
 
+  const handleDeleteMember = async (memberId: number) => {
+    if (!team) return;
+
+    try {
+      const response = await axios.patch(
+        `/api/vehicle/patrolteam/update/${team.id}/deleteMember`,
+        {
+          member_id: memberId,
+        }
+      );
+      onTeamUpdate(response.data);
+      setMembers(response.data.members); // 更新 members 列表
+    } catch (error) {
+      console.error("Failed to delete member:", error);
+    }
+  };
+
   const handleAddMember = async (newMemberId: number, shift: string) => {
     if (!team) return;
 
@@ -100,7 +119,6 @@ const PatrolTeamDetails = ({
   if (!team) {
     return <p>请选择一个巡逻组以查看详细信息</p>;
   }
-
   return (
     <div className="flex">
       <div>
@@ -152,15 +170,22 @@ const PatrolTeamDetails = ({
                 .filter((member) => member.shift === shift)
                 .map((member) => (
                   <Grid item xs={12} sm={6} md={4} key={member.id}>
-                    <Card variant="outlined">
+                    <Card variant="outlined" className="flex">
                       <CardContent>
                         <p>
                           {member.staff.name} ({member.staff.police_number})
                         </p>
-                        <p>{member.staff.position}</p>
+                        {/* <p>{member.staff.position}</p> */}
                         <p>{member.staff.department}</p>
-                        <p>{member.staff.contact}</p>
+                        {/* <p>{member.staff.contact}</p> */}
                       </CardContent>
+                      <IconButton
+                        className="ml-10"
+                        aria-label="delete"
+                        onClick={() => handleDeleteMember(member.staff.id)}
+                      >
+                        <DeleteIcon />
+                      </IconButton>
                     </Card>
                   </Grid>
                 ))}
