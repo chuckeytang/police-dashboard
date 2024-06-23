@@ -4,26 +4,40 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 export async function POST(req: NextRequest) {
-  const { code, police_number, name, position, department, contact, vehicle } =
-    await req.json();
+  const {
+    incident_number,
+    receiver,
+    report_time,
+    contact_number,
+    reporter,
+    incident_category,
+    report_source,
+    incident_location,
+    incident_details,
+    incident_status,
+    response_time,
+  } = await req.json();
 
   try {
-    const newStaff = await prisma.staff.create({
+    const newIncidentAnalysis = await prisma.incidentAnalysis.create({
       data: {
-        code,
-        police_number,
-        name,
-        position,
-        department,
-        contact,
-        vehicle,
-        skills: [],
+        incident_number,
+        receiver,
+        report_time: new Date(report_time),
+        contact_number,
+        reporter,
+        incident_category,
+        report_source,
+        incident_location,
+        incident_details,
+        incident_status,
+        response_time: new Date(response_time),
       },
     });
-    return NextResponse.json(newStaff, { status: 201 });
+    return NextResponse.json(newIncidentAnalysis, { status: 201 });
   } catch (error) {
     return NextResponse.json(
-      { error: "Failed to create staff" },
+      { error: "Failed to create incident analysis" },
       { status: 500 }
     );
   }

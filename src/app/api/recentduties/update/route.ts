@@ -4,34 +4,21 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 export async function PUT(req: NextRequest) {
-  const {
-    id,
-    code,
-    police_number,
-    name,
-    position,
-    department,
-    contact,
-    vehicle,
-  } = await req.json();
+  const { id, duty_date, duty_type, content } = await req.json();
 
   try {
-    const updatedStaff = await prisma.staff.update({
+    const updatedRecentDuty = await prisma.recentDuties.update({
       where: { id: Number(id) },
       data: {
-        code,
-        police_number,
-        name,
-        position,
-        department,
-        contact,
-        vehicle,
+        duty_date: new Date(duty_date),
+        duty_type,
+        content,
       },
     });
-    return NextResponse.json(updatedStaff, { status: 200 });
+    return NextResponse.json(updatedRecentDuty, { status: 200 });
   } catch (error) {
     return NextResponse.json(
-      { error: "Failed to update staff" },
+      { error: "Failed to update recent duty" },
       { status: 500 }
     );
   }

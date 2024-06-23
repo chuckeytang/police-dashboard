@@ -4,26 +4,20 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 export async function POST(req: NextRequest) {
-  const { code, police_number, name, position, department, contact, vehicle } =
-    await req.json();
+  const { duty_date, duty_type, content } = await req.json();
 
   try {
-    const newStaff = await prisma.staff.create({
+    const newRecentDuty = await prisma.recentDuties.create({
       data: {
-        code,
-        police_number,
-        name,
-        position,
-        department,
-        contact,
-        vehicle,
-        skills: [],
+        duty_date: new Date(duty_date),
+        duty_type,
+        content,
       },
     });
-    return NextResponse.json(newStaff, { status: 201 });
+    return NextResponse.json(newRecentDuty, { status: 201 });
   } catch (error) {
     return NextResponse.json(
-      { error: "Failed to create staff" },
+      { error: "Failed to create recent duty" },
       { status: 500 }
     );
   }

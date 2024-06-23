@@ -12,19 +12,19 @@ export async function GET(req: NextRequest) {
   }
 
   try {
-    const staff = await prisma.staff.findUnique({
+    const workFocus = await prisma.workFocus.findUnique({
       where: { id: parseInt(id, 10) },
     });
 
-    if (!staff) {
-      return NextResponse.json({ error: "Staff not found" }, { status: 404 });
+    if (!workFocus) {
+      return NextResponse.json({ error: "Work focus not found" }, { status: 404 });
     }
 
-    return NextResponse.json(staff, { status: 200 });
+    return NextResponse.json(workFocus, { status: 200 });
   } catch (error) {
-    console.error("Error fetching staff:", error);
+    console.error("Error fetching work focus:", error);
     return NextResponse.json(
-      { error: `Failed to fetch staff: ${error}` },
+      { error: `Failed to fetch work focus: ${error}` },
       { status: 500 }
     );
   }

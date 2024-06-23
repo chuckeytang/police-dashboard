@@ -5,32 +5,21 @@ const prisma = new PrismaClient();
 
 export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
-  const department = searchParams.get("department");
-  const position = searchParams.get("position");
   const keyword = searchParams.get("keyword");
 
   try {
-    const staff = await prisma.staff.findMany({
+    const recentDuties = await prisma.recentDuties.findMany({
       where: {
-        AND: [
-          department ? { department: department } : {},
-          position ? { position: position } : {},
-          keyword
-            ? {
-                OR: [
-                  { police_number: { contains: keyword } },
-                  { name: { contains: keyword } },
-                  { contact: { contains: keyword } },
-                ],
-              }
-            : {},
+        OR: [
+          { content: { contains: keyword || '' } },
+          { duty_type: { contains: keyword || '' } },
         ],
       },
     });
-    return NextResponse.json(staff, { status: 200 });
+    return NextResponse.json(recentDuties, { status: 200 });
   } catch (error) {
     return NextResponse.json(
-      { error: "Failed to fetch staff" },
+      { error: "Failed to fetch recent duties" },
       { status: 500 }
     );
   }

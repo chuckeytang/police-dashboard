@@ -14,9 +14,9 @@ const PatrolScheduleTable = () => {
   const { refetch } = useListContext<PatrolSchedule>();
 
   useEffect(() => {
-    // 获取所有的团队列表
+    // 获取所有的巡逻组
     const fetchTeams = async () => {
-      const response = await axios.get("/api/personnel/team/search");
+      const response = await axios.get("/api/vehicle/patrolteam/search");
       setAllTeams(response.data);
     };
 

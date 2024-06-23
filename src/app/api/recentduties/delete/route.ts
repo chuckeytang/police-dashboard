@@ -7,17 +7,17 @@ export async function DELETE(req: NextRequest) {
   const { ids } = await req.json();
 
   try {
-    const deletedStaff = await prisma.staff.deleteMany({
+    const deletedRecentDuties = await prisma.recentDuties.deleteMany({
       where: {
         id: {
           in: ids.map((id: string) => Number(id)),
         },
       },
     });
-    return NextResponse.json(deletedStaff, { status: 204 });
+    return NextResponse.json(deletedRecentDuties, { status: 204 });
   } catch (error) {
     return NextResponse.json(
-      { error: "Failed to delete staff" },
+      { error: "Failed to delete recent duties" },
       { status: 500 }
     );
   }

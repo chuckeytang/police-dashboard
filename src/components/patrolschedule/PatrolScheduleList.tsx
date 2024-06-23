@@ -35,8 +35,8 @@ const PatrolScheduleList: React.FC<PatrolScheduleListProps> = ({
   const events = data.map((schedule) => ({
     title: `巡逻组: ${schedule.patrol_team.team_name}`,
     start: new Date(schedule.schedule_date),
-    end: new Date(schedule.schedule_date),
-    allDay: true,
+    end: new Date(new Date(schedule.schedule_date).getTime() + (24*60*60-1)*1000),
+    allDay: false,
     desc: "巡逻组",
   }));
 
@@ -46,7 +46,7 @@ const PatrolScheduleList: React.FC<PatrolScheduleListProps> = ({
         <Calendar
           localizer={mLocalizer}
           events={events}
-          views={[Views.WEEK]}
+          views={[Views.MONTH]}
           style={{ height: 700 }}
           step={60}
           selectable

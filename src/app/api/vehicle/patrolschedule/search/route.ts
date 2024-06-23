@@ -10,20 +10,19 @@ export async function GET(req: NextRequest) {
   const scheduleId = searchParams.get("id");
 
   try {
-    let schedules;
+    let patrolSchedules;
 
     if (scheduleId) {
-      schedules = await prisma.schedule.findUnique({
+      patrolSchedules = await prisma.patrolSchedule.findUnique({
         where: {
           id: parseInt(scheduleId, 10),
         },
         include: {
-          day_team: true,
-          night_team: true,
+          patrol_team: true,
         },
       });
     } else if (startDate && endDate) {
-      schedules = await prisma.schedule.findMany({
+      patrolSchedules = await prisma.patrolSchedule.findMany({
         where: {
           schedule_date: {
             gte: new Date(startDate),
@@ -31,8 +30,7 @@ export async function GET(req: NextRequest) {
           },
         },
         include: {
-          day_team: true,
-          night_team: true,
+          patrol_team: true,
         },
       });
     } else {
@@ -42,11 +40,11 @@ export async function GET(req: NextRequest) {
       );
     }
 
-    return NextResponse.json(schedules, { status: 200 });
+    return NextResponse.json(patrolSchedules, { status: 200 });
   } catch (error) {
-    console.error("Error fetching schedules:", error);
+    console.error("Error fetching patrol schedules:", error);
     return NextResponse.json(
-      { error: "Failed to fetch schedules" },
+      { error: "Failed to fetch patrol schedules" },
       { status: 500 }
     );
   }
