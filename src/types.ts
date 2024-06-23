@@ -20,8 +20,9 @@ export interface PatrolTeam {
   team_name: string;
   created_at: Date;
   updated_at: Date;
-  vehicle: Vehicle | null;
-  members: Array<PatrolStaffAssignment>;
+  PatrolVehicleAssignments?: PatrolVehicleAssignment[];
+  PatrolStaffAssignments?: PatrolStaffAssignment[];
+  schedules?: PatrolSchedule[];
 }
 
 export interface Vehicle {
@@ -35,4 +36,29 @@ export interface PatrolStaffAssignment {
   id: number;
   staff: Staff;
   shift: string;
+}
+
+export interface PatrolVehicleAssignment {
+  id: number;
+  vehicle: Vehicle;
+}
+
+export interface Schedule {
+  id: number;
+  schedule_date: Date;
+  day_team: {
+    team_name: string;
+  };
+  night_team: {
+    team_name: string;
+  };
+}
+
+export interface PatrolSchedule {
+  id: number;
+  patrol_team_id: number;
+  schedule_date: Date;
+  created_at: Date;
+  updated_at: Date;
+  patrol_team: PatrolTeam;
 }

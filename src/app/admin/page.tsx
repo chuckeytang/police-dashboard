@@ -68,6 +68,9 @@ const CustomMenu = () => {
           </div>
         )}
       </CustomMenuItem>
+      <Menu.Item to="/workfocus" primaryText="工作重点" />
+      <Menu.Item to="/incidentanalysis" primaryText="警情分析" />
+      <Menu.Item to="/recentduties" primaryText="近期勤务" />
     </Menu>
   );
 };
@@ -79,15 +82,6 @@ const MyLayout = (props: LayoutProps) => (
 const AdminPage = () => (
   <Admin dataProvider={dataProvider} layout={MyLayout}>
     <Resource
-      name="vehicle/vehicle"
-      list={VehicleList}
-      show={VehicleShow}
-      edit={VehicleEdit}
-      create={VehicleCreate}
-    />
-    <Resource name="vehicle/patrolteam" list={PatrolTeamList} />
-    <Resource name="vehicle/patrolschedule" list={ScheduleTable} />
-    <Resource
       name="personnel/staff"
       list={StaffList}
       show={StaffShow}
@@ -96,6 +90,15 @@ const AdminPage = () => (
     />
     <Resource name="personnel/team" list={TeamList} />
     <Resource name="personnel/schedule" list={ScheduleTable} />
+    <Resource
+      name="vehicle/vehicle"
+      list={VehicleList}
+      show={VehicleShow}
+      edit={VehicleEdit}
+      create={VehicleCreate}
+    />
+    <Resource name="vehicle/patrolteam" list={PatrolTeamList} />
+    <Resource name="vehicle/patrolschedule" list={ScheduleTable} />
   </Admin>
 );
 

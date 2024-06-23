@@ -21,12 +21,13 @@ async function main() {
   // 清空相关表的数据
   await prisma.teamMember.deleteMany({});
   await prisma.schedule.deleteMany({});
-  await prisma.team.deleteMany({});
-  await prisma.staff.deleteMany({});
-  await prisma.vehicle.deleteMany({});
+  await prisma.patrolSchedule.deleteMany({});
   await prisma.patrolVehicleAssignment.deleteMany({});
   await prisma.patrolStaffAssignment.deleteMany({});
+  await prisma.team.deleteMany({});
   await prisma.patrolTeam.deleteMany({});
+  await prisma.staff.deleteMany({});
+  await prisma.vehicle.deleteMany({});
 
   // 创建20个staff记录
   const staffData = [
@@ -624,6 +625,25 @@ async function main() {
   }
 
   console.log("巡逻组创建完成");
+
+  // 生成本月的巡逻排班数据
+  let teamIndex = 0;
+
+  while (currentDate <= lastDayOfMonth) {
+    await prisma.patrolSchedule.create({
+      data: {
+        schedule_date: currentDate,
+        patrol_team_id: teams[teamIndex % teams.length].id,
+      },
+    });
+
+    // 切换到下一个巡逻组
+    teamIndex++;
+    // 日期加1
+    currentDate = addDays(currentDate, 1);
+  }
+
+  console.log("巡逻排班数据创建完成");
 }
 
 main()
