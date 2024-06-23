@@ -1,40 +1,15 @@
 import React, { useState } from "react";
 import { List, useListContext, Loading } from "react-admin";
-import { Calendar, dateFnsLocalizer, Views } from "react-big-calendar";
-import {
-  format,
-  parse,
-  startOfWeek,
-  getDay,
-  addMonths,
-  subMonths,
-} from "date-fns";
-import { zhCN } from "date-fns/locale";
+import { Calendar, Views } from "react-big-calendar";
 import "react-big-calendar/lib/css/react-big-calendar.css";
-import {
-  Button,
-  List as MuiList,
-  ListItem,
-  ListItemText,
-  TextField,
-} from "@mui/material";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { LocalizationProvider, DatePicker } from "@mui/x-date-pickers";
+import moment from 'moment'
+import {
+  momentLocalizer,
+} from 'react-big-calendar'
 
-const locales = {
-  "zh-CN": zhCN,
-};
-
-const localizer = dateFnsLocalizer({
-  format: (date: Date, formatStr: string, options: any) =>
-    format(date, formatStr, { locale: zhCN }),
-  parse: (dateStr: string, formatStr: string, options: any) =>
-    parse(dateStr, formatStr, new Date(), { locale: zhCN }),
-  startOfWeek: (date: Date, options: any) =>
-    startOfWeek(date, { locale: zhCN }),
-  getDay,
-  locales,
-});
+const mLocalizer = momentLocalizer(moment)
 
 interface Schedule {
   id: number;
@@ -112,16 +87,14 @@ const ScheduleList = () => {
     <div className="flex">
       <div className="w-full p-2">
         <Calendar
-          localizer={localizer}
+          localizer={mLocalizer}
           events={events}
-          startAccessor="start"
-          endAccessor="end"
           views={[Views.MONTH]}
           style={{ height: 700 }}
           step={60}
-          components={{
-            event: CustomEvent,
-          }}
+          // components={{
+          //   toolbar: CustomToolbar, // 使用自定义 Toolbar
+          // }}
         />
       </div>
     </div>
@@ -141,19 +114,9 @@ const ScheduleTable = () => {
   };
 
   return (
-    <LocalizationProvider dateAdapter={AdapterDateFns}>
-      <div className="flex flex-col items-center">
-        <DatePicker
-          label="选择开始日期"
-          value={selectedDate}
-          onChange={(date) => setSelectedDate(date)}
-          slotProps={{ textField: { variant: "outlined" } }} // 使用 slotProps 替代 renderInput
-        />
-        <List filter={filter} pagination={false}>
-          <ScheduleList />
-        </List>
-      </div>
-    </LocalizationProvider>
+    <List filter={filter} pagination={false}>
+    <ScheduleList />
+  </List>
   );
 };
 

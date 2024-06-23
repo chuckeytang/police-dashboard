@@ -7,7 +7,7 @@ import StaffShow from "@/components/staff/StaffShow";
 import StaffEdit from "@/components/staff/StaffEdit";
 import StaffCreate from "@/components/staff/StaffCreate";
 import TeamList from "@/components/team/TeamList";
-import ScheduleTable from "@/components/schedule/ScheduleTable"; // 导入 ScheduleTable
+import ScheduleTable from "@/components/schedule/ScheduleTable";
 import { JSX, ReactNode, useState } from "react";
 import VehicleList from "@/components/vehicle/VehicleList";
 import VehicleShow from "@/components/vehicle/VehicleShow";
