@@ -4,20 +4,18 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 export async function DELETE(req: NextRequest) {
-  const { ids } = await req.json();
+  const { id } = await req.json();
 
   try {
-    const deletedVehicles = await prisma.vehicle.deleteMany({
+    const deletedVehicle = await prisma.vehicle.delete({
       where: {
-        id: {
-          in: ids.map((id: string) => Number(id)),
-        },
+        id: Number(id),
       },
     });
-    return NextResponse.json(deletedVehicles, { status: 204 });
+    return NextResponse.json(deletedVehicle, { status: 200 });
   } catch (error) {
     return NextResponse.json(
-      { error: "Failed to delete vehicles" },
+      { error: "Failed to delete vehicle" },
       { status: 500 }
     );
   }

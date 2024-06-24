@@ -4,17 +4,15 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 export async function DELETE(req: NextRequest) {
-  const { ids } = await req.json();
+  const { id } = await req.json();
 
   try {
-    const deletedStaff = await prisma.staff.deleteMany({
+    const deletedStaff = await prisma.staff.delete({
       where: {
-        id: {
-          in: ids.map((id: string) => Number(id)),
-        },
+        id: Number(id),
       },
     });
-    return NextResponse.json(deletedStaff, { status: 204 });
+    return NextResponse.json(deletedStaff, { status: 200 });
   } catch (error) {
     return NextResponse.json(
       { error: "Failed to delete staff" },
