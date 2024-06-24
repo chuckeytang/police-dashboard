@@ -11,6 +11,8 @@ export async function GET(req: NextRequest) {
   const response_time_gte = searchParams.get("response_time_gte");
   const response_time_lte = searchParams.get("response_time_lte");
   const incident_status = searchParams.get("incident_status");
+  const sort = searchParams.get("_sort") || "id";
+  const order = searchParams.get("_order") || "ASC";
 
   try {
     const incidentAnalyses = await prisma.incidentAnalysis.findMany({
@@ -35,6 +37,9 @@ export async function GET(req: NextRequest) {
           response_time_lte ? { response_time: { lte: new Date(response_time_lte) } } : {},
           incident_status ? { incident_status: incident_status } : {},
         ],
+      },
+      orderBy: {
+        [sort]: order.toLowerCase(), // Prisma expects 'asc' or 'desc'
       },
     });
     return NextResponse.json(incidentAnalyses, { status: 200 });
