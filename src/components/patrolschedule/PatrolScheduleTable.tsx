@@ -1,7 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { List, useListContext } from "react-admin";
-import { Dialog, DialogTitle, DialogContent, DialogActions, Button, TextField, MenuItem } from '@mui/material';
-import axios from 'axios';
+import {
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  Button,
+  TextField,
+  MenuItem,
+} from "@mui/material";
+import axios from "axios";
 import PatrolScheduleList from "./PatrolScheduleList"; // 确保导入路径正确
 import { PatrolTeam, PatrolSchedule } from "@/types";
 
@@ -107,15 +115,14 @@ const PatrolScheduleTableWrapper = () => {
   const filter = {
     start: new Date().toISOString().split("T")[0],
     end: new Date(new Date().getTime() + 30 * 24 * 60 * 60 * 1000)
-          .toISOString()
-          .split("T")[0]
-      ,
+      .toISOString()
+      .split("T")[0],
   };
   return (
-    <List filter={filter} pagination={false}>
+    <List filter={filter} pagination={false} empty={false}>
       <PatrolScheduleTable />
     </List>
   );
-}
+};
 
 export default PatrolScheduleTableWrapper;
