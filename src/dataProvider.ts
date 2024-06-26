@@ -92,7 +92,7 @@ const dataProvider: DataProvider = {
       body: JSON.stringify(params.data),
     };
     const response = await httpClient(url, options);
-    const json = await response.json();
+    const json = await response.json;
     return {
       data: { ...params.data, id: json.id },
     } as CreateResult<RecordType>;

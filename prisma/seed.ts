@@ -21,12 +21,15 @@ async function main() {
   // 清空相关表的数据
   await prisma.teamMember.deleteMany({});
   await prisma.schedule.deleteMany({});
-  await prisma.team.deleteMany({});
-  await prisma.staff.deleteMany({});
-  await prisma.vehicle.deleteMany({});
+  await prisma.patrolSchedule.deleteMany({});
   await prisma.patrolVehicleAssignment.deleteMany({});
   await prisma.patrolStaffAssignment.deleteMany({});
+  await prisma.team.deleteMany({});
   await prisma.patrolTeam.deleteMany({});
+  await prisma.staff.deleteMany({});
+  await prisma.vehicle.deleteMany({});
+  await prisma.workFocus.deleteMany({});
+  await prisma.incidentAnalysis.deleteMany({});
 
   // 创建20个staff记录
   const staffData = [
@@ -591,12 +594,15 @@ async function main() {
   const vehicles = await Promise.all(vehiclePromises);
 
   // 创建巡逻团队并分配车辆和成员
+  const patrolTeams = [];
   for (let i = 1; i <= 3; i++) {
     const patrolTeam = await prisma.patrolTeam.create({
       data: {
         team_name: `巡逻组${i}`,
       },
     });
+
+    patrolTeams.push(patrolTeam);
 
     // 分配车辆
     const vehicle = vehicles[i - 1]; // 假设车辆从1开始
@@ -624,6 +630,174 @@ async function main() {
   }
 
   console.log("巡逻组创建完成");
+
+  // 生成本月的排班数据
+  currentDate = firstDayOfMonth;
+  isTeam1DayShift = true;
+  let teamIndex = 0;
+
+  while (currentDate <= lastDayOfMonth) {
+    await prisma.patrolSchedule.create({
+      data: {
+        schedule_date: currentDate,
+        patrol_team_id: patrolTeams[teamIndex % patrolTeams.length].id,
+      },
+    });
+
+    // 切换到下一个巡逻组
+    teamIndex++;
+    // 日期加1
+    currentDate = addDays(currentDate, 1);
+  }
+
+  console.log("巡逻排班数据创建完成");
+
+  // 创建一些 WorkFocus 数据
+  const workFocusData = [
+    {
+      focus_date: firstDayOfMonth,
+      content: "加强社区巡逻，确保安全",
+    },
+    {
+      focus_date: addDays(firstDayOfMonth, 2),
+      content: "处理市中心交通问题",
+    },
+    {
+      focus_date: addDays(firstDayOfMonth, 5),
+      content: "与学校合作进行安全教育",
+    },
+    {
+      focus_date: addDays(firstDayOfMonth, 10),
+      content: "社区义务劳动日",
+    },
+    {
+      focus_date: addDays(firstDayOfMonth, 15),
+      content: "道路修缮计划启动",
+    },
+  ];
+
+  for (const data of workFocusData) {
+    await prisma.workFocus.create({
+      data,
+    });
+  }
+
+  console.log("WorkFocus 数据创建完成");
+
+
+  // 创建一些 IncidentAnalysis 数据
+  const incidentAnalysisData = [
+    {
+      incident_number: "001",
+      receiver: "张三",
+      report_time: addDays(firstDayOfMonth, 1),
+      contact_number: "1234567890",
+      reporter: "李四",
+      incident_category: "盗窃",
+      report_source: "电话",
+      incident_location: "东街123号",
+      incident_details: "商店被盗",
+      incident_status: "未反馈",
+      response_time: addDays(firstDayOfMonth, 1),
+    },
+    {
+      incident_number: "002",
+      receiver: "王五",
+      report_time: addDays(firstDayOfMonth, 2),
+      contact_number: "0987654321",
+      reporter: "赵六",
+      incident_category: "交通事故",
+      report_source: "微信",
+      incident_location: "西街456号",
+      incident_details: "两车相撞",
+      incident_status: "已反馈",
+      response_time: addDays(firstDayOfMonth, 2),
+    },
+    {
+      incident_number: "003",
+      receiver: "李四",
+      report_time: addDays(firstDayOfMonth, 3),
+      contact_number: "1122334455",
+      reporter: "孙七",
+      incident_category: "火灾",
+      report_source: "微博",
+      incident_location: "南街789号",
+      incident_details: "住宅区火灾",
+      incident_status: "未反馈",
+      response_time: addDays(firstDayOfMonth, 3),
+    },
+    {
+      incident_number: "004",
+      receiver: "赵六",
+      report_time: addDays(firstDayOfMonth, 4),
+      contact_number: "6677889900",
+      reporter: "周八",
+      incident_category: "打架斗殴",
+      report_source: "电话",
+      incident_location: "北街101号",
+      incident_details: "街头斗殴",
+      incident_status: "已反馈",
+      response_time: addDays(firstDayOfMonth, 4),
+    },
+    {
+      incident_number: "005",
+      receiver: "孙七",
+      report_time: addDays(firstDayOfMonth, 5),
+      contact_number: "4455667788",
+      reporter: "吴九",
+      incident_category: "诈骗",
+      report_source: "邮件",
+      incident_location: "中街202号",
+      incident_details: "网络诈骗",
+      incident_status: "未反馈",
+      response_time: addDays(firstDayOfMonth, 5),
+    },
+  ];
+
+  for (const data of incidentAnalysisData) {
+    await prisma.incidentAnalysis.create({
+      data,
+    });
+  }
+
+  console.log("IncidentAnalysis 数据创建完成");
+
+  // 创建一些 RecentDuties 数据
+  const recentDutiesData = [
+    {
+      duty_date: firstDayOfMonth,
+      duty_type: "巡逻",
+      content: "加强社区巡逻，确保安全",
+    },
+    {
+      duty_date: addDays(firstDayOfMonth, 1),
+      duty_type: "交通执勤",
+      content: "处理市中心交通问题",
+    },
+    {
+      duty_date: addDays(firstDayOfMonth, 2),
+      duty_type: "安全教育",
+      content: "与学校合作进行安全教育",
+    },
+    {
+      duty_date: addDays(firstDayOfMonth, 3),
+      duty_type: "社区服务",
+      content: "社区义务劳动日",
+    },
+    {
+      duty_date: addDays(firstDayOfMonth, 4),
+      duty_type: "维修",
+      content: "道路修缮计划启动",
+    },
+  ];
+
+  for (const data of recentDutiesData) {
+    await prisma.recentDuties.create({
+      data,
+    });
+  }
+
+  console.log("RecentDuties 数据创建完成");
 }
 
 main()

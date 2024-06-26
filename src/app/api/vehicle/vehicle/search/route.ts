@@ -10,6 +10,8 @@ export async function GET(req: NextRequest) {
   const usage_status = searchParams.get("usage_status");
   const department = searchParams.get("department");
   const keyword = searchParams.get("keyword");
+  const sort = searchParams.get("_sort") || "id";
+  const order = searchParams.get("_order") || "ASC";
 
   try {
     const vehicles = await prisma.vehicle.findMany({
@@ -29,6 +31,9 @@ export async function GET(req: NextRequest) {
               }
             : {},
         ],
+      },
+      orderBy: {
+        [sort]: order.toLowerCase(), // Prisma expects 'asc' or 'desc'
       },
     });
     return NextResponse.json(vehicles, { status: 200 });

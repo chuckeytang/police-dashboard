@@ -1,160 +1,394 @@
-import React, { useState } from "react";
-import { List, useListContext, Loading } from "react-admin";
-import { Calendar, dateFnsLocalizer, Views } from "react-big-calendar";
+import React, { useState, useEffect } from "react";
+import { List, useListContext } from "react-admin";
 import {
-  format,
-  parse,
-  startOfWeek,
-  getDay,
-  addMonths,
-  subMonths,
-} from "date-fns";
-import { zhCN } from "date-fns/locale";
-import "react-big-calendar/lib/css/react-big-calendar.css";
-import {
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
   Button,
-  List as MuiList,
-  ListItem,
-  ListItemText,
   TextField,
+  MenuItem,
+  IconButton,
+  RadioGroup,
+  FormControlLabel,
+  Radio,
+  FormControl,
+  FormLabel,
 } from "@mui/material";
-import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
-import { LocalizationProvider, DatePicker } from "@mui/x-date-pickers";
+import { Settings as SettingsIcon } from "@mui/icons-material";
+import axios from "axios";
+import ScheduleList from "./ScheduleList"; // 确保导入路径正确
+import { PatrolTeam, Schedule } from "@/types";
 
-const locales = {
-  "zh-CN": zhCN,
-};
-
-const localizer = dateFnsLocalizer({
-  format: (date: Date, formatStr: string, options: any) =>
-    format(date, formatStr, { locale: zhCN }),
-  parse: (dateStr: string, formatStr: string, options: any) =>
-    parse(dateStr, formatStr, new Date(), { locale: zhCN }),
-  startOfWeek: (date: Date, options: any) =>
-    startOfWeek(date, { locale: zhCN }),
-  getDay,
-  locales,
-});
-
-interface Schedule {
+interface TeamOrder {
   id: number;
-  schedule_date: Date;
-  day_team: {
-    team_name: string;
-  };
-  night_team: {
-    team_name: string;
-  };
+  name: string;
+  priority: number;
 }
 
-interface Team {
-  id: number;
-  team_name: string;
+interface ScheduleSettings {
+  overwrite: string;
+  range: string;
+  includeHolidays: string;
+  startDate: string;
+  endDate: string;
+  dayOrder: TeamOrder[];
+  nightOrder: TeamOrder[];
 }
 
-const CustomEvent = ({ event }: { event: any }) => (
-  <div>
-    <div>{event.title}</div>
-    {event.desc && <span> - {event.desc}</span>}
-  </div>
-);
-const ScheduleList = () => {
-  const { data, isLoading, error } = useListContext<Schedule>();
+const ScheduleTable = () => {
+  const [selectedDate, setSelectedDate] = useState<Date | null>(new Date());
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [confirmDialogOpen, setConfirmDialogOpen] = useState(false);
+  const [smartScheduleOpen, setSmartScheduleOpen] = useState(false);
+  const [dayTeam, setDayTeam] = useState<string>("");
+  const [nightTeam, setNightTeam] = useState<string>("");
+  const [allTeams, setAllTeams] = useState<PatrolTeam[]>([]);
+  const { refetch } = useListContext<Schedule>();
 
-  if (error) return <div color="error">加载数据时出错: {error.message}</div>;
-  if (isLoading) return <Loading />;
+  const [scheduleSettings, setScheduleSettings] = useState<ScheduleSettings>({
+    overwrite: "overwrite", // 覆盖现有排班
+    range: "custom", // 自定义范围
+    includeHolidays: "exclude", // 不包含节假日
+    startDate: new Date().toISOString().split("T")[0], // 默认开始日期
+    endDate: new Date(new Date().setDate(new Date().getDate() + 10))
+      .toISOString()
+      .split("T")[0], // 默认结束日期
+    dayOrder: [],
+    nightOrder: [],
+  });
 
-  const events = data
-    .map((schedule) => [
-      {
-        title: `早班: ${schedule.day_team.team_name}`,
-        start: new Date(schedule.schedule_date),
-        end: new Date(schedule.schedule_date),
-        allDay: true,
-        desc: "早班",
-      },
-      {
-        title: `晚班: ${schedule.night_team.team_name}`,
-        start: new Date(schedule.schedule_date),
-        end: new Date(schedule.schedule_date),
-        allDay: true,
-        desc: "晚班",
-      },
-    ])
-    .flat();
+  useEffect(() => {
+    const fetchTeams = async () => {
+      const response = await axios.get("/api/personnel/team/search");
+      setAllTeams(response.data);
 
-  const lastScheduledDate =
-    data.length > 0 ? new Date(data[data.length - 1].schedule_date) : null;
-  const nextDay = lastScheduledDate
-    ? new Date(lastScheduledDate.setDate(lastScheduledDate.getDate() + 1))
-    : null;
+      // 初始化 dayOrder 和 nightOrder 为班组的 ID
+      const initialOrder = response.data.map(
+        (team: { id: number; team_name: string }, index: number) => ({
+          id: team.id,
+          name: team.team_name,
+          priority: index + 1,
+        })
+      );
 
-  if (nextDay) {
-    events.push(
-      {
-        title: `添加早班班组`,
-        start: nextDay,
-        end: nextDay,
-        allDay: true,
-        desc: "早班",
-      },
-      {
-        title: `添加晚班班组`,
-        start: nextDay,
-        end: nextDay,
-        allDay: true,
-        desc: "晚班",
-      }
+      setScheduleSettings((prevSettings) => ({
+        ...prevSettings,
+        dayOrder: initialOrder,
+        nightOrder: initialOrder.slice().reverse(), // 默认夜班顺序为倒序
+      }));
+    };
+
+    fetchTeams();
+  }, []);
+
+  const handleAddSchedule = async () => {
+    try {
+      const response = await axios.post("/api/personnel/schedule/add", {
+        schedule_date: selectedDate,
+        day_team: dayTeam,
+        night_team: nightTeam,
+      });
+      setDialogOpen(false);
+      refetch();
+    } catch (error) {
+      console.error("Failed to add schedule:", error);
+    }
+  };
+
+  const handleDeleteSchedule = async () => {
+    try {
+      await axios.delete("/api/personnel/schedule/delete", {
+        data: { ids: [selectedDate] },
+      });
+      setConfirmDialogOpen(false);
+      refetch();
+    } catch (error) {
+      console.error("Failed to delete schedule:", error);
+    }
+  };
+
+  const handleSaveSmartScheduleConfig = async () => {
+    // 检查 dayOrder 和 nightOrder 是否有重复优先级
+    const dayOrderSet = new Set(
+      scheduleSettings.dayOrder.map((order) => order.priority)
     );
-  }
+    const nightOrderSet = new Set(
+      scheduleSettings.nightOrder.map((order) => order.priority)
+    );
+    if (
+      dayOrderSet.size !== scheduleSettings.dayOrder.length ||
+      nightOrderSet.size !== scheduleSettings.nightOrder.length
+    ) {
+      alert("Day order and night order must have unique priorities.");
+      return;
+    }
+
+    try {
+      const response = await axios.post(
+        "/api/personnel/schedule/smartarrage",
+        scheduleSettings
+      );
+      // 处理响应
+      setSmartScheduleOpen(false);
+      refetch();
+    } catch (error) {
+      console.error("Failed to save smart schedule config:", error);
+    }
+  };
+
+  const handleChange = (name: keyof ScheduleSettings, value: any) => {
+    setScheduleSettings((prevSettings) => ({
+      ...prevSettings,
+      [name]: value,
+    }));
+  };
 
   return (
-    <div className="flex">
-      <div className="w-full p-2">
-        <Calendar
-          localizer={localizer}
-          events={events}
-          startAccessor="start"
-          endAccessor="end"
-          views={[Views.MONTH]}
-          style={{ height: 700 }}
-          step={60}
-          components={{
-            event: CustomEvent,
-          }}
-        />
+    <div>
+      <div className="flex justify-end mb-4">
+        <IconButton onClick={() => setSmartScheduleOpen(true)} color="primary">
+          <SettingsIcon />
+        </IconButton>
       </div>
+      <ScheduleList
+        onRefetch={refetch}
+        setSelectedDate={setSelectedDate}
+        setDialogOpen={setDialogOpen}
+        setConfirmDialogOpen={setConfirmDialogOpen}
+      />
+      <Dialog open={dialogOpen} onClose={() => setDialogOpen(false)}>
+        <DialogTitle>添加排班</DialogTitle>
+        <DialogContent className="flex flex-col">
+          <TextField
+            select
+            label="选择早班班组"
+            value={dayTeam}
+            onChange={(e) => setDayTeam(e.target.value)}
+            className="w-[200px]"
+          >
+            {allTeams.map((team) => (
+              <MenuItem key={team.id} value={team.id}>
+                {team.team_name}
+              </MenuItem>
+            ))}
+          </TextField>
+          <TextField
+            select
+            label="选择晚班班组"
+            value={nightTeam}
+            onChange={(e) => setNightTeam(e.target.value)}
+            className="w-[200px]"
+          >
+            {allTeams.map((team) => (
+              <MenuItem key={team.id} value={team.id}>
+                {team.team_name}
+              </MenuItem>
+            ))}
+          </TextField>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setDialogOpen(false)} color="primary">
+            取消
+          </Button>
+          <Button onClick={handleAddSchedule} color="primary">
+            确定
+          </Button>
+        </DialogActions>
+      </Dialog>
+      <Dialog
+        open={confirmDialogOpen}
+        onClose={() => setConfirmDialogOpen(false)}
+      >
+        <DialogTitle>删除排班</DialogTitle>
+        <DialogContent>
+          <p>你确定要删除选定日期的早班和晚班吗？</p>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setConfirmDialogOpen(false)} color="primary">
+            取消
+          </Button>
+          <Button onClick={handleDeleteSchedule} color="primary">
+            确定
+          </Button>
+        </DialogActions>
+      </Dialog>
+      <Dialog
+        open={smartScheduleOpen}
+        onClose={() => setSmartScheduleOpen(false)}
+      >
+        <DialogTitle>自动排班</DialogTitle>
+        <DialogContent className="flex flex-col">
+          <FormControl component="fieldset">
+            <FormLabel component="legend">排班设置</FormLabel>
+            <RadioGroup
+              row
+              value={scheduleSettings.overwrite}
+              onChange={(e) => handleChange("overwrite", e.target.value)}
+            >
+              <FormControlLabel
+                value="overwrite"
+                control={<Radio />}
+                label="覆盖现有排班"
+              />
+              <FormControlLabel
+                value="fill"
+                control={<Radio />}
+                label="只填充空闲天数"
+              />
+            </RadioGroup>
+          </FormControl>
+          <FormControl component="fieldset" className="mt-4">
+            <FormLabel component="legend">排班范围</FormLabel>
+            <RadioGroup
+              row
+              value={scheduleSettings.range}
+              onChange={(e) => handleChange("range", e.target.value)}
+            >
+              <FormControlLabel
+                value="month"
+                control={<Radio />}
+                label="当月"
+              />
+              <FormControlLabel
+                value="custom"
+                control={<Radio />}
+                label="自定义"
+              />
+            </RadioGroup>
+            {scheduleSettings.range === "custom" && (
+              <div className="flex space-x-4 mt-2">
+                <TextField
+                  type="date"
+                  label="开始日期"
+                  value={scheduleSettings.startDate}
+                  onChange={(e) => handleChange("startDate", e.target.value)}
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                />
+                <TextField
+                  type="date"
+                  label="结束日期"
+                  value={scheduleSettings.endDate}
+                  onChange={(e) => handleChange("endDate", e.target.value)}
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                />
+              </div>
+            )}
+          </FormControl>
+          <FormControl component="fieldset" className="mt-4">
+            <FormLabel component="legend">排班时间</FormLabel>
+            <RadioGroup
+              row
+              value={scheduleSettings.includeHolidays}
+              onChange={(e) => handleChange("includeHolidays", e.target.value)}
+            >
+              <FormControlLabel
+                value="include"
+                control={<Radio />}
+                label="包含节假日"
+              />
+              <FormControlLabel
+                value="exclude"
+                control={<Radio />}
+                label="不包含节假日"
+              />
+            </RadioGroup>
+          </FormControl>
+          <div className="mt-4">
+            <FormLabel component="legend">排班时间</FormLabel>
+            <table className="w-full mt-2">
+              <thead>
+                <tr>
+                  <th>班组</th>
+                  <th>白班顺序</th>
+                  <th>夜班顺序</th>
+                </tr>
+              </thead>
+              <tbody>
+                {allTeams.map((team, index) => (
+                  <tr key={team.id}>
+                    <td>{team.team_name}</td>
+                    <td>
+                      <TextField
+                        type="number"
+                        value={
+                          scheduleSettings.dayOrder.find(
+                            (order) => order.id === team.id
+                          )?.priority || ""
+                        }
+                        onChange={(e) => {
+                          const newDayOrder = scheduleSettings.dayOrder.map(
+                            (order) =>
+                              order.id === team.id
+                                ? {
+                                    ...order,
+                                    priority: parseInt(e.target.value, 10),
+                                  }
+                                : order
+                          );
+                          handleChange("dayOrder", newDayOrder);
+                        }}
+                        inputProps={{ min: 1, max: allTeams.length }}
+                      />
+                    </td>
+                    <td>
+                      <TextField
+                        type="number"
+                        value={
+                          scheduleSettings.nightOrder.find(
+                            (order) => order.id === team.id
+                          )?.priority || ""
+                        }
+                        onChange={(e) => {
+                          const newNightOrder = scheduleSettings.nightOrder.map(
+                            (order) =>
+                              order.id === team.id
+                                ? {
+                                    ...order,
+                                    priority: parseInt(e.target.value, 10),
+                                  }
+                                : order
+                          );
+                          handleChange("nightOrder", newNightOrder);
+                        }}
+                        inputProps={{ min: 1, max: allTeams.length }}
+                      />
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setSmartScheduleOpen(false)} color="primary">
+            取消
+          </Button>
+          <Button onClick={handleSaveSmartScheduleConfig} color="primary">
+            保存
+          </Button>
+        </DialogActions>
+      </Dialog>
     </div>
   );
 };
 
-const ScheduleTable = () => {
-  const [selectedDate, setSelectedDate] = useState<Date | null>(new Date());
-
+const ScheduleTableWrapper = () => {
   const filter = {
-    start: selectedDate ? selectedDate.toISOString().split("T")[0] : "",
-    end: selectedDate
-      ? new Date(selectedDate.getTime() + 30 * 24 * 60 * 60 * 1000)
-          .toISOString()
-          .split("T")[0]
-      : "",
+    start: new Date().toISOString().split("T")[0],
+    end: new Date(new Date().getTime() + 30 * 24 * 60 * 60 * 1000)
+      .toISOString()
+      .split("T")[0],
   };
-
   return (
-    <LocalizationProvider dateAdapter={AdapterDateFns}>
-      <div className="flex flex-col items-center">
-        <DatePicker
-          label="选择开始日期"
-          value={selectedDate}
-          onChange={(date) => setSelectedDate(date)}
-          slotProps={{ textField: { variant: "outlined" } }} // 使用 slotProps 替代 renderInput
-        />
-        <List filter={filter} pagination={false}>
-          <ScheduleList />
-        </List>
-      </div>
-    </LocalizationProvider>
+    <List filter={filter} pagination={false} empty={false}>
+      <ScheduleTable />
+    </List>
   );
 };
 
-export default ScheduleTable;
+export default ScheduleTableWrapper;
