@@ -89,7 +89,9 @@ const PatrolTeamDetails = ({
         }
       );
       onTeamUpdate(response.data);
-      setVehicle(response.data.vehicle.plate_number); // 更新 vehicle 车牌号
+      setVehicle(
+        response.data.PatrolVehicleAssignments[0]?.vehicle.plate_number
+      ); // 更新 vehicle 车牌号
     } catch (error) {
       console.error("Failed to update vehicle:", error);
     }
@@ -107,7 +109,7 @@ const PatrolTeamDetails = ({
         }
       );
       onTeamUpdate(response.data);
-      setMembers(response.data.members); // 更新 members 列表
+      setMembers(response.data.PatrolStaffAssignments); // 更新 members 列表
     } catch (error) {
       console.error("Failed to delete member:", error);
     }
@@ -125,7 +127,7 @@ const PatrolTeamDetails = ({
         }
       );
       onTeamUpdate(response.data);
-      setMembers(response.data.members); // 更新 members 列表
+      setMembers(response.data.PatrolStaffAssignments); // 更新 members 列表
       setSelectedMemberId((prev) => ({
         ...prev,
         [shift]: 0,

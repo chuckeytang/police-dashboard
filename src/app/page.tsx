@@ -1,5 +1,3 @@
-'use client';
-
 import * as React from "react";
 import {
   Container,
@@ -8,125 +6,39 @@ import {
   Typography,
   Box,
   Button,
+  List,
+  ListItem,
+  ListItemText,
+  Table,
   TableBody,
   TableHead,
   TableCell,
   TableRow,
   TableContainer,
-  Select,
-  FormControl,
-  InputLabel,
-  MenuItem,
 } from "@mui/material";
-import { PiPoliceCarFill } from "react-icons/pi";
-import { GrSchedule } from "react-icons/gr";
-import { HiMiniBuildingLibrary } from "react-icons/hi2";
-import "animate.css";
-import { useEffect, useState } from "react";
-import axios from "axios";
-import { useRouter } from "next/navigation";
 
 const Dashboard = () => {
-    const router = useRouter();
-    const handleButtonClick = () => {
-      router.push(''); // 替换为你想跳转的目标URL
-    };
-
-    // 新增的状态变量
-    const [RecentData, setRecentData] = useState([]);
-    const [Workforce, setWorkforce] = useState([]);
-    const [Analysis, setAnalysis] = useState([]);
-    const [patrolteam, setpatrolteam] = useState([]);
-
-  
-    // 新增的 useEffect 钩子，用于获取数据
-    useEffect(() => {
-      const fetchRecentData = async () => {
-        try {
-          const response = await axios.get("api/recentduties/search");
-          console.log("Fetched recent duties data:",response.data);
-          setRecentData(response.data);
-        } catch (error) {
-          console.error("Error fetching staff data:", error);
-        }
-      };
-      fetchRecentData();
-    }, []);
-  
-    useEffect(()=> {
-      const fetchWorkforce = async () => {
-        try {
-          const response = await axios.get("api/workfocus/search");
-          console.log("Fetched workfocus data:",response.data);
-          setWorkforce(response.data);
-        }catch (error){
-          console.error("",error);
-        }
-      };
-      fetchWorkforce();
-    },[]);
-
-    useEffect(()=> {
-      const fetchAnalysis = async () => {
-        try {
-          const response = await axios.get("api/incidentanalysis/search");
-          console.log("Fetched analysis data:",response.data);
-          setAnalysis(response.data);
-        }catch (error){
-          console.error("",error);
-        }
-      };
-      fetchAnalysis();
-    },[]);
-
-    useEffect(()=> {
-      const fetchpatrolteam = async () => {
-        try {
-          const response = await axios.get("api/vehicle/patrolteam/search");
-          console.log("Fetched patrolteam data:",response.data);
-          setpatrolteam(response.data);
-        }catch (error){
-          console.error("",error);
-        }
-      };
-      fetchpatrolteam();
-    },[]);
-
   return (
-    <Container
-      maxWidth={false}
-      sx={{ padding: 0, margin: 0, position: "relative" }}
-    >
-      {/* 背景层 */}
-      <Box
-        sx={{
-          position: "fixed",
-          top: 0,
-          left: 0,
-          width: "100%",
-          height: "100%",
-          backgroundColor: "#001f3f", // 夜蓝色
-          zIndex: -1, // 设置较低的 zIndex 确保背景在最底层
-        }}
-      />
-
-      <Grid container spacing={2} sx={{ zIndex: 3, padding: 2 }}>
-        <Grid item xs={3}>
-          {/* 勤务管理 */}
+    <Container sx={{ width: "100vw", height: "100vh", padding: 0 }}>
+      <Grid
+        container
+        spacing={3}
+        alignItems="flex-start"
+        justifyContent="flex-start"
+      >
+        {/* 左侧面板 */}
+        <Grid item xs={12} md={4}>
           <Paper
-            className="animate__animated animate__zoomInLeft"
             sx={{
               p: 2,
               display: "flex",
               flexDirection: "column",
-              mt: 2,
-              backgroundColor: "#003366",
+              height: "30vh",
+              backgroundColor: "rgba(255,255,255,0.0)",
               boxShadow: "none",
-              border: "2px solid #1e3a8a",
+              border: "2px solid white",
               color: "white",
-              width: "100%",
-              marginLeft: 1,
-              zIndex: 3,
+              overflow: "hidden",
             }}
           >
             <Box sx={{ display: "flex", alignItems: "center" }}>
@@ -134,7 +46,7 @@ const Dashboard = () => {
               <Typography sx={{ ml: 2, fontSize: "1rem" }}>
                 今日备勤等级:
               </Typography>
-              <Button variant="contained" color="primary" sx={{ ml: "auto" }} onClick={handleButtonClick}>
+              <Button variant="contained" color="primary" sx={{ ml: "auto" }}>
                 编辑
               </Button>
             </Box>
@@ -147,7 +59,6 @@ const Dashboard = () => {
                 overflow: "hidden",
                 minWidth: "100%",
                 boxShadow: "none",
-                zIndex: 3,
               }}
             >
               <TableHead>
@@ -156,7 +67,7 @@ const Dashboard = () => {
                     sx={{
                       borderBottom: "none",
                       padding: "4px",
-                      color: "lightblue",
+                      color: "white",
                       textOverflow: "ellipsis",
                       maxWidth: "80px",
                       minWidth: "50px",
@@ -164,7 +75,7 @@ const Dashboard = () => {
                       overflow: "hidden",
                     }}
                   >
-                    值班领导
+                    154654654
                   </TableCell>
                   <TableCell
                     sx={{
@@ -172,13 +83,13 @@ const Dashboard = () => {
                       padding: "4px",
                       color: "white",
                       textOverflow: "ellipsis",
-                      maxWidth: "140px",
-                      minWidth: "140px",
+                      maxWidth: "120px",
+                      minWidth: "120px",
                       whiteSpace: "nowrap",
                       overflow: "hidden",
                     }}
                   >
-                    张三 154344341233
+                    454446546545465465464654654654
                   </TableCell>
                   <TableCell
                     sx={{
@@ -186,13 +97,13 @@ const Dashboard = () => {
                       padding: "4px",
                       color: "white",
                       textOverflow: "ellipsis",
-                      maxWidth: "140px",
-                      minWidth: "140px",
+                      maxWidth: "120px",
+                      minWidth: "120px",
                       whiteSpace: "nowrap",
                       overflow: "hidden",
                     }}
                   >
-                    李三 15434434123
+                    Status
                   </TableCell>
                 </TableRow>
               </TableHead>
@@ -202,7 +113,7 @@ const Dashboard = () => {
                     sx={{
                       borderBottom: "none",
                       padding: "4px",
-                      color: "lightblue",
+                      color: "white",
                       textOverflow: "ellipsis",
                       maxWidth: "80px",
                       minWidth: "50px",
@@ -210,7 +121,7 @@ const Dashboard = () => {
                       overflow: "hidden",
                     }}
                   >
-                    值班员
+                    154654654
                   </TableCell>
                   <TableCell
                     sx={{
@@ -218,13 +129,13 @@ const Dashboard = () => {
                       padding: "4px",
                       color: "white",
                       textOverflow: "ellipsis",
-                      maxWidth: "140px",
-                      minWidth: "140px",
+                      maxWidth: "120px",
+                      minWidth: "120px",
                       whiteSpace: "nowrap",
                       overflow: "hidden",
                     }}
                   >
-                    张四 154344341233
+                    454446546545465465464654654654
                   </TableCell>
                   <TableCell
                     sx={{
@@ -232,13 +143,13 @@ const Dashboard = () => {
                       padding: "4px",
                       color: "white",
                       textOverflow: "ellipsis",
-                      maxWidth: "140px",
-                      minWidth: "140px",
+                      maxWidth: "120px",
+                      minWidth: "120px",
                       whiteSpace: "nowrap",
                       overflow: "hidden",
                     }}
                   >
-                    李四 15434434123
+                    Status
                   </TableCell>
                 </TableRow>
                 <TableRow>
@@ -246,7 +157,7 @@ const Dashboard = () => {
                     sx={{
                       borderBottom: "none",
                       padding: "4px",
-                      color: "lightblue",
+                      color: "white",
                       textOverflow: "ellipsis",
                       maxWidth: "80px",
                       minWidth: "50px",
@@ -254,7 +165,7 @@ const Dashboard = () => {
                       overflow: "hidden",
                     }}
                   >
-                    值班员
+                    154654654
                   </TableCell>
                   <TableCell
                     sx={{
@@ -262,13 +173,13 @@ const Dashboard = () => {
                       padding: "4px",
                       color: "white",
                       textOverflow: "ellipsis",
-                      maxWidth: "140px",
-                      minWidth: "140px",
+                      maxWidth: "120px",
+                      minWidth: "120px",
                       whiteSpace: "nowrap",
                       overflow: "hidden",
                     }}
                   >
-                    张五 154344341233
+                    454446546545465465464654654654
                   </TableCell>
                   <TableCell
                     sx={{
@@ -276,13 +187,13 @@ const Dashboard = () => {
                       padding: "4px",
                       color: "white",
                       textOverflow: "ellipsis",
-                      maxWidth: "140px",
-                      minWidth: "140px",
+                      maxWidth: "120px",
+                      minWidth: "120px",
                       whiteSpace: "nowrap",
                       overflow: "hidden",
                     }}
                   >
-                    李五 15434434123
+                    Status
                   </TableCell>
                 </TableRow>
                 <TableRow>
@@ -290,7 +201,7 @@ const Dashboard = () => {
                     sx={{
                       borderBottom: "none",
                       padding: "4px",
-                      color: "lightblue",
+                      color: "white",
                       textOverflow: "ellipsis",
                       maxWidth: "80px",
                       minWidth: "50px",
@@ -298,7 +209,7 @@ const Dashboard = () => {
                       overflow: "hidden",
                     }}
                   >
-                    值班员
+                    154654654
                   </TableCell>
                   <TableCell
                     sx={{
@@ -306,13 +217,13 @@ const Dashboard = () => {
                       padding: "4px",
                       color: "white",
                       textOverflow: "ellipsis",
-                      maxWidth: "140px",
-                      minWidth: "140px",
+                      maxWidth: "120px",
+                      minWidth: "120px",
                       whiteSpace: "nowrap",
                       overflow: "hidden",
                     }}
                   >
-                    张六 154344341233
+                    454446546545465465464654654654
                   </TableCell>
                   <TableCell
                     sx={{
@@ -320,13 +231,13 @@ const Dashboard = () => {
                       padding: "4px",
                       color: "white",
                       textOverflow: "ellipsis",
-                      maxWidth: "140px",
-                      minWidth: "140px",
+                      maxWidth: "120px",
+                      minWidth: "120px",
                       whiteSpace: "nowrap",
                       overflow: "hidden",
                     }}
                   >
-                    李六 15434434123
+                    Status
                   </TableCell>
                 </TableRow>
                 <TableRow>
@@ -334,7 +245,7 @@ const Dashboard = () => {
                     sx={{
                       borderBottom: "none",
                       padding: "4px",
-                      color: "lightblue",
+                      color: "white",
                       textOverflow: "ellipsis",
                       maxWidth: "80px",
                       minWidth: "50px",
@@ -342,7 +253,7 @@ const Dashboard = () => {
                       overflow: "hidden",
                     }}
                   >
-                    值班员
+                    154654654
                   </TableCell>
                   <TableCell
                     sx={{
@@ -350,13 +261,13 @@ const Dashboard = () => {
                       padding: "4px",
                       color: "white",
                       textOverflow: "ellipsis",
-                      maxWidth: "140px",
-                      minWidth: "140px",
+                      maxWidth: "120px",
+                      minWidth: "120px",
                       whiteSpace: "nowrap",
                       overflow: "hidden",
                     }}
                   >
-                    张七 154344341233
+                    454446546545465465464654654654
                   </TableCell>
                   <TableCell
                     sx={{
@@ -364,34 +275,30 @@ const Dashboard = () => {
                       padding: "4px",
                       color: "white",
                       textOverflow: "ellipsis",
-                      maxWidth: "140px",
-                      minWidth: "140px",
+                      maxWidth: "120px",
+                      minWidth: "120px",
                       whiteSpace: "nowrap",
                       overflow: "hidden",
                     }}
                   >
-                    李七 15434434123
+                    Status
                   </TableCell>
                 </TableRow>
               </TableBody>
             </TableContainer>
+            {/* Add your content here */}
           </Paper>
-
-          {/* 街面巡逻 */}
           <Paper
-            className="animate__animated animate__zoomInLeft"
             sx={{
               p: 2,
               display: "flex",
               flexDirection: "column",
               mt: 2,
-              backgroundColor: "#003366",
+              backgroundColor: "rgba(255,255,255,0.0)",
               boxShadow: "none",
-              border: "2px solid #1e3a8a",
+              border: "2px solid white",
               color: "white",
-              width: "100%",
-              marginLeft: 1,
-              zIndex: 3,
+              height: "30vh",
             }}
           >
             <Box sx={{ display: "flex", alignItems: "center" }}>
@@ -403,206 +310,115 @@ const Dashboard = () => {
                 编辑
               </Button>
             </Box>
-
-            <TableContainer
-              component={Paper}
-              sx={{
-                backgroundColor: "transparent",
-                marginTop: "2px",
-                overflow: "hidden",
-                minWidth: "100%",
-                boxShadow: "none",
-                zIndex: 3,
-              }}
-            >
-              <TableHead>
-                <TableRow>
-                  <TableCell
-                    sx={{
-                      borderBottom: "none",
-                      padding: "4px",
-                      color: "white",
-                      textOverflow: "ellipsis",
-                      maxWidth: "50px",
-                      minWidth: "50px",
-                      whiteSpace: "nowrap",
-                      overflow: "hidden",
-                    }}
-                  ></TableCell>
-                  <TableCell
-                    sx={{
-                      borderBottom: "none",
-                      padding: "4px",
-                      color: "white",
-                      textOverflow: "ellipsis",
-                      maxWidth: "50px",
-                      minWidth: "50px",
-                      whiteSpace: "nowrap",
-                      overflow: "hidden",
-                    }}
-                  ></TableCell>
-                  <TableCell
-                    sx={{
-                      borderBottom: "none",
-                      padding: "4px",
-                      color: "lightblue",
-                      textOverflow: "ellipsis",
-                      maxWidth: "80px",
-                      minWidth: "80px",
-                      whiteSpace: "nowrap",
-                      overflow: "hidden",
-                      fontSize: "1.2rem",
-                      textAlign: "center",
-                    }}
-                  >
-                    早
-                  </TableCell>
-                  <TableCell
-                    sx={{
-                      borderBottom: "none",
-                      padding: "4px",
-                      color: "lightblue",
-                      textOverflow: "ellipsis",
-                      maxWidth: "80px",
-                      minWidth: "80px",
-                      whiteSpace: "nowrap",
-                      overflow: "hidden",
-                      fontSize: "1.2rem",
-                      textAlign: "center",
-                    }}
-                  >
-                    中
-                  </TableCell>
-                  <TableCell
-                    sx={{
-                      borderBottom: "none",
-                      padding: "4px",
-                      color: "lightblue",
-                      textOverflow: "ellipsis",
-                      maxWidth: "80px",
-                      minWidth: "80px",
-                      whiteSpace: "nowrap",
-                      overflow: "hidden",
-                      fontSize: "1.2rem",
-                      textAlign: "center",
-                    }}
-                  >
-                    晚
-                  </TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-              {patrolteam.map((row,index) =>(
-                <TableRow key={index} >
-                  <TableCell
-                    sx={{
-                      borderBottom: "none",
-                      padding: "4px",
-                      color: "white",
-                      textOverflow: "ellipsis",
-                      maxWidth: "50px",
-                      minWidth: "50px",
-                      whiteSpace: "nowrap",
-                      overflow: "hidden",
-                    }}
-                  >
-                    <PiPoliceCarFill fontSize={20} />
-                  </TableCell>
-                  <TableCell
-                    sx={{
-                      borderBottom: "none",
-                      padding: "4px",
-                      color: "lightblue",
-                      textOverflow: "ellipsis",
-                      maxWidth: "50px",
-                      minWidth: "50px",
-                      whiteSpace: "nowrap",
-                      overflow: "hidden",
-                    }}
-                  >
-                    {row.team_name}
-                  </TableCell>
-                  <TableCell
-                    sx={{
-                      borderBottom: "none",
-                      padding: "4px",
-                      color: "white",
-                      textOverflow: "ellipsis",
-                      maxWidth: "80px",
-                      minWidth: "80px",
-                      whiteSpace: "nowrap",
-                      overflow: "hidden",
-                      fontWeight: "bold",
-                      textAlign: "center",
-                    }}
-                  >
-                    {row.members.filter(member => member.shift === "早班").map((member, memberIndex) => (
-                    <div key={memberIndex}>
-                    {member.staff.name}
-                    </div>
-                    ))}
-                    </TableCell>
-                  <TableCell
-                    sx={{
-                      borderBottom: "none",
-                      padding: "4px",
-                      color: "white",
-                      textOverflow: "ellipsis",
-                      maxWidth: "80px",
-                      minWidth: "80px",
-                      whiteSpace: "nowrap",
-                      overflow: "hidden",
-                      fontWeight: "bold",
-                      textAlign: "center",
-                    }}
-                  >
-                    {row.members.filter(member => member.shift === "中班").map((member, memberIndex) => (
-                    <div key={memberIndex}>
-                    {member.staff.name}
-                    </div>
-                    ))}
-                  </TableCell>
-                  <TableCell
-                    sx={{
-                      borderBottom: "none",
-                      padding: "4px",
-                      color: "white",
-                      textOverflow: "ellipsis",
-                      maxWidth: "80px",
-                      minWidth: "80px",
-                      whiteSpace: "nowrap",
-                      overflow: "hidden",
-                      fontWeight: "bold",
-                      textAlign: "center",
-                    }}
-                  >
-                    {row.members.filter(member => member.shift === "晚班").map((member, memberIndex) => (
-                    <div key={memberIndex}>
-                    {member.staff.name}
-                    </div>
-                    ))}
-                  </TableCell>
-                </TableRow>
-              ))}
-              </TableBody>
-            </TableContainer>
+            <Box sx={{ mt: 2 }}>
+              <Grid container spacing={1}>
+                <Grid item xs={2}>
+                  <Typography sx={{ lineHeight: "1.2" }}></Typography>
+                </Grid>
+                <Grid item xs={2.5}>
+                  <Typography sx={{ lineHeight: "1.2" }}></Typography>
+                </Grid>
+                <Grid item xs={2.5}>
+                  <Typography sx={{ lineHeight: "1.2" }}>早</Typography>
+                </Grid>
+                <Grid item xs={2.5}>
+                  <Typography sx={{ lineHeight: "1.2" }}>中</Typography>
+                </Grid>
+                <Grid item xs={2.5}>
+                  <Typography sx={{ lineHeight: "1.2" }}>晚</Typography>
+                </Grid>
+                <Grid item xs={2}>
+                  <Typography sx={{ lineHeight: "1.2" }}></Typography>
+                </Grid>
+                <Grid item xs={2.5}>
+                  <Typography sx={{ lineHeight: "1.2" }}>4587</Typography>
+                </Grid>
+                <Grid item xs={2.5}>
+                  <Typography sx={{ lineHeight: "1.2", overflow: "hidden" }}>
+                    张三 李四
+                  </Typography>
+                </Grid>
+                <Grid item xs={2.5}>
+                  <Typography sx={{ lineHeight: "1.2" }}>中</Typography>
+                </Grid>
+                <Grid item xs={2.5}>
+                  <Typography sx={{ lineHeight: "1.2" }}>晚</Typography>
+                </Grid>
+                <Grid item xs={2}>
+                  <Typography sx={{ lineHeight: "1.2" }}></Typography>
+                </Grid>
+                <Grid item xs={2.5}>
+                  <Typography sx={{ lineHeight: "1.2" }}></Typography>
+                </Grid>
+                <Grid item xs={2.5}>
+                  <Typography sx={{ lineHeight: "1.2" }}>早</Typography>
+                </Grid>
+                <Grid item xs={2.5}>
+                  <Typography sx={{ lineHeight: "1.2" }}>中</Typography>
+                </Grid>
+                <Grid item xs={2.5}>
+                  <Typography sx={{ lineHeight: "1.2" }}>晚</Typography>
+                </Grid>
+                <Grid item xs={2}>
+                  <Typography sx={{ lineHeight: "1.2" }}></Typography>
+                </Grid>
+                <Grid item xs={2.5}>
+                  <Typography sx={{ lineHeight: "1.2" }}></Typography>
+                </Grid>
+                <Grid item xs={2.5}>
+                  <Typography sx={{ lineHeight: "1.2" }}>早</Typography>
+                </Grid>
+                <Grid item xs={2.5}>
+                  <Typography sx={{ lineHeight: "1.2" }}>中</Typography>
+                </Grid>
+                <Grid item xs={2.5}>
+                  <Typography sx={{ lineHeight: "1.2" }}>晚</Typography>
+                </Grid>
+                <Grid item xs={2}>
+                  <Typography sx={{ lineHeight: "1.2" }}></Typography>
+                </Grid>
+                <Grid item xs={2.5}>
+                  <Typography sx={{ lineHeight: "1.2" }}></Typography>
+                </Grid>
+                <Grid item xs={2.5}>
+                  <Typography sx={{ lineHeight: "1.2" }}>早</Typography>
+                </Grid>
+                <Grid item xs={2.5}>
+                  <Typography sx={{ lineHeight: "1.2" }}>中</Typography>
+                </Grid>
+                <Grid item xs={2.5}>
+                  <Typography sx={{ lineHeight: "1.2" }}>晚</Typography>
+                </Grid>
+                <Grid item xs={2}>
+                  <Typography sx={{ lineHeight: "1.2" }}></Typography>
+                </Grid>
+                <Grid item xs={2.5}>
+                  <Typography sx={{ lineHeight: "1.2" }}></Typography>
+                </Grid>
+                <Grid item xs={2.5}>
+                  <Typography sx={{ lineHeight: "1.2" }}>早</Typography>
+                </Grid>
+                <Grid item xs={2.5}>
+                  <Typography sx={{ lineHeight: "1.2" }}>中</Typography>
+                </Grid>
+                <Grid item xs={2.5}>
+                  <Typography sx={{ lineHeight: "1.2" }}>晚</Typography>
+                </Grid>
+              </Grid>
+            </Box>
+            {/* Add your content here */}
           </Paper>
-
-          {/* 工作重点 */}
           <Paper
-            className="animate__animated animate__zoomInLeft"
             sx={{
               p: 2,
               display: "flex",
               flexDirection: "column",
               mt: 2,
-              backgroundColor: "#003366",
+              backgroundColor: "rgba(255,255,255,0.0)",
               boxShadow: "none",
-              border: "2px solid #1e3a8a",
+              border: "2px solid white",
               color: "white",
-              width: "100%",
-              marginLeft: 1,
-              zIndex: 3,
+              height: "30vh",
             }}
           >
             <Box sx={{ display: "flex", alignItems: "center" }}>
@@ -611,339 +427,64 @@ const Dashboard = () => {
                 编辑
               </Button>
             </Box>
-
-            <TableContainer
-              component={Paper}
-              sx={{
-                backgroundColor: "transparent",
-                marginTop: "2px",
-                overflow: "hidden",
-                minWidth: "100%",
-                boxShadow: "none",
-                zIndex: 3,
-              }}
-            >
-              <TableHead>
-                <TableRow>
-                  <TableCell
-                    sx={{
-                      borderBottom: "none",
-                      padding: "4px",
-                      color: "lightblue",
-                      textOverflow: "ellipsis",
-                      maxWidth: "40px",
-                      minWidth: "40px",
-                      whiteSpace: "nowrap",
-                      overflow: "hidden",
-                    }}
-                  >
-                    序号
-                  </TableCell>
-                  <TableCell
-                    sx={{
-                      borderBottom: "none",
-                      padding: "4px",
-                      color: "lightblue",
-                      textOverflow: "ellipsis",
-                      maxWidth: "90px",
-                      minWidth: "90px",
-                      whiteSpace: "nowrap",
-                      overflow: "hidden",
-                      textAlign: "center",
-                    }}
-                  >
-                    时间
-                  </TableCell>
-                  <TableCell
-                    sx={{
-                      borderBottom: "none",
-                      padding: "4px",
-                      color: "lightblue",
-                      textOverflow: "ellipsis",
-                      maxWidth: "210px",
-                      minWidth: "210px",
-                      whiteSpace: "nowrap",
-                      overflow: "hidden",
-                    }}
-                  >
-                    工作内容
-                  </TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {Workforce.map((row,index) =>(
-                <TableRow key={index}>
-                  <TableCell
-                    sx={{
-                      borderBottom: "none",
-                      padding: "4px",
-                      color: "white",
-                      textOverflow: "ellipsis",
-                      maxWidth: "40px",
-                      minWidth: "40px",
-                      whiteSpace: "nowrap",
-                      overflow: "hidden",
-                    }}
-                  >
-                    {row.id}
-                  </TableCell>
-                  <TableCell
-                    sx={{
-                      borderBottom: "none",
-                      padding: "4px",
-                      color: "white",
-                      textOverflow: "ellipsis",
-                      maxWidth: "90px",
-                      minWidth: "90px",
-                      whiteSpace: "nowrap",
-                      overflow: "hidden",
-                      textAlign: "center",
-                    }}
-                  >
-                    {row.focus_date}
-                  </TableCell>
-                  <TableCell
-                    sx={{
-                      borderBottom: "none",
-                      padding: "4px",
-                      color: "white",
-                      textOverflow: "ellipsis",
-                      maxWidth: "210px",
-                      minWidth: "210px",
-                      whiteSpace: "nowrap",
-                      overflow: "hidden",
-                    }}
-                  >
-                    {row.content}
-                  </TableCell>
-                </TableRow>
-                ))}
-              </TableBody>
-            </TableContainer>
+            {/* Add your content here */}
           </Paper>
         </Grid>
 
-        <Grid item xs={6} position="relative">
-          {/* 居中显示的文本 */}
-          <Typography
-            className="animate__animated animate__fadeIn " // 添加动画类
-            variant="h4"
-            sx={{
-              position: "absolute",
-              top: 0,
-              left: "50%",
-              transform: "translate(-50%,50%)", // 调整文本位置到图片上方
-              zIndex: 1, // 确保文本在图片之上
-              color: "white", // 文本颜色为白色
-              display: "flex",
-            }}
-          >
-            <HiMiniBuildingLibrary />
+        {/* 中间地图 */}
+
+        <Grid item xs={12} md={4}>
+          <Typography variant="h4" align="center" gutterBottom>
             定海派出所
           </Typography>
           <Box
-            className="animate__animated animate__fadeIn"
             component="img"
-            src="/source/bg.jpg" // 替换为你的图片URL
-            alt="map"
+            src="/source/bg.jpg"
+            alt="地图"
             sx={{
-              width: "100%", // 图片宽度，占容器的80%
-              height: "100%", // 保持图片的原始比例
-              maxWidth: "960px", // 最大宽度限制，避免图片过大
-              maxHeight: "440px", // 最大高度限制，保持16:9比例
-              borderRadius: 2, // 圆角
-              zIndex: -1,
-              boxShadow: "none",
-              position: "absolute",
-              transform: "scale(1.5)",
-              top: 80,
+              position: "fixed",
+              top: 0,
               left: 0,
-            }}
-            mt={4}
-          ></Box>
-
-          <Box
-            className="animate__animated animate__fadeIn"
-            sx={{
-              width: "100%", // 图片宽度，占容器的80%
-              height: "100%", // 保持图片的原始比例
-              maxWidth: "960px", // 最大宽度限制，避免图片过大
-              maxHeight: "440px", // 最大高度限制，保持16:9比例
-              borderRadius: 2, // 圆角
+              width: "100vw",
+              height: "100vh",
               zIndex: -1,
-              boxShadow: "none",
             }}
-            mt={4}
-          ></Box>
+          />
+        </Grid>
 
+        {/* 右侧面板 */}
+        <Grid item xs={12} md={4}>
           <Paper
-            className="animate__animated animate__zoomInUp "
             sx={{
               p: 2,
               display: "flex",
               flexDirection: "column",
-              height: "35vh",
-              backgroundColor: "#003366",
+              height: "30vh",
+              backgroundColor: "rgba(255,255,255,0.0)",
               boxShadow: "none",
-              border: "2px solid #1e3a8a",
+              border: "2px solid white",
               color: "white",
-              marginTop: 3,
             }}
           >
             <Box sx={{ display: "flex", alignItems: "center" }}>
               <Typography variant="h6">警情分析</Typography>
-              <Box sx={{ ml: 4 }}>
-                <FormControl sx={{ minWidth: 120, ml: "center" }} size="small">
-                  <InputLabel id="select-label" sx={{ color: "white" }}>
-                    警情类型
-                  </InputLabel>
-                  <Select
-                    labelId="select-label"
-                    label="选择选项"
-                    sx={{
-                      color: "white",
-                      ".MuiOutlinedInput-notchedOutline": {
-                        borderColor: "white",
-                      },
-                      ".MuiSvgIcon-root": { color: "white" },
-                    }}
-                    MenuProps={{
-                      PaperProps: {
-                        sx: { backgroundColor: "#003366", color: "black" },
-                      },
-                    }}
-                  >
-                    <MenuItem value={1}>警情分析</MenuItem>
-                    <MenuItem value={2}>Every Night</MenuItem>
-                    <MenuItem value={3}>Weeknights</MenuItem>
-                    <MenuItem value={4}>Weekends</MenuItem>
-                    <MenuItem value={5}>Weekly</MenuItem>
-                  </Select>
-                </FormControl>
-              </Box>
               <Button variant="contained" color="primary" sx={{ ml: "auto" }}>
                 编辑
               </Button>
             </Box>
-
-            <TableContainer
-              component={Paper}
-              sx={{
-                backgroundColor: "transparent",
-                marginTop: "15px",
-                overflow: "hidden",
-                boxShadow: "none",
-              }}
-            >
-              <TableHead>
-                <TableRow>
-                  <TableCell
-                    sx={{
-                      borderBottom: "none",
-                      padding: "2px",
-                      color: "#7DF9FF",
-                      textOverflow: "ellipsis",
-                      maxWidth: "16.4%",
-                      minWidth: "16.4%",
-                      whiteSpace: "nowrap",
-                      overflow: "hidden",
-                      paddingRight: "10px",
-                    }}
-                  >
-                    报警时间
-                  </TableCell>
-                  <TableCell
-                    sx={{
-                      borderBottom: "none",
-                      padding: "2px",
-                      color: "#7DF9FF",
-                      textOverflow: "ellipsis",
-                      maxWidth: "16.4%",
-                      minWidth: "16.4%",
-                      whiteSpace: "nowrap",
-                      overflow: "hidden",
-                      paddingRight: "10px",
-                    }}
-                  >
-                    警情类型
-                  </TableCell>
-                  <TableCell
-                    sx={{
-                      borderBottom: "none",
-                      padding: "2px",
-                      color: "#7DF9FF",
-                      textOverflow: "ellipsis",
-                      maxWidth: "23.8%",
-                      minWidth: "23.8%",
-                      whiteSpace: "nowrap",
-                      overflow: "hidden",
-                      textAlign: "auto",
-                      paddingRight: "10px",
-                    }}
-                  >
-                    案由
-                  </TableCell>
-                  <TableCell
-                    sx={{
-                      borderBottom: "none",
-                      padding: "2px",
-                      color: "#7DF9FF",
-                      textOverflow: "ellipsis",
-                      maxWidth: "26.8%",
-                      minWidth: "26.8%",
-                      whiteSpace: "nowrap",
-                      overflow: "hidden",
-                      textAlign: "auto",
-                      paddingRight: "10px",
-                    }}
-                  >
-                    详情
-                  </TableCell>
-                  <TableCell
-                    sx={{
-                      borderBottom: "none",
-                      padding: "2px",
-                      color: "#7DF9FF",
-                      textOverflow: "ellipsis",
-                      maxWidth: "16.4%",
-                      minWidth: "16.4%",
-                      whiteSpace: "nowrap",
-                      overflow: "hidden",
-                      textAlign: "center",
-                      paddingRight: "10px",
-                    }}
-                  >
-                    责任民警
-                  </TableCell>
-                </TableRow>
-              </TableHead>
-            <TableBody>
-            {Analysis.map((row,index) =>(
-            <TableRow key={index}>
-                  <TableCell sx={{ borderBottom: 'none', padding: '2px',color: 'white',textOverflow: 'ellipsis', maxWidth: '16.4%', minWidth: '16.4%',whiteSpace: 'nowrap', overflow: 'hidden',paddingY:'6px',paddingRight:'10px' }}>{row.report_time}</TableCell>
-                  <TableCell sx={{ borderBottom: 'none', padding: '2px',color: 'white',textOverflow: 'ellipsis', maxWidth: '16.4%',minWidth: '16.4%', whiteSpace: 'nowrap', overflow: 'hidden',paddingY:'6px',paddingRight:'10px'}}>{row.incident_category}</TableCell>
-                  <TableCell sx={{ borderBottom: 'none', padding: '2px',color: 'white',textOverflow: 'ellipsis', maxWidth: '23.8%',minWidth: '23.8%', whiteSpace: 'nowrap', overflow: 'hidden',textAlign:"auto",paddingY:'6px' ,paddingRight:'10px'}}>{row.report_source}</TableCell>
-                  <TableCell sx={{ borderBottom: 'none', padding: '2px',color: 'white',textOverflow: 'ellipsis', maxWidth: '26.8%',minWidth: '26.8%', whiteSpace: 'nowrap', overflow: 'hidden',textAlign:"auto",paddingY:'6px',paddingRight:'10px' }}>{row.incident_details}</TableCell>
-                  <TableCell sx={{ borderBottom: 'none', padding: '2px',color: 'white',textOverflow: 'ellipsis', maxWidth: '16.4%',minWidth: '16.4%', whiteSpace: 'nowrap', overflow: 'hidden',textAlign:"center",paddingY:'6px' ,paddingRight:'10px'}}>{row.receiver}</TableCell>
-                </TableRow>
-            ))}
-              </TableBody>
-            </TableContainer>
+            {/* Add your content here */}
           </Paper>
-        </Grid>
-        <Grid item xs={3}>
           <Paper
-            className="animate__animated animate__zoomInRight "
             sx={{
               p: 2,
               display: "flex",
               flexDirection: "column",
               mt: 2,
-              backgroundColor: "#003366",
+              backgroundColor: "rgba(255,255,255,0.0)",
               boxShadow: "none",
-              border: "2px solid #1e3a8a",
+              border: "2px solid white",
               color: "white",
-              height: "63vh",
+              height: "30vh",
             }}
           >
             <Box sx={{ display: "flex", alignItems: "center" }}>
@@ -953,300 +494,24 @@ const Dashboard = () => {
               </Button>
             </Box>
             {/* Add your content here */}
-            <TableContainer component={Paper} sx= {{ backgroundColor: 'transparent', marginTop: '30px',overflow: 'hidden',minWidth: '100%',boxShadow: "none",Width: '100%',}}>
-            <TableHead>
-              <TableRow>
-                <TableCell sx={{ borderBottom: 'none', padding: '4px',color: 'lightblue',textOverflow: 'ellipsis', maxWidth: '17.6%', minWidth: '17.6%',whiteSpace: 'nowrap', overflow: 'hidden',textAlign:"center" }}>时间</TableCell>
-                <TableCell sx={{ borderBottom: 'none', padding: '4px',color: 'lightblue',textOverflow: 'ellipsis', maxWidth: '23.5%',minWidth: '23.5%', whiteSpace: 'nowrap', overflow: 'hidden',textAlign:"center" }}>勤务类型</TableCell>
-                <TableCell sx={{ borderBottom: 'none', padding: '4px',color: 'lightblue',textOverflow: 'ellipsis', maxWidth: '58.8%',minWidth: '58.8%', whiteSpace: 'nowrap', overflow: 'hidden',}}>   勤务内容</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-            {RecentData.map((row, index) => (
-            <TableRow key={index}>
-                <TableCell sx={{ borderBottom: 'none', padding: '4px',color: 'white',textOverflow: 'ellipsis', maxWidth: '17.6%', minWidth: '17.6%',whiteSpace: 'nowrap', overflow: 'hidden',textAlign:"center",paddingY:'10px' }}>{row.duty_date}</TableCell>
-                <TableCell sx={{ borderBottom: 'none', padding: '4px',color: 'white',textOverflow: 'ellipsis', maxWidth: '23.5%',minWidth: '23.5%', whiteSpace: 'nowrap', overflow: 'hidden',textAlign:"center",paddingY:'10px' }}>{row.duty_type}</TableCell>
-                <TableCell sx={{ borderBottom: 'none', padding: '4px',color: 'white',textOverflow: 'ellipsis', maxWidth: '58.8%',minWidth: '58.8%', whiteSpace: 'nowrap', overflow: 'hidden',paddingY:'10px'}}>{row.content}</TableCell>
-              </TableRow>
-            ))}
-            </TableBody>
-            </TableContainer>
           </Paper>
-
           <Paper
-            className="animate__animated animate__zoomInRight "
             sx={{
               p: 2,
               display: "flex",
               flexDirection: "column",
               mt: 2,
-              backgroundColor: "#003366",
+              backgroundColor: "rgba(255,255,255,0.0)",
               boxShadow: "none",
-              border: "2px solid #1e3a8a",
+              border: "2px solid white",
               color: "white",
               height: "30vh",
             }}
           >
             <Box sx={{ display: "flex", alignItems: "center" }}>
               <Typography variant="h6">民警-警情</Typography>
-              <Button variant="contained" color="primary" sx={{ ml: "auto" }}>
-                时间
-                <Box sx={{ ml: 2 }}>
-                  <GrSchedule fontSize={20} />
-                </Box>
-              </Button>
             </Box>
             {/* Add your content here */}
-            <TableContainer
-              component={Paper}
-              sx={{
-                backgroundColor: "transparent",
-                marginTop: "20px",
-                overflow: "hidden",
-                minWidth: "100%",
-                boxShadow: "none",
-              }}
-            >
-              <TableHead>
-                <TableRow>
-                  <TableCell
-                    sx={{
-                      borderBottom: "none",
-                      padding: "4px",
-                      color: "lightblue",
-                      textOverflow: "ellipsis",
-                      maxWidth: "80px",
-                      minWidth: "50px",
-                      whiteSpace: "nowrap",
-                      overflow: "hidden",
-                      textAlign: "center",
-                    }}
-                  >
-                    序号
-                  </TableCell>
-                  <TableCell
-                    sx={{
-                      borderBottom: "none",
-                      padding: "4px",
-                      color: "lightblue",
-                      textOverflow: "ellipsis",
-                      maxWidth: "140px",
-                      minWidth: "140px",
-                      whiteSpace: "nowrap",
-                      overflow: "hidden",
-                      textAlign: "center",
-                    }}
-                  >
-                    民警
-                  </TableCell>
-                  <TableCell
-                    sx={{
-                      borderBottom: "none",
-                      padding: "4px",
-                      color: "lightblue",
-                      textOverflow: "ellipsis",
-                      maxWidth: "140px",
-                      minWidth: "140px",
-                      whiteSpace: "nowrap",
-                      overflow: "hidden",
-                      textAlign: "center",
-                    }}
-                  >
-                    警情
-                  </TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                <TableRow>
-                  <TableCell
-                    sx={{
-                      borderBottom: "none",
-                      padding: "4px",
-                      color: "white",
-                      textOverflow: "ellipsis",
-                      maxWidth: "80px",
-                      minWidth: "50px",
-                      whiteSpace: "nowrap",
-                      overflow: "hidden",
-                      textAlign: "center",
-                    }}
-                  >
-                    1
-                  </TableCell>
-                  <TableCell
-                    sx={{
-                      borderBottom: "none",
-                      padding: "4px",
-                      color: "white",
-                      textOverflow: "ellipsis",
-                      maxWidth: "140px",
-                      minWidth: "140px",
-                      whiteSpace: "nowrap",
-                      overflow: "hidden",
-                      textAlign: "center",
-                    }}
-                  >
-                    张三
-                  </TableCell>
-                  <TableCell
-                    sx={{
-                      borderBottom: "none",
-                      padding: "4px",
-                      color: "white",
-                      textOverflow: "ellipsis",
-                      maxWidth: "140px",
-                      minWidth: "140px",
-                      whiteSpace: "nowrap",
-                      overflow: "hidden",
-                      textAlign: "center",
-                    }}
-                  >
-                    43
-                  </TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell
-                    sx={{
-                      borderBottom: "none",
-                      padding: "4px",
-                      color: "white",
-                      textOverflow: "ellipsis",
-                      maxWidth: "80px",
-                      minWidth: "50px",
-                      whiteSpace: "nowrap",
-                      overflow: "hidden",
-                      textAlign: "center",
-                    }}
-                  >
-                    1
-                  </TableCell>
-                  <TableCell
-                    sx={{
-                      borderBottom: "none",
-                      padding: "4px",
-                      color: "white",
-                      textOverflow: "ellipsis",
-                      maxWidth: "140px",
-                      minWidth: "140px",
-                      whiteSpace: "nowrap",
-                      overflow: "hidden",
-                      textAlign: "center",
-                    }}
-                  >
-                    张三
-                  </TableCell>
-                  <TableCell
-                    sx={{
-                      borderBottom: "none",
-                      padding: "4px",
-                      color: "white",
-                      textOverflow: "ellipsis",
-                      maxWidth: "140px",
-                      minWidth: "140px",
-                      whiteSpace: "nowrap",
-                      overflow: "hidden",
-                      textAlign: "center",
-                    }}
-                  >
-                    43
-                  </TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell
-                    sx={{
-                      borderBottom: "none",
-                      padding: "4px",
-                      color: "white",
-                      textOverflow: "ellipsis",
-                      maxWidth: "80px",
-                      minWidth: "50px",
-                      whiteSpace: "nowrap",
-                      overflow: "hidden",
-                      textAlign: "center",
-                    }}
-                  >
-                    1
-                  </TableCell>
-                  <TableCell
-                    sx={{
-                      borderBottom: "none",
-                      padding: "4px",
-                      color: "white",
-                      textOverflow: "ellipsis",
-                      maxWidth: "140px",
-                      minWidth: "140px",
-                      whiteSpace: "nowrap",
-                      overflow: "hidden",
-                      textAlign: "center",
-                    }}
-                  >
-                    张三
-                  </TableCell>
-                  <TableCell
-                    sx={{
-                      borderBottom: "none",
-                      padding: "4px",
-                      color: "white",
-                      textOverflow: "ellipsis",
-                      maxWidth: "140px",
-                      minWidth: "140px",
-                      whiteSpace: "nowrap",
-                      overflow: "hidden",
-                      textAlign: "center",
-                    }}
-                  >
-                    43
-                  </TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell
-                    sx={{
-                      borderBottom: "none",
-                      padding: "4px",
-                      color: "white",
-                      textOverflow: "ellipsis",
-                      maxWidth: "80px",
-                      minWidth: "50px",
-                      whiteSpace: "nowrap",
-                      overflow: "hidden",
-                      textAlign: "center",
-                    }}
-                  >
-                    1
-                  </TableCell>
-                  <TableCell
-                    sx={{
-                      borderBottom: "none",
-                      padding: "4px",
-                      color: "white",
-                      textOverflow: "ellipsis",
-                      maxWidth: "140px",
-                      minWidth: "140px",
-                      whiteSpace: "nowrap",
-                      overflow: "hidden",
-                      textAlign: "center",
-                    }}
-                  >
-                    张三
-                  </TableCell>
-                  <TableCell
-                    sx={{
-                      borderBottom: "none",
-                      padding: "4px",
-                      color: "white",
-                      textOverflow: "ellipsis",
-                      maxWidth: "140px",
-                      minWidth: "140px",
-                      whiteSpace: "nowrap",
-                      overflow: "hidden",
-                      textAlign: "center",
-                    }}
-                  >
-                    43
-                  </TableCell>
-                </TableRow>
-              </TableBody>
-            </TableContainer>
           </Paper>
         </Grid>
       </Grid>

@@ -21,19 +21,7 @@ export async function GET(req: NextRequest) {
       },
     });
 
-    const formattedPatrolTeams = patrolTeams.map((team) => ({
-      ...team,
-      vehicle:
-        team.PatrolVehicleAssignments.length > 0
-          ? team.PatrolVehicleAssignments[0].vehicle
-          : null,
-      members: team.PatrolStaffAssignments.map((psa) => ({
-        ...psa,
-        shift: psa.shift,
-      })),
-    }));
-
-    return NextResponse.json(formattedPatrolTeams, { status: 200 });
+    return NextResponse.json(patrolTeams, { status: 200 });
   } catch (error) {
     console.error("Error fetching patrol teams:", error);
     return NextResponse.json(
