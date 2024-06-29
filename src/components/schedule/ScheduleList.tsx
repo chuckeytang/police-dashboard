@@ -1,10 +1,11 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useListContext, Loading } from "react-admin";
 import { Calendar, Views } from "react-big-calendar";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import { Schedule } from "@/types";
 import CalenderToolbar from "../common/CalenderToolbar";
 import { localizer } from "../common/CalenderLocalizer";
+import AlertDialog from "../common/AlertDialog";
 
 export interface ScheduleListProps {
   onRefetch: () => void;
@@ -20,6 +21,7 @@ const ScheduleList: React.FC<ScheduleListProps> = ({
   setConfirmDialogOpen,
 }) => {
   const { data, isLoading, error } = useListContext<Schedule>();
+  const [alertDialogOpen, setAlertDialogOpen] = useState(false);
 
   useEffect(() => {
     if (onRefetch) {
@@ -49,6 +51,35 @@ const ScheduleList: React.FC<ScheduleListProps> = ({
     ])
     .flat();
 
+  const handleSelectSlot = (slot: any) => {
+    const today = new Date();
+    const selected = new Date(slot.start);
+
+    if (selected < today) {
+      setAlertDialogOpen(true);
+    } else {
+      const hasEvents = events.some(
+        (event) =>
+          event.start.toDateString() === selected.toDateString() &&
+          event.end.toDateString() === selected.toDateString()
+      );
+
+      if (hasEvents) {
+        // 如果该日期已有排班，执行与 onSelectEvent 相同的逻辑
+        setSelectedDate(selected);
+        setConfirmDialogOpen(true);
+      } else {
+        // 如果该日期没有排班，打开创建排班对话框
+        setSelectedDate(selected);
+        setDialogOpen(true);
+      }
+    }
+  };
+
+  const handleCloseAlertDialog = () => {
+    setAlertDialogOpen(false);
+  };
+
   return (
     <div className="flex">
       <div className="w-full p-2">
@@ -59,10 +90,7 @@ const ScheduleList: React.FC<ScheduleListProps> = ({
           style={{ height: 700 }}
           step={60}
           selectable
-          onSelectSlot={({ start }) => {
-            setSelectedDate(start);
-            setDialogOpen(true);
-          }}
+          onSelectSlot={handleSelectSlot}
           onSelectEvent={(event) => {
             setSelectedDate(event.start);
             setConfirmDialogOpen(true);
@@ -78,6 +106,14 @@ const ScheduleList: React.FC<ScheduleListProps> = ({
           }}
         />
       </div>
+
+      {/* Alert Dialog */}
+      <AlertDialog
+        open={alertDialogOpen}
+        onClose={handleCloseAlertDialog}
+        title="提示"
+        message="请选择明日及以后的日期创建排班。"
+      />
     </div>
   );
 };

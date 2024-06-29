@@ -153,33 +153,35 @@ const TeamDetails = ({
           </CardContent>
         </Card>
       </div>
-      <div className="ml-6 w-60">
+      <div className="ml-6">
         <h6>值班人员</h6>
         <div>
-          {members.map((member) => (
-            <Grid item xs={12} sm={6} md={4} key={member.id}>
-              <Card variant="outlined">
-                <CardContent>
-                  <div className="flex justify-between">
-                    <div>
-                      <p>
-                        {member.name} ({member.police_number})
-                      </p>
-                      <p>{member.position}</p>
-                      <p>{member.department}</p>
-                      <p>{member.contact}</p>
+          <Grid container spacing={2}>
+            {members.map((member) => (
+              <Grid item xs={6} key={member.id}>
+                <Card variant="outlined">
+                  <CardContent>
+                    <div className="flex justify-between">
+                      <div>
+                        <p>
+                          {member.name} ({member.police_number})
+                        </p>
+                        <p>{member.position}</p>
+                        <p>{member.department}</p>
+                        <p>{member.contact}</p>
+                      </div>
+                      <IconButton
+                        aria-label="delete"
+                        onClick={() => handleDeleteMember(member.id)}
+                      >
+                        <DeleteIcon />
+                      </IconButton>
                     </div>
-                    <IconButton
-                      aria-label="delete"
-                      onClick={() => handleDeleteMember(member.id)}
-                    >
-                      <DeleteIcon />
-                    </IconButton>
-                  </div>
-                </CardContent>
-              </Card>
-            </Grid>
-          ))}
+                  </CardContent>
+                </Card>
+              </Grid>
+            ))}
+          </Grid>
           <div className="flex">
             <TextField
               label="选择成员"

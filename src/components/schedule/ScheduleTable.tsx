@@ -84,11 +84,22 @@ const ScheduleTable = () => {
 
   const handleAddSchedule = async () => {
     try {
-      const response = await axios.post("/api/personnel/schedule/add", {
-        schedule_date: selectedDate,
-        day_team: dayTeam,
-        night_team: nightTeam,
-      });
+      if (selectedDate) {
+        const localDate = `${selectedDate.getFullYear()}-${(
+          selectedDate.getMonth() + 1
+        )
+          .toString()
+          .padStart(2, "0")}-${selectedDate
+          .getDate()
+          .toString()
+          .padStart(2, "0")}`;
+
+        const response = await axios.post("/api/personnel/schedule/add", {
+          schedule_date: localDate,
+          day_team: dayTeam,
+          night_team: nightTeam,
+        });
+      }
       setDialogOpen(false);
       refetch();
     } catch (error) {
@@ -98,9 +109,22 @@ const ScheduleTable = () => {
 
   const handleDeleteSchedule = async () => {
     try {
-      await axios.delete("/api/personnel/schedule/delete", {
-        data: { ids: [selectedDate] },
-      });
+      if (selectedDate) {
+        const localDate = `${selectedDate.getFullYear()}-${(
+          selectedDate.getMonth() + 1
+        )
+          .toString()
+          .padStart(2, "0")}-${selectedDate
+          .getDate()
+          .toString()
+          .padStart(2, "0")}`;
+
+        await axios.delete("/api/personnel/schedule/delete", {
+          data: {
+            schedule_date: localDate,
+          },
+        });
+      }
       setConfirmDialogOpen(false);
       refetch();
     } catch (error) {

@@ -1,10 +1,11 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useListContext, Loading } from "react-admin";
 import { Calendar, Views } from "react-big-calendar";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import { PatrolSchedule } from "@/types";
 import CalenderToolbar from "../common/CalenderToolbar";
 import { localizer } from "../common/CalenderLocalizer";
+import AlertDialog from "../common/AlertDialog";
 
 export interface PatrolScheduleListProps {
   onRefetch: () => void;
@@ -20,6 +21,7 @@ const PatrolScheduleList: React.FC<PatrolScheduleListProps> = ({
   setConfirmDialogOpen,
 }) => {
   const { data, isLoading, error } = useListContext<PatrolSchedule>();
+  const [alertDialogOpen, setAlertDialogOpen] = useState(false);
 
   useEffect(() => {
     if (onRefetch) {
@@ -33,12 +35,26 @@ const PatrolScheduleList: React.FC<PatrolScheduleListProps> = ({
   const events = data.map((schedule) => ({
     title: `巡逻组: ${schedule.patrol_team.team_name}`,
     start: new Date(schedule.schedule_date),
-    end: new Date(
-      new Date(schedule.schedule_date).getTime() + (24 * 60 * 60 - 1) * 1000
-    ),
+    end: new Date(schedule.schedule_date),
     allDay: false,
     desc: "巡逻组",
   }));
+
+  const handleSelectSlot = (slot: any) => {
+    const today = new Date();
+    const selected = new Date(slot.start);
+
+    if (selected < today) {
+      setAlertDialogOpen(true);
+    } else {
+      setSelectedDate(slot.start);
+      setDialogOpen(true);
+    }
+  };
+
+  const handleCloseAlertDialog = () => {
+    setAlertDialogOpen(false);
+  };
 
   return (
     <div className="flex">
@@ -51,10 +67,7 @@ const PatrolScheduleList: React.FC<PatrolScheduleListProps> = ({
             style={{ height: 700 }}
             step={60}
             selectable
-            onSelectSlot={({ start }) => {
-              setSelectedDate(start);
-              setDialogOpen(true);
-            }}
+            onSelectSlot={handleSelectSlot}
             onSelectEvent={(event) => {
               setSelectedDate(event.start);
               setConfirmDialogOpen(true);
@@ -68,11 +81,20 @@ const PatrolScheduleList: React.FC<PatrolScheduleListProps> = ({
               weekdayFormat: (date, culture, localizer) =>
                 localizer ? localizer.format(date, "eee", culture) : "", // 显示中文星期几
             }}
+            popup
           />
         ) : (
           <p>Loading...</p>
         )}
       </div>
+
+      {/* Alert Dialog */}
+      <AlertDialog
+        open={alertDialogOpen}
+        onClose={handleCloseAlertDialog}
+        title="提示"
+        message="请选择明日及以后的日期创建排班。"
+      />
     </div>
   );
 };
