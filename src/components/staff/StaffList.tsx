@@ -8,14 +8,8 @@ import {
   TextInput,
   SelectInput,
   FilterProps,
+  Title,
 } from "react-admin";
-import {
-  CustomEditButton,
-  CustomExportButton,
-  CustomShowButton,
-} from "../common/CustomButtons";
-import CustomListActions from "../common/CustomListActions";
-import CustomPagination from "../common/CustomPagination";
 
 interface Staff {
   id: number;
@@ -73,8 +67,8 @@ const StaffList = () => {
         <TextField source="department" label="所属部门" />
         <TextField source="contact" label="联系方式" />
         <TextField source="vehicle" label="使用车辆" />
-        <CustomShowButton />
-        <CustomEditButton />
+        <ShowButton />
+        <EditButton />
       </Datagrid>
     </List>
   );

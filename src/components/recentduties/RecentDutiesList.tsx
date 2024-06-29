@@ -10,7 +10,6 @@ import {
   SelectInput,
   FilterProps,
 } from "react-admin";
-import { CustomEditButton, CustomShowButton } from "../common/CustomButtons";
 
 const RecentDutiesFilter = (props: FilterProps) => (
   <Filter {...props}>
@@ -30,8 +29,8 @@ const RecentDutiesList = () => {
         <DateField source="duty_date" label="日期" />
         <TextField source="duty_type" label="勤务类型" />
         <TextField source="content" label="内容" />
-        <CustomShowButton />
-        <CustomEditButton />
+        <ShowButton />
+        <EditButton />
       </Datagrid>
     </List>
   );

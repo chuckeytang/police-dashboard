@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { List, useListContext } from "react-admin";
+import { ExportButton, List, useListContext } from "react-admin";
 import { IconButton } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import {
@@ -20,7 +20,6 @@ import {
   CircularProgress,
 } from "@mui/material";
 import { Staff, PatrolTeam, Vehicle, PatrolStaffAssignment } from "@/types";
-import { CustomExportButton } from "../common/CustomButtons";
 const PatrolTeamDetails = ({
   team,
   onTeamUpdate,
@@ -338,7 +337,7 @@ const PatrolTeamList = () => {
 const PatrolTeamListWrapper = () => (
   <List>
     <PatrolTeamList />
-    <CustomExportButton />
+    <ExportButton />
   </List>
 );
 

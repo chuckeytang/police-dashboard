@@ -107,6 +107,7 @@ const AdminPage = () => (
       show={StaffShow}
       edit={StaffEdit}
       create={StaffCreate}
+      options={{ label: "人员录入" }}
     />
     <Resource name="personnel/team" list={TeamList} />
     <Resource name="personnel/schedule" list={ScheduleTable} />

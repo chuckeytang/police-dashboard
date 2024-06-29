@@ -9,7 +9,6 @@ import {
   SelectInput,
   FilterProps,
 } from "react-admin";
-import { CustomEditButton, CustomShowButton } from "../common/CustomButtons";
 
 interface Vehicle {
   id: number;
@@ -96,8 +95,8 @@ const VehicleList = () => {
         <TextField source="user_id" label="使用人员" />
         <TextField source="borrow_time" label="借出时间" />
         <TextField source="return_time" label="应归还时间" />
-        <CustomShowButton />
-        <CustomEditButton />
+        <ShowButton />
+        <EditButton />
       </Datagrid>
     </List>
   );

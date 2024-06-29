@@ -11,7 +11,6 @@ import {
   SelectInput,
   FilterProps,
 } from "react-admin";
-import { CustomEditButton, CustomShowButton } from "../common/CustomButtons";
 
 const IncidentAnalysisFilter = (props: FilterProps) => (
   <Filter {...props}>
@@ -52,8 +51,8 @@ const IncidentAnalysisList = () => {
         <TextField source="incident_details" label="警情详情" />
         <TextField source="incident_status" label="警情状态" />
         <DateField source="response_time" label="处警时间" />
-        <CustomShowButton />
-        <CustomEditButton />
+        <ShowButton />
+        <EditButton />
       </Datagrid>
     </List>
   );
