@@ -28,6 +28,7 @@ import Link from "next/link";
 import axios from "axios";
 import { Staff, Team } from "@/types";
 import DeleteIcon from "@mui/icons-material/Delete"; // 需要添加这个导入
+import { CustomExportButton } from "../common/CustomButtons";
 
 const TeamDetails = ({
   team,
@@ -320,6 +321,7 @@ const TeamList = () => {
 const TeamListWrapper = () => (
   <List>
     <TeamList />
+    <CustomExportButton />
   </List>
 );
 

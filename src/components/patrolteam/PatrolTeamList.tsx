@@ -20,6 +20,7 @@ import {
   CircularProgress,
 } from "@mui/material";
 import { Staff, PatrolTeam, Vehicle, PatrolStaffAssignment } from "@/types";
+import { CustomExportButton } from "../common/CustomButtons";
 const PatrolTeamDetails = ({
   team,
   onTeamUpdate,
@@ -27,11 +28,13 @@ const PatrolTeamDetails = ({
   team: PatrolTeam | null;
   onTeamUpdate: (updatedTeam: PatrolTeam) => void;
 }) => {
-  const [vehicle, setVehicle] = useState<string | null>(
-    team?.vehicle?.plate_number || null
+  const [vehicle, setVehicle] = useState<Vehicle | null>(
+    team?.PatrolVehicleAssignments
+      ? team?.PatrolVehicleAssignments[0]?.vehicle || null
+      : null
   );
   const [members, setMembers] = useState<PatrolStaffAssignment[]>(
-    team?.members || []
+    team?.PatrolStaffAssignments || []
   );
   const [selectedVehicleId, setSelectedVehicleId] = useState<number>(0);
   const [selectedMemberId, setSelectedMemberId] = useState<number>(0);
@@ -58,9 +61,14 @@ const PatrolTeamDetails = ({
   }, []);
 
   useEffect(() => {
-    // 更新 members 状态
-    if (team && team.members) {
-      setMembers(team.members);
+    // 更新 members 和 vehicle 状态
+    if (team) {
+      setMembers(team.PatrolStaffAssignments || []);
+      setVehicle(
+        team.PatrolVehicleAssignments
+          ? team.PatrolVehicleAssignments[0]?.vehicle || null
+          : null
+      );
     }
   }, [team]);
 
@@ -126,10 +134,10 @@ const PatrolTeamDetails = ({
         <h6>巡逻车辆</h6>
         <Card variant="outlined" className="mb-6">
           <CardContent className="w-[200px]">
-            {team.vehicle ? (
+            {vehicle ? (
               <div>
                 <p>
-                  {team.vehicle.brand_model} ({team.vehicle.plate_number})
+                  {vehicle.brand_model} ({vehicle.plate_number})
                 </p>
               </div>
             ) : (
@@ -330,6 +338,7 @@ const PatrolTeamList = () => {
 const PatrolTeamListWrapper = () => (
   <List>
     <PatrolTeamList />
+    <CustomExportButton />
   </List>
 );
 

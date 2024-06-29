@@ -9,6 +9,7 @@ import {
   TextInput,
   FilterProps,
 } from "react-admin";
+import { CustomEditButton, CustomShowButton } from "../common/CustomButtons";
 
 const WorkFocusFilter = (props: FilterProps) => (
   <Filter {...props}>
@@ -27,8 +28,8 @@ const WorkFocusList = () => {
       <Datagrid>
         <DateField source="focus_date" label="日期" />
         <TextField source="content" label="内容" />
-        <ShowButton />
-        <EditButton />
+        <CustomShowButton />
+        <CustomEditButton />
       </Datagrid>
     </List>
   );

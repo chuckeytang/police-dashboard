@@ -2,9 +2,9 @@ import React, { useEffect } from "react";
 import { useListContext, Loading } from "react-admin";
 import { Calendar, Views } from "react-big-calendar";
 import "react-big-calendar/lib/css/react-big-calendar.css";
-import moment from "moment";
-import { momentLocalizer } from "react-big-calendar";
 import { Schedule } from "@/types";
+import CalenderToolbar from "../common/CalenderToolbar";
+import { localizer } from "../common/CalenderLocalizer";
 
 export interface ScheduleListProps {
   onRefetch: () => void;
@@ -12,8 +12,6 @@ export interface ScheduleListProps {
   setDialogOpen: (open: boolean) => void;
   setConfirmDialogOpen: (open: boolean) => void;
 }
-
-const mLocalizer = momentLocalizer(moment);
 
 const ScheduleList: React.FC<ScheduleListProps> = ({
   onRefetch,
@@ -55,7 +53,7 @@ const ScheduleList: React.FC<ScheduleListProps> = ({
     <div className="flex">
       <div className="w-full p-2">
         <Calendar
-          localizer={mLocalizer}
+          localizer={localizer}
           events={events}
           views={[Views.MONTH]}
           style={{ height: 700 }}
@@ -68,6 +66,15 @@ const ScheduleList: React.FC<ScheduleListProps> = ({
           onSelectEvent={(event) => {
             setSelectedDate(event.start);
             setConfirmDialogOpen(true);
+          }}
+          components={{
+            toolbar: CalenderToolbar,
+          }}
+          formats={{
+            dayFormat: (date, culture, localizer) =>
+              localizer ? localizer.format(date, "eeee", culture) : "", // 显示中文星期几
+            weekdayFormat: (date, culture, localizer) =>
+              localizer ? localizer.format(date, "eee", culture) : "", // 显示中文星期几
           }}
         />
       </div>

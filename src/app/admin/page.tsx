@@ -27,6 +27,9 @@ import RecentDutiesList from "@/components/recentduties/RecentDutiesList";
 import RecentDutiesCreate from "@/components/recentduties/RecentDutiesCreate";
 import RecentDutiesEdit from "@/components/recentduties/RecentDutiesEdit";
 import RecentDutiesShow from "@/components/recentduties/RecentDutiesShow";
+import Loading from "@/components/common/Loading";
+import { CustomDashboardMenuItem } from "@/components/common/CustomButtons";
+import i18nProvider from "@/components/common/i18nProvider";
 
 interface CustomMenuItemProps {
   primaryText: string;
@@ -61,7 +64,7 @@ const CustomMenu = () => {
 
   return (
     <Menu>
-      <Menu.DashboardItem />
+      <CustomDashboardMenuItem />
       <CustomMenuItem primaryText="勤务管理" onClick={handlePersonnelClick}>
         {personnelOpen && (
           <div className="flex flex-col pl-4">
@@ -92,7 +95,12 @@ const MyLayout = (props: LayoutProps) => (
 );
 
 const AdminPage = () => (
-  <Admin dataProvider={dataProvider} layout={MyLayout}>
+  <Admin
+    dataProvider={dataProvider}
+    layout={MyLayout}
+    loading={Loading}
+    i18nProvider={i18nProvider}
+  >
     <Resource
       name="personnel/staff"
       list={StaffList}
