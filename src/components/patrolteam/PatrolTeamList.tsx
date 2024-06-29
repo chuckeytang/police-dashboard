@@ -3,6 +3,7 @@ import axios from "axios";
 import { ExportButton, List, useListContext } from "react-admin";
 import { IconButton } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
+import { AiOutlinePlusCircle as AddIcon } from "react-icons/ai";
 import {
   Card,
   CardContent,
@@ -36,7 +37,13 @@ const PatrolTeamDetails = ({
     team?.PatrolStaffAssignments || []
   );
   const [selectedVehicleId, setSelectedVehicleId] = useState<number>(0);
-  const [selectedMemberId, setSelectedMemberId] = useState<number>(0);
+  const [selectedMemberId, setSelectedMemberId] = useState<{
+    [key: string]: number;
+  }>({
+    早班: 0,
+    中班: 0,
+    晚班: 0,
+  });
   const [shift, setShift] = useState<string>("早班");
 
   const [allStaffs, setAllStaffs] = useState<Staff[]>([]);
@@ -88,7 +95,7 @@ const PatrolTeamDetails = ({
     }
   };
 
-  const handleDeleteMember = async (memberId: number) => {
+  const handleDeleteMember = async (memberId: number, shift: string) => {
     if (!team) return;
 
     try {
@@ -96,6 +103,7 @@ const PatrolTeamDetails = ({
         `/api/vehicle/patrolteam/update/${team.id}/deleteMember`,
         {
           member_id: memberId,
+          shift: shift,
         }
       );
       onTeamUpdate(response.data);
@@ -118,6 +126,10 @@ const PatrolTeamDetails = ({
       );
       onTeamUpdate(response.data);
       setMembers(response.data.members); // 更新 members 列表
+      setSelectedMemberId((prev) => ({
+        ...prev,
+        [shift]: 0,
+      }));
     } catch (error) {
       console.error("Failed to add member:", error);
     }
@@ -127,105 +139,117 @@ const PatrolTeamDetails = ({
     return <p>请选择一个巡逻组以查看详细信息</p>;
   }
   return (
-    <div className="flex">
-      <div>
-        <h4 className="mb-6">{team.team_name}</h4>
-        <h6>巡逻车辆</h6>
-        <Card variant="outlined" className="mb-6">
-          <CardContent className="w-[200px]">
-            {vehicle ? (
-              <div>
-                <p>
-                  {vehicle.brand_model} ({vehicle.plate_number})
-                </p>
-              </div>
-            ) : (
-              <div>
-                <p>无车辆信息</p>
-              </div>
-            )}
-            <TextField
-              label="选择车辆"
-              select
-              value={selectedVehicleId}
-              onChange={(e) => {
-                const newVehicleId = parseInt(e.target.value, 10);
-                setSelectedVehicleId(newVehicleId);
-                handleVehicleChange(newVehicleId);
-              }}
-              SelectProps={{
-                native: true,
-              }}
-            >
-              <option value="">选择一辆车辆</option>
-              {allVehicles.map((vehicle) => (
-                <option key={vehicle.id} value={vehicle.id}>
-                  {vehicle.brand_model} ({vehicle.plate_number})
-                </option>
-              ))}
-            </TextField>
-          </CardContent>
-        </Card>
-      </div>
-      <div className="ml-6 w-60">
-        <h6>巡逻人员</h6>
-        {["早班", "中班", "晚班"].map((shift) => (
-          <div key={shift}>
-            <div>{shift}</div>
-            <div>
-              {members
-                .filter((member) => member.shift === shift)
-                .map((member) => (
-                  <Grid item xs={12} sm={6} md={4} key={member.id}>
-                    <Card variant="outlined" className="flex">
-                      <CardContent>
-                        <p>
-                          {member.staff.name} ({member.staff.police_number})
-                        </p>
-                        {/* <p>{member.staff.position}</p> */}
-                        <p>{member.staff.department}</p>
-                        {/* <p>{member.staff.contact}</p> */}
-                      </CardContent>
-                      <IconButton
-                        className="ml-10"
-                        aria-label="delete"
-                        onClick={() => handleDeleteMember(member.staff.id)}
-                      >
-                        <DeleteIcon />
-                      </IconButton>
-                    </Card>
-                  </Grid>
+    <div className="flex flex-col">
+      <h4 className="mb-6">{team.team_name}</h4>
+      <div className="flex">
+        <div>
+          <h6>巡逻车辆</h6>
+          <Card variant="outlined" className="mb-6">
+            <CardContent className="w-[200px]">
+              {vehicle ? (
+                <div>
+                  <p>
+                    {vehicle.brand_model} ({vehicle.plate_number})
+                  </p>
+                </div>
+              ) : (
+                <div>
+                  <p>无车辆信息</p>
+                </div>
+              )}
+              <TextField
+                label="选择车辆"
+                select
+                value={selectedVehicleId}
+                onChange={(e) => {
+                  const newVehicleId = parseInt(e.target.value, 10);
+                  setSelectedVehicleId(newVehicleId);
+                  handleVehicleChange(newVehicleId);
+                }}
+                SelectProps={{
+                  native: true,
+                }}
+              >
+                <option value="">选择一辆车辆</option>
+                {allVehicles.map((vehicle) => (
+                  <option key={vehicle.id} value={vehicle.id}>
+                    {vehicle.brand_model} ({vehicle.plate_number})
+                  </option>
                 ))}
-              <div className="flex flex-col">
-                <Button
-                  variant="contained"
-                  onClick={() => handleAddMember(selectedMemberId, shift)}
-                >
-                  添加成员
-                </Button>
-                <TextField
-                  label="选择成员"
-                  select
-                  value={selectedMemberId}
-                  onChange={(e) => {
-                    const newMemberId = parseInt(e.target.value, 10);
-                    setSelectedMemberId(newMemberId);
-                  }}
-                  SelectProps={{
-                    native: true,
-                  }}
-                >
-                  <option value="">选择一个成员</option>
-                  {allStaffs.map((staff) => (
-                    <option key={staff.id} value={staff.id}>
-                      {staff.name}
-                    </option>
-                  ))}
-                </TextField>
+              </TextField>
+            </CardContent>
+          </Card>
+        </div>
+
+        <div className="ml-6">
+          <h6>巡逻人员</h6>
+          <div className="flex">
+            {["早班", "中班", "晚班"].map((shift) => (
+              <div key={shift} className="mr-4">
+                <div>{shift}</div>
+                <div>
+                  {members
+                    .filter((member) => member.shift === shift)
+                    .map((member) => (
+                      <Grid item xs={12} sm={6} md={4} key={member.id}>
+                        <Card
+                          variant="outlined"
+                          className="flex justify-between"
+                        >
+                          <CardContent>
+                            <p>
+                              {member.staff.name} ({member.staff.police_number})
+                            </p>
+                            <p>{member.staff.department}</p>
+                          </CardContent>
+                          <IconButton
+                            aria-label="delete"
+                            onClick={() =>
+                              handleDeleteMember(member.staff.id, shift)
+                            }
+                          >
+                            <DeleteIcon />
+                          </IconButton>
+                        </Card>
+                      </Grid>
+                    ))}
+                  <div className="flex">
+                    <TextField
+                      label="选择成员"
+                      select
+                      value={selectedMemberId[shift]}
+                      onChange={(e) => {
+                        const newMemberId = parseInt(e.target.value, 10);
+                        setSelectedMemberId((prev) => ({
+                          ...prev,
+                          [shift]: newMemberId,
+                        }));
+                      }}
+                      SelectProps={{
+                        native: true,
+                      }}
+                    >
+                      <option value="">选择一个成员</option>
+                      {allStaffs.map((staff) => (
+                        <option key={staff.id} value={staff.id}>
+                          {staff.name}
+                        </option>
+                      ))}
+                    </TextField>
+                    <Button
+                      onClick={() =>
+                        handleAddMember(selectedMemberId[shift], shift)
+                      }
+                    >
+                      添加
+                      <AddIcon />
+                    </Button>
+                  </div>
+                </div>
               </div>
-            </div>
+            ))}
           </div>
-        ))}
+        </div>
       </div>
     </div>
   );
@@ -267,13 +291,8 @@ const PatrolTeamList = () => {
       <div className="border-r border-gray-200 p-4">
         <div className="flex justify-between items-center mb-4">
           <div style={{ display: "inline" }}>巡逻组目录 </div>
-          <Button
-            variant="contained"
-            color="primary"
-            size="small"
-            onClick={handleClickOpen}
-          >
-            <div className="text-white">+</div>
+          <Button onClick={handleClickOpen}>
+            <AddIcon />
           </Button>
           <Dialog open={open} onClose={handleClose}>
             <DialogTitle>添加新的巡逻组</DialogTitle>
@@ -335,9 +354,8 @@ const PatrolTeamList = () => {
 };
 
 const PatrolTeamListWrapper = () => (
-  <List>
+  <List actions={false}>
     <PatrolTeamList />
-    <ExportButton />
   </List>
 );
 

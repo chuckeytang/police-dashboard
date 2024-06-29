@@ -149,6 +149,7 @@ const ScheduleTable = () => {
       <div className="flex justify-end mb-4">
         <IconButton onClick={() => setSmartScheduleOpen(true)} color="primary">
           <SettingsIcon />
+          <div className="text-base">自动排班</div>
         </IconButton>
       </div>
       <ScheduleList
@@ -385,7 +386,7 @@ const ScheduleTableWrapper = () => {
       .split("T")[0],
   };
   return (
-    <List filter={filter} pagination={false} empty={false}>
+    <List filter={filter} pagination={false} empty={false} actions={false}>
       <ScheduleTable />
     </List>
   );

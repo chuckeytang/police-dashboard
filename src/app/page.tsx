@@ -6,10 +6,6 @@ import {
   Typography,
   Box,
   Button,
-  List,
-  ListItem,
-  ListItemText,
-  Table,
   TableBody,
   TableHead,
   TableCell,
@@ -19,7 +15,6 @@ import {
   FormControl,
   InputLabel,
   MenuItem,
-  colors,
 } from "@mui/material";
 import { PiPoliceCarFill } from "react-icons/pi";
 import { GrSchedule } from "react-icons/gr";
@@ -1181,7 +1176,7 @@ const Dashboard = () => {
               boxShadow: "none",
               border: "2px solid #1e3a8a",
               color: "white",
-              marginTop: 3
+              marginTop: 3,
             }}
           >
             <Box sx={{ display: "flex", alignItems: "center" }}>
@@ -1220,8 +1215,16 @@ const Dashboard = () => {
               </Button>
             </Box>
 
-            <TableContainer component={Paper} sx= {{ backgroundColor: 'transparent', marginTop: '15px',overflow: 'hidden',boxShadow: "none"}}>
-            <TableHead>
+            <TableContainer
+              component={Paper}
+              sx={{
+                backgroundColor: "transparent",
+                marginTop: "15px",
+                overflow: "hidden",
+                boxShadow: "none",
+              }}
+            >
+              <TableHead>
                 <TableRow>
                   <TableCell
                     sx={{
@@ -1303,41 +1306,431 @@ const Dashboard = () => {
                   </TableCell>
                 </TableRow>
               </TableHead>
-            <TableBody>
-            <TableRow>
-                  <TableCell sx={{ borderBottom: 'none', padding: '2px',color: 'white',textOverflow: 'ellipsis', maxWidth: '16.4%', minWidth: '16.4%',whiteSpace: 'nowrap', overflow: 'hidden',paddingY:'6px',paddingRight:'10px' }}>2024-01-01</TableCell>
-                  <TableCell sx={{ borderBottom: 'none', padding: '2px',color: 'white',textOverflow: 'ellipsis', maxWidth: '16.4%',minWidth: '16.4%', whiteSpace: 'nowrap', overflow: 'hidden',paddingY:'6px',paddingRight:'10px'}}>报警类</TableCell>
-                  <TableCell sx={{ borderBottom: 'none', padding: '2px',color: 'white',textOverflow: 'ellipsis', maxWidth: '23.8%',minWidth: '23.8%', whiteSpace: 'nowrap', overflow: 'hidden',textAlign:"auto",paddingY:'6px' ,paddingRight:'10px'}}>侵犯人身安全</TableCell>
-                  <TableCell sx={{ borderBottom: 'none', padding: '2px',color: 'white',textOverflow: 'ellipsis', maxWidth: '26.8%',minWidth: '26.8%', whiteSpace: 'nowrap', overflow: 'hidden',textAlign:"auto",paddingY:'6px',paddingRight:'10px' }}>A侵犯B人身安全,人身安全</TableCell>
-                  <TableCell sx={{ borderBottom: 'none', padding: '2px',color: 'white',textOverflow: 'ellipsis', maxWidth: '16.4%',minWidth: '16.4%', whiteSpace: 'nowrap', overflow: 'hidden',textAlign:"center",paddingY:'6px' ,paddingRight:'10px'}}>张三</TableCell>
+              <TableBody>
+                <TableRow>
+                  <TableCell
+                    sx={{
+                      borderBottom: "none",
+                      padding: "2px",
+                      color: "white",
+                      textOverflow: "ellipsis",
+                      maxWidth: "16.4%",
+                      minWidth: "16.4%",
+                      whiteSpace: "nowrap",
+                      overflow: "hidden",
+                      paddingY: "6px",
+                      paddingRight: "10px",
+                    }}
+                  >
+                    2024-01-01
+                  </TableCell>
+                  <TableCell
+                    sx={{
+                      borderBottom: "none",
+                      padding: "2px",
+                      color: "white",
+                      textOverflow: "ellipsis",
+                      maxWidth: "16.4%",
+                      minWidth: "16.4%",
+                      whiteSpace: "nowrap",
+                      overflow: "hidden",
+                      paddingY: "6px",
+                      paddingRight: "10px",
+                    }}
+                  >
+                    报警类
+                  </TableCell>
+                  <TableCell
+                    sx={{
+                      borderBottom: "none",
+                      padding: "2px",
+                      color: "white",
+                      textOverflow: "ellipsis",
+                      maxWidth: "23.8%",
+                      minWidth: "23.8%",
+                      whiteSpace: "nowrap",
+                      overflow: "hidden",
+                      textAlign: "auto",
+                      paddingY: "6px",
+                      paddingRight: "10px",
+                    }}
+                  >
+                    侵犯人身安全
+                  </TableCell>
+                  <TableCell
+                    sx={{
+                      borderBottom: "none",
+                      padding: "2px",
+                      color: "white",
+                      textOverflow: "ellipsis",
+                      maxWidth: "26.8%",
+                      minWidth: "26.8%",
+                      whiteSpace: "nowrap",
+                      overflow: "hidden",
+                      textAlign: "auto",
+                      paddingY: "6px",
+                      paddingRight: "10px",
+                    }}
+                  >
+                    A侵犯B人身安全,人身安全
+                  </TableCell>
+                  <TableCell
+                    sx={{
+                      borderBottom: "none",
+                      padding: "2px",
+                      color: "white",
+                      textOverflow: "ellipsis",
+                      maxWidth: "16.4%",
+                      minWidth: "16.4%",
+                      whiteSpace: "nowrap",
+                      overflow: "hidden",
+                      textAlign: "center",
+                      paddingY: "6px",
+                      paddingRight: "10px",
+                    }}
+                  >
+                    张三
+                  </TableCell>
                 </TableRow>
                 <TableRow>
-                  <TableCell sx={{ borderBottom: 'none', padding: '2px',color: 'white',textOverflow: 'ellipsis', maxWidth: '16.4%', minWidth: '16.4%',whiteSpace: 'nowrap', overflow: 'hidden',paddingY:'6px',paddingRight:'10px' }}>2024-01-01</TableCell>
-                  <TableCell sx={{ borderBottom: 'none', padding: '2px',color: 'white',textOverflow: 'ellipsis', maxWidth: '16.4%',minWidth: '16.4%', whiteSpace: 'nowrap', overflow: 'hidden',paddingY:'6px',paddingRight:'10px'}}>报警类</TableCell>
-                  <TableCell sx={{ borderBottom: 'none', padding: '2px',color: 'white',textOverflow: 'ellipsis', maxWidth: '23.8%',minWidth: '23.8%', whiteSpace: 'nowrap', overflow: 'hidden',textAlign:"auto",paddingY:'6px',paddingRight:'10px' }}>侵犯人身安全</TableCell>
-                  <TableCell sx={{ borderBottom: 'none', padding: '2px',color: 'white',textOverflow: 'ellipsis', maxWidth: '26.8%',minWidth: '26.8%', whiteSpace: 'nowrap', overflow: 'hidden',textAlign:"auto",paddingY:'6px',paddingRight:'10px' }}>A侵犯B人身安全,人身安全</TableCell>
-                  <TableCell sx={{ borderBottom: 'none', padding: '2px',color: 'white',textOverflow: 'ellipsis', maxWidth: '16.4%',minWidth: '16.4%', whiteSpace: 'nowrap', overflow: 'hidden',textAlign:"center",paddingY:'6px' ,paddingRight:'10px'}}>张三</TableCell>
+                  <TableCell
+                    sx={{
+                      borderBottom: "none",
+                      padding: "2px",
+                      color: "white",
+                      textOverflow: "ellipsis",
+                      maxWidth: "16.4%",
+                      minWidth: "16.4%",
+                      whiteSpace: "nowrap",
+                      overflow: "hidden",
+                      paddingY: "6px",
+                      paddingRight: "10px",
+                    }}
+                  >
+                    2024-01-01
+                  </TableCell>
+                  <TableCell
+                    sx={{
+                      borderBottom: "none",
+                      padding: "2px",
+                      color: "white",
+                      textOverflow: "ellipsis",
+                      maxWidth: "16.4%",
+                      minWidth: "16.4%",
+                      whiteSpace: "nowrap",
+                      overflow: "hidden",
+                      paddingY: "6px",
+                      paddingRight: "10px",
+                    }}
+                  >
+                    报警类
+                  </TableCell>
+                  <TableCell
+                    sx={{
+                      borderBottom: "none",
+                      padding: "2px",
+                      color: "white",
+                      textOverflow: "ellipsis",
+                      maxWidth: "23.8%",
+                      minWidth: "23.8%",
+                      whiteSpace: "nowrap",
+                      overflow: "hidden",
+                      textAlign: "auto",
+                      paddingY: "6px",
+                      paddingRight: "10px",
+                    }}
+                  >
+                    侵犯人身安全
+                  </TableCell>
+                  <TableCell
+                    sx={{
+                      borderBottom: "none",
+                      padding: "2px",
+                      color: "white",
+                      textOverflow: "ellipsis",
+                      maxWidth: "26.8%",
+                      minWidth: "26.8%",
+                      whiteSpace: "nowrap",
+                      overflow: "hidden",
+                      textAlign: "auto",
+                      paddingY: "6px",
+                      paddingRight: "10px",
+                    }}
+                  >
+                    A侵犯B人身安全,人身安全
+                  </TableCell>
+                  <TableCell
+                    sx={{
+                      borderBottom: "none",
+                      padding: "2px",
+                      color: "white",
+                      textOverflow: "ellipsis",
+                      maxWidth: "16.4%",
+                      minWidth: "16.4%",
+                      whiteSpace: "nowrap",
+                      overflow: "hidden",
+                      textAlign: "center",
+                      paddingY: "6px",
+                      paddingRight: "10px",
+                    }}
+                  >
+                    张三
+                  </TableCell>
                 </TableRow>
                 <TableRow>
-                  <TableCell sx={{ borderBottom: 'none', padding: '2px',color: 'white',textOverflow: 'ellipsis', maxWidth: '16.4%', minWidth: '16.4%',whiteSpace: 'nowrap', overflow: 'hidden',paddingY:'6px' ,paddingRight:'10px'}}>2024-01-01</TableCell>
-                  <TableCell sx={{ borderBottom: 'none', padding: '2px',color: 'white',textOverflow: 'ellipsis', maxWidth: '16.4%',minWidth: '16.4%', whiteSpace: 'nowrap', overflow: 'hidden',paddingY:'6px',paddingRight:'10px'}}>报警类</TableCell>
-                  <TableCell sx={{ borderBottom: 'none', padding: '2px',color: 'white',textOverflow: 'ellipsis', maxWidth: '23.8%',minWidth: '23.8%', whiteSpace: 'nowrap', overflow: 'hidden',textAlign:"auto",paddingY:'6px' ,paddingRight:'10px'}}>侵犯人身安全</TableCell>
-                  <TableCell sx={{ borderBottom: 'none', padding: '2px',color: 'white',textOverflow: 'ellipsis', maxWidth: '26.8%',minWidth: '26.8%', whiteSpace: 'nowrap', overflow: 'hidden',textAlign:"auto",paddingY:'6px',paddingRight:'10px' }}>A侵犯B人身安全,人身安全</TableCell>
-                  <TableCell sx={{ borderBottom: 'none', padding: '2px',color: 'white',textOverflow: 'ellipsis', maxWidth: '16.4%',minWidth: '16.4%', whiteSpace: 'nowrap', overflow: 'hidden',textAlign:"center",paddingY:'6px' ,paddingRight:'10px'}}>张三</TableCell>
+                  <TableCell
+                    sx={{
+                      borderBottom: "none",
+                      padding: "2px",
+                      color: "white",
+                      textOverflow: "ellipsis",
+                      maxWidth: "16.4%",
+                      minWidth: "16.4%",
+                      whiteSpace: "nowrap",
+                      overflow: "hidden",
+                      paddingY: "6px",
+                      paddingRight: "10px",
+                    }}
+                  >
+                    2024-01-01
+                  </TableCell>
+                  <TableCell
+                    sx={{
+                      borderBottom: "none",
+                      padding: "2px",
+                      color: "white",
+                      textOverflow: "ellipsis",
+                      maxWidth: "16.4%",
+                      minWidth: "16.4%",
+                      whiteSpace: "nowrap",
+                      overflow: "hidden",
+                      paddingY: "6px",
+                      paddingRight: "10px",
+                    }}
+                  >
+                    报警类
+                  </TableCell>
+                  <TableCell
+                    sx={{
+                      borderBottom: "none",
+                      padding: "2px",
+                      color: "white",
+                      textOverflow: "ellipsis",
+                      maxWidth: "23.8%",
+                      minWidth: "23.8%",
+                      whiteSpace: "nowrap",
+                      overflow: "hidden",
+                      textAlign: "auto",
+                      paddingY: "6px",
+                      paddingRight: "10px",
+                    }}
+                  >
+                    侵犯人身安全
+                  </TableCell>
+                  <TableCell
+                    sx={{
+                      borderBottom: "none",
+                      padding: "2px",
+                      color: "white",
+                      textOverflow: "ellipsis",
+                      maxWidth: "26.8%",
+                      minWidth: "26.8%",
+                      whiteSpace: "nowrap",
+                      overflow: "hidden",
+                      textAlign: "auto",
+                      paddingY: "6px",
+                      paddingRight: "10px",
+                    }}
+                  >
+                    A侵犯B人身安全,人身安全
+                  </TableCell>
+                  <TableCell
+                    sx={{
+                      borderBottom: "none",
+                      padding: "2px",
+                      color: "white",
+                      textOverflow: "ellipsis",
+                      maxWidth: "16.4%",
+                      minWidth: "16.4%",
+                      whiteSpace: "nowrap",
+                      overflow: "hidden",
+                      textAlign: "center",
+                      paddingY: "6px",
+                      paddingRight: "10px",
+                    }}
+                  >
+                    张三
+                  </TableCell>
                 </TableRow>
                 <TableRow>
-                  <TableCell sx={{ borderBottom: 'none', padding: '2px',color: 'white',textOverflow: 'ellipsis', maxWidth: '16.4%', minWidth: '16.4%',whiteSpace: 'nowrap', overflow: 'hidden',paddingY:'6px' ,paddingRight:'10px'}}>2024-01-01</TableCell>
-                  <TableCell sx={{ borderBottom: 'none', padding: '2px',color: 'white',textOverflow: 'ellipsis', maxWidth: '16.4%',minWidth: '16.4%', whiteSpace: 'nowrap', overflow: 'hidden',paddingY:'6px',paddingRight:'10px'}}>报警类</TableCell>
-                  <TableCell sx={{ borderBottom: 'none', padding: '2px',color: 'white',textOverflow: 'ellipsis', maxWidth: '23.8%',minWidth: '23.8%', whiteSpace: 'nowrap', overflow: 'hidden',textAlign:"auto",paddingY:'6px',paddingRight:'10px' }}>侵犯人身安全</TableCell>
-                  <TableCell sx={{ borderBottom: 'none', padding: '2px',color: 'white',textOverflow: 'ellipsis', maxWidth: '26.8%',minWidth: '26.8%', whiteSpace: 'nowrap', overflow: 'hidden',textAlign:"auto",paddingY:'6px',paddingRight:'10px' }}>A侵犯B人身安全,人身安全</TableCell>
-                  <TableCell sx={{ borderBottom: 'none', padding: '2px',color: 'white',textOverflow: 'ellipsis', maxWidth: '16.4%',minWidth: '16.4%', whiteSpace: 'nowrap', overflow: 'hidden',textAlign:"center",paddingY:'6px',paddingRight:'10px'}}>张三</TableCell>
+                  <TableCell
+                    sx={{
+                      borderBottom: "none",
+                      padding: "2px",
+                      color: "white",
+                      textOverflow: "ellipsis",
+                      maxWidth: "16.4%",
+                      minWidth: "16.4%",
+                      whiteSpace: "nowrap",
+                      overflow: "hidden",
+                      paddingY: "6px",
+                      paddingRight: "10px",
+                    }}
+                  >
+                    2024-01-01
+                  </TableCell>
+                  <TableCell
+                    sx={{
+                      borderBottom: "none",
+                      padding: "2px",
+                      color: "white",
+                      textOverflow: "ellipsis",
+                      maxWidth: "16.4%",
+                      minWidth: "16.4%",
+                      whiteSpace: "nowrap",
+                      overflow: "hidden",
+                      paddingY: "6px",
+                      paddingRight: "10px",
+                    }}
+                  >
+                    报警类
+                  </TableCell>
+                  <TableCell
+                    sx={{
+                      borderBottom: "none",
+                      padding: "2px",
+                      color: "white",
+                      textOverflow: "ellipsis",
+                      maxWidth: "23.8%",
+                      minWidth: "23.8%",
+                      whiteSpace: "nowrap",
+                      overflow: "hidden",
+                      textAlign: "auto",
+                      paddingY: "6px",
+                      paddingRight: "10px",
+                    }}
+                  >
+                    侵犯人身安全
+                  </TableCell>
+                  <TableCell
+                    sx={{
+                      borderBottom: "none",
+                      padding: "2px",
+                      color: "white",
+                      textOverflow: "ellipsis",
+                      maxWidth: "26.8%",
+                      minWidth: "26.8%",
+                      whiteSpace: "nowrap",
+                      overflow: "hidden",
+                      textAlign: "auto",
+                      paddingY: "6px",
+                      paddingRight: "10px",
+                    }}
+                  >
+                    A侵犯B人身安全,人身安全
+                  </TableCell>
+                  <TableCell
+                    sx={{
+                      borderBottom: "none",
+                      padding: "2px",
+                      color: "white",
+                      textOverflow: "ellipsis",
+                      maxWidth: "16.4%",
+                      minWidth: "16.4%",
+                      whiteSpace: "nowrap",
+                      overflow: "hidden",
+                      textAlign: "center",
+                      paddingY: "6px",
+                      paddingRight: "10px",
+                    }}
+                  >
+                    张三
+                  </TableCell>
                 </TableRow>
                 <TableRow>
-                  <TableCell sx={{ borderBottom: 'none', padding: '2px',color: 'white',textOverflow: 'ellipsis', maxWidth: '16.4%', minWidth: '16.4%',whiteSpace: 'nowrap', overflow: 'hidden',paddingY:'6px' ,paddingRight:'10px'}}>2024-01-01</TableCell>
-                  <TableCell sx={{ borderBottom: 'none', padding: '2px',color: 'white',textOverflow: 'ellipsis', maxWidth: '16.4%',minWidth: '16.4%', whiteSpace: 'nowrap', overflow: 'hidden',paddingY:'6px',paddingRight:'10px'}}>报警类</TableCell>
-                  <TableCell sx={{ borderBottom: 'none', padding: '2px',color: 'white',textOverflow: 'ellipsis', maxWidth: '23.8%',minWidth: '23.8%', whiteSpace: 'nowrap', overflow: 'hidden',textAlign:"auto" ,paddingY:'6px',paddingRight:'10px'}}>侵犯人身安全</TableCell>
-                  <TableCell sx={{ borderBottom: 'none', padding: '2px',color: 'white',textOverflow: 'ellipsis', maxWidth: '26.8%',minWidth: '26.8%', whiteSpace: 'nowrap', overflow: 'hidden',textAlign:"auto",paddingY:'6px' ,paddingRight:'10px'}}>A侵犯B人身安全,人身安全</TableCell>
-                  <TableCell sx={{ borderBottom: 'none', padding: '2px',color: 'white',textOverflow: 'ellipsis', maxWidth: '16.4%',minWidth: '16.4%', whiteSpace: 'nowrap', overflow: 'hidden',textAlign:"center" ,paddingY:'6px',paddingRight:'10px'}}>张三</TableCell>
+                  <TableCell
+                    sx={{
+                      borderBottom: "none",
+                      padding: "2px",
+                      color: "white",
+                      textOverflow: "ellipsis",
+                      maxWidth: "16.4%",
+                      minWidth: "16.4%",
+                      whiteSpace: "nowrap",
+                      overflow: "hidden",
+                      paddingY: "6px",
+                      paddingRight: "10px",
+                    }}
+                  >
+                    2024-01-01
+                  </TableCell>
+                  <TableCell
+                    sx={{
+                      borderBottom: "none",
+                      padding: "2px",
+                      color: "white",
+                      textOverflow: "ellipsis",
+                      maxWidth: "16.4%",
+                      minWidth: "16.4%",
+                      whiteSpace: "nowrap",
+                      overflow: "hidden",
+                      paddingY: "6px",
+                      paddingRight: "10px",
+                    }}
+                  >
+                    报警类
+                  </TableCell>
+                  <TableCell
+                    sx={{
+                      borderBottom: "none",
+                      padding: "2px",
+                      color: "white",
+                      textOverflow: "ellipsis",
+                      maxWidth: "23.8%",
+                      minWidth: "23.8%",
+                      whiteSpace: "nowrap",
+                      overflow: "hidden",
+                      textAlign: "auto",
+                      paddingY: "6px",
+                      paddingRight: "10px",
+                    }}
+                  >
+                    侵犯人身安全
+                  </TableCell>
+                  <TableCell
+                    sx={{
+                      borderBottom: "none",
+                      padding: "2px",
+                      color: "white",
+                      textOverflow: "ellipsis",
+                      maxWidth: "26.8%",
+                      minWidth: "26.8%",
+                      whiteSpace: "nowrap",
+                      overflow: "hidden",
+                      textAlign: "auto",
+                      paddingY: "6px",
+                      paddingRight: "10px",
+                    }}
+                  >
+                    A侵犯B人身安全,人身安全
+                  </TableCell>
+                  <TableCell
+                    sx={{
+                      borderBottom: "none",
+                      padding: "2px",
+                      color: "white",
+                      textOverflow: "ellipsis",
+                      maxWidth: "16.4%",
+                      minWidth: "16.4%",
+                      whiteSpace: "nowrap",
+                      overflow: "hidden",
+                      textAlign: "center",
+                      paddingY: "6px",
+                      paddingRight: "10px",
+                    }}
+                  >
+                    张三
+                  </TableCell>
                 </TableRow>
               </TableBody>
             </TableContainer>
@@ -1365,61 +1758,509 @@ const Dashboard = () => {
               </Button>
             </Box>
             {/* Add your content here */}
-            <TableContainer component={Paper} sx= {{ backgroundColor: 'transparent', marginTop: '30px',overflow: 'hidden',minWidth: '100%',boxShadow: "none",Width: '100%',}}>
-            <TableHead>
-              <TableRow>
-                <TableCell sx={{ borderBottom: 'none', padding: '4px',color: 'lightblue',textOverflow: 'ellipsis', maxWidth: '17.6%', minWidth: '17.6%',whiteSpace: 'nowrap', overflow: 'hidden',textAlign:"center" }}>时间</TableCell>
-                <TableCell sx={{ borderBottom: 'none', padding: '4px',color: 'lightblue',textOverflow: 'ellipsis', maxWidth: '23.5%',minWidth: '23.5%', whiteSpace: 'nowrap', overflow: 'hidden',textAlign:"center" }}>勤务类型</TableCell>
-                <TableCell sx={{ borderBottom: 'none', padding: '4px',color: 'lightblue',textOverflow: 'ellipsis', maxWidth: '58.8%',minWidth: '58.8%', whiteSpace: 'nowrap', overflow: 'hidden',}}>   勤务内容</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-            <TableRow>
-                <TableCell sx={{ borderBottom: 'none', padding: '4px',color: 'white',textOverflow: 'ellipsis', maxWidth: '17.6%', minWidth: '17.6%',whiteSpace: 'nowrap', overflow: 'hidden',textAlign:"center",paddingY:'10px' }}>2024-01-01</TableCell>
-                <TableCell sx={{ borderBottom: 'none', padding: '4px',color: 'white',textOverflow: 'ellipsis', maxWidth: '23.5%',minWidth: '23.5%', whiteSpace: 'nowrap', overflow: 'hidden',textAlign:"center",paddingY:'10px' }}>清查整治</TableCell>
-                <TableCell sx={{ borderBottom: 'none', padding: '4px',color: 'white',textOverflow: 'ellipsis', maxWidth: '58.8%',minWidth: '58.8%', whiteSpace: 'nowrap', overflow: 'hidden',paddingY:'10px'}}>这是勤务内容勤务内容勤务内容勤务内容</TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell sx={{ borderBottom: 'none', padding: '4px',color: 'white',textOverflow: 'ellipsis', maxWidth: '17.6%', minWidth: '17.6%',whiteSpace: 'nowrap', overflow: 'hidden',textAlign:"center",paddingY:'10px' }}>2024-01-01</TableCell>
-                <TableCell sx={{ borderBottom: 'none', padding: '4px',color: 'white',textOverflow: 'ellipsis', maxWidth: '23.5%',minWidth: '23.5%', whiteSpace: 'nowrap', overflow: 'hidden',textAlign:"center",paddingY:'10px' }}>清查整治</TableCell>
-                <TableCell sx={{ borderBottom: 'none', padding: '4px',color: 'white',textOverflow: 'ellipsis', maxWidth: '58.8%',minWidth: '58.8%', whiteSpace: 'nowrap', overflow: 'hidden',paddingY:'10px'}}>这是勤务内容勤务内容勤务内容勤务内容</TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell sx={{ borderBottom: 'none', padding: '4px',color: 'white',textOverflow: 'ellipsis', maxWidth: '17.6%', minWidth: '17.6%',whiteSpace: 'nowrap', overflow: 'hidden',textAlign:"center",paddingY:'10px' }}>2024-01-01</TableCell>
-                <TableCell sx={{ borderBottom: 'none', padding: '4px',color: 'white',textOverflow: 'ellipsis', maxWidth: '23.5%',minWidth: '23.5%', whiteSpace: 'nowrap', overflow: 'hidden',textAlign:"center",paddingY:'10px' }}>清查整治</TableCell>
-                <TableCell sx={{ borderBottom: 'none', padding: '4px',color: 'white',textOverflow: 'ellipsis', maxWidth: '58.8%',minWidth: '58.8%', whiteSpace: 'nowrap', overflow: 'hidden',paddingY:'10px'}}>这是勤务内容勤务内容勤务内容勤务内容</TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell sx={{ borderBottom: 'none', padding: '4px',color: 'white',textOverflow: 'ellipsis', maxWidth: '17.6%', minWidth: '17.6%',whiteSpace: 'nowrap', overflow: 'hidden',textAlign:"center",paddingY:'10px' }}>2024-01-01</TableCell>
-                <TableCell sx={{ borderBottom: 'none', padding: '4px',color: 'white',textOverflow: 'ellipsis', maxWidth: '23.5%',minWidth: '23.5%', whiteSpace: 'nowrap', overflow: 'hidden',textAlign:"center",paddingY:'10px'  }}>清查整治</TableCell>
-                <TableCell sx={{ borderBottom: 'none', padding: '4px',color: 'white',textOverflow: 'ellipsis', maxWidth: '58.8%',minWidth: '58.8%', whiteSpace: 'nowrap', overflow: 'hidden',paddingY:'10px'}}>这是勤务内容勤务内容勤务内容勤务内容</TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell sx={{ borderBottom: 'none', padding: '4px',color: 'white',textOverflow: 'ellipsis', maxWidth: '17.6%', minWidth: '17.6%',whiteSpace: 'nowrap', overflow: 'hidden',textAlign:"center",paddingY:'10px' }}>2024-01-01</TableCell>
-                <TableCell sx={{ borderBottom: 'none', padding: '4px',color: 'white',textOverflow: 'ellipsis', maxWidth: '23.5%',minWidth: '23.5%', whiteSpace: 'nowrap', overflow: 'hidden',textAlign:"center",paddingY:'10px' }}>清查整治</TableCell>
-                <TableCell sx={{ borderBottom: 'none', padding: '4px',color: 'white',textOverflow: 'ellipsis', maxWidth: '58.8%',minWidth: '58.8%', whiteSpace: 'nowrap', overflow: 'hidden',paddingY:'10px'}}>这是勤务内容勤务内容勤务内容勤务内容</TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell sx={{ borderBottom: 'none', padding: '4px',color: 'white',textOverflow: 'ellipsis', maxWidth: '17.6%', minWidth: '17.6%',whiteSpace: 'nowrap', overflow: 'hidden',textAlign:"center",paddingY:'10px' }}>2024-01-01</TableCell>
-                <TableCell sx={{ borderBottom: 'none', padding: '4px',color: 'white',textOverflow: 'ellipsis', maxWidth: '23.5%',minWidth: '23.5%', whiteSpace: 'nowrap', overflow: 'hidden',textAlign:"center",paddingY:'10px' }}>清查整治</TableCell>
-                <TableCell sx={{ borderBottom: 'none', padding: '4px',color: 'white',textOverflow: 'ellipsis', maxWidth: '58.8%',minWidth: '58.8%', whiteSpace: 'nowrap', overflow: 'hidden',paddingY:'10px'}}>这是勤务内容勤务内容勤务内容勤务内容</TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell sx={{ borderBottom: 'none', padding: '4px',color: 'white',textOverflow: 'ellipsis', maxWidth: '17.6%', minWidth: '17.6%',whiteSpace: 'nowrap', overflow: 'hidden',textAlign:"center",paddingY:'10px' }}>2024-01-01</TableCell>
-                <TableCell sx={{ borderBottom: 'none', padding: '4px',color: 'white',textOverflow: 'ellipsis', maxWidth: '23.5%',minWidth: '23.5%', whiteSpace: 'nowrap', overflow: 'hidden',textAlign:"center",paddingY:'10px' }}>清查整治</TableCell>
-                <TableCell sx={{ borderBottom: 'none', padding: '4px',color: 'white',textOverflow: 'ellipsis', maxWidth: '58.8%',minWidth: '58.8%', whiteSpace: 'nowrap', overflow: 'hidden',paddingY:'10px'}}>这是勤务内容勤务内容勤务内容勤务内容</TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell sx={{ borderBottom: 'none', padding: '4px',color: 'white',textOverflow: 'ellipsis', maxWidth: '17.6%', minWidth: '17.6%',whiteSpace: 'nowrap', overflow: 'hidden',textAlign:"center",paddingY:'10px' }}>2024-01-01</TableCell>
-                <TableCell sx={{ borderBottom: 'none', padding: '4px',color: 'white',textOverflow: 'ellipsis', maxWidth: '23.5%',minWidth: '23.5%', whiteSpace: 'nowrap', overflow: 'hidden',textAlign:"center",paddingY:'10px' }}>清查整治</TableCell>
-                <TableCell sx={{ borderBottom: 'none', padding: '4px',color: 'white',textOverflow: 'ellipsis', maxWidth: '58.8%',minWidth: '58.8%', whiteSpace: 'nowrap', overflow: 'hidden',paddingY:'10px'}}>这是勤务内容勤务内容勤务内容勤务内容</TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell sx={{ borderBottom: 'none', padding: '4px',color: 'white',textOverflow: 'ellipsis', maxWidth: '17.6%', minWidth: '17.6%',whiteSpace: 'nowrap', overflow: 'hidden',textAlign:"center",paddingY:'10px' }}>2024-01-01</TableCell>
-                <TableCell sx={{ borderBottom: 'none', padding: '4px',color: 'white',textOverflow: 'ellipsis', maxWidth: '23.5%',minWidth: '23.5%', whiteSpace: 'nowrap', overflow: 'hidden',textAlign:"center",paddingY:'10px' }}>清查整治</TableCell>
-                <TableCell sx={{ borderBottom: 'none', padding: '4px',color: 'white',textOverflow: 'ellipsis', maxWidth: '58.8%',minWidth: '58.8%', whiteSpace: 'nowrap', overflow: 'hidden',paddingY:'10px'}}>这是勤务内容勤务内容勤务内容勤务内容</TableCell>
-              </TableRow>
-            </TableBody>
+            <TableContainer
+              component={Paper}
+              sx={{
+                backgroundColor: "transparent",
+                marginTop: "30px",
+                overflow: "hidden",
+                minWidth: "100%",
+                boxShadow: "none",
+                Width: "100%",
+              }}
+            >
+              <TableHead>
+                <TableRow>
+                  <TableCell
+                    sx={{
+                      borderBottom: "none",
+                      padding: "4px",
+                      color: "lightblue",
+                      textOverflow: "ellipsis",
+                      maxWidth: "17.6%",
+                      minWidth: "17.6%",
+                      whiteSpace: "nowrap",
+                      overflow: "hidden",
+                      textAlign: "center",
+                    }}
+                  >
+                    时间
+                  </TableCell>
+                  <TableCell
+                    sx={{
+                      borderBottom: "none",
+                      padding: "4px",
+                      color: "lightblue",
+                      textOverflow: "ellipsis",
+                      maxWidth: "23.5%",
+                      minWidth: "23.5%",
+                      whiteSpace: "nowrap",
+                      overflow: "hidden",
+                      textAlign: "center",
+                    }}
+                  >
+                    勤务类型
+                  </TableCell>
+                  <TableCell
+                    sx={{
+                      borderBottom: "none",
+                      padding: "4px",
+                      color: "lightblue",
+                      textOverflow: "ellipsis",
+                      maxWidth: "58.8%",
+                      minWidth: "58.8%",
+                      whiteSpace: "nowrap",
+                      overflow: "hidden",
+                    }}
+                  >
+                    {" "}
+                    勤务内容
+                  </TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                <TableRow>
+                  <TableCell
+                    sx={{
+                      borderBottom: "none",
+                      padding: "4px",
+                      color: "white",
+                      textOverflow: "ellipsis",
+                      maxWidth: "17.6%",
+                      minWidth: "17.6%",
+                      whiteSpace: "nowrap",
+                      overflow: "hidden",
+                      textAlign: "center",
+                      paddingY: "10px",
+                    }}
+                  >
+                    2024-01-01
+                  </TableCell>
+                  <TableCell
+                    sx={{
+                      borderBottom: "none",
+                      padding: "4px",
+                      color: "white",
+                      textOverflow: "ellipsis",
+                      maxWidth: "23.5%",
+                      minWidth: "23.5%",
+                      whiteSpace: "nowrap",
+                      overflow: "hidden",
+                      textAlign: "center",
+                      paddingY: "10px",
+                    }}
+                  >
+                    清查整治
+                  </TableCell>
+                  <TableCell
+                    sx={{
+                      borderBottom: "none",
+                      padding: "4px",
+                      color: "white",
+                      textOverflow: "ellipsis",
+                      maxWidth: "58.8%",
+                      minWidth: "58.8%",
+                      whiteSpace: "nowrap",
+                      overflow: "hidden",
+                      paddingY: "10px",
+                    }}
+                  >
+                    这是勤务内容勤务内容勤务内容勤务内容
+                  </TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell
+                    sx={{
+                      borderBottom: "none",
+                      padding: "4px",
+                      color: "white",
+                      textOverflow: "ellipsis",
+                      maxWidth: "17.6%",
+                      minWidth: "17.6%",
+                      whiteSpace: "nowrap",
+                      overflow: "hidden",
+                      textAlign: "center",
+                      paddingY: "10px",
+                    }}
+                  >
+                    2024-01-01
+                  </TableCell>
+                  <TableCell
+                    sx={{
+                      borderBottom: "none",
+                      padding: "4px",
+                      color: "white",
+                      textOverflow: "ellipsis",
+                      maxWidth: "23.5%",
+                      minWidth: "23.5%",
+                      whiteSpace: "nowrap",
+                      overflow: "hidden",
+                      textAlign: "center",
+                      paddingY: "10px",
+                    }}
+                  >
+                    清查整治
+                  </TableCell>
+                  <TableCell
+                    sx={{
+                      borderBottom: "none",
+                      padding: "4px",
+                      color: "white",
+                      textOverflow: "ellipsis",
+                      maxWidth: "58.8%",
+                      minWidth: "58.8%",
+                      whiteSpace: "nowrap",
+                      overflow: "hidden",
+                      paddingY: "10px",
+                    }}
+                  >
+                    这是勤务内容勤务内容勤务内容勤务内容
+                  </TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell
+                    sx={{
+                      borderBottom: "none",
+                      padding: "4px",
+                      color: "white",
+                      textOverflow: "ellipsis",
+                      maxWidth: "17.6%",
+                      minWidth: "17.6%",
+                      whiteSpace: "nowrap",
+                      overflow: "hidden",
+                      textAlign: "center",
+                      paddingY: "10px",
+                    }}
+                  >
+                    2024-01-01
+                  </TableCell>
+                  <TableCell
+                    sx={{
+                      borderBottom: "none",
+                      padding: "4px",
+                      color: "white",
+                      textOverflow: "ellipsis",
+                      maxWidth: "23.5%",
+                      minWidth: "23.5%",
+                      whiteSpace: "nowrap",
+                      overflow: "hidden",
+                      textAlign: "center",
+                      paddingY: "10px",
+                    }}
+                  >
+                    清查整治
+                  </TableCell>
+                  <TableCell
+                    sx={{
+                      borderBottom: "none",
+                      padding: "4px",
+                      color: "white",
+                      textOverflow: "ellipsis",
+                      maxWidth: "58.8%",
+                      minWidth: "58.8%",
+                      whiteSpace: "nowrap",
+                      overflow: "hidden",
+                      paddingY: "10px",
+                    }}
+                  >
+                    这是勤务内容勤务内容勤务内容勤务内容
+                  </TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell
+                    sx={{
+                      borderBottom: "none",
+                      padding: "4px",
+                      color: "white",
+                      textOverflow: "ellipsis",
+                      maxWidth: "17.6%",
+                      minWidth: "17.6%",
+                      whiteSpace: "nowrap",
+                      overflow: "hidden",
+                      textAlign: "center",
+                      paddingY: "10px",
+                    }}
+                  >
+                    2024-01-01
+                  </TableCell>
+                  <TableCell
+                    sx={{
+                      borderBottom: "none",
+                      padding: "4px",
+                      color: "white",
+                      textOverflow: "ellipsis",
+                      maxWidth: "23.5%",
+                      minWidth: "23.5%",
+                      whiteSpace: "nowrap",
+                      overflow: "hidden",
+                      textAlign: "center",
+                      paddingY: "10px",
+                    }}
+                  >
+                    清查整治
+                  </TableCell>
+                  <TableCell
+                    sx={{
+                      borderBottom: "none",
+                      padding: "4px",
+                      color: "white",
+                      textOverflow: "ellipsis",
+                      maxWidth: "58.8%",
+                      minWidth: "58.8%",
+                      whiteSpace: "nowrap",
+                      overflow: "hidden",
+                      paddingY: "10px",
+                    }}
+                  >
+                    这是勤务内容勤务内容勤务内容勤务内容
+                  </TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell
+                    sx={{
+                      borderBottom: "none",
+                      padding: "4px",
+                      color: "white",
+                      textOverflow: "ellipsis",
+                      maxWidth: "17.6%",
+                      minWidth: "17.6%",
+                      whiteSpace: "nowrap",
+                      overflow: "hidden",
+                      textAlign: "center",
+                      paddingY: "10px",
+                    }}
+                  >
+                    2024-01-01
+                  </TableCell>
+                  <TableCell
+                    sx={{
+                      borderBottom: "none",
+                      padding: "4px",
+                      color: "white",
+                      textOverflow: "ellipsis",
+                      maxWidth: "23.5%",
+                      minWidth: "23.5%",
+                      whiteSpace: "nowrap",
+                      overflow: "hidden",
+                      textAlign: "center",
+                      paddingY: "10px",
+                    }}
+                  >
+                    清查整治
+                  </TableCell>
+                  <TableCell
+                    sx={{
+                      borderBottom: "none",
+                      padding: "4px",
+                      color: "white",
+                      textOverflow: "ellipsis",
+                      maxWidth: "58.8%",
+                      minWidth: "58.8%",
+                      whiteSpace: "nowrap",
+                      overflow: "hidden",
+                      paddingY: "10px",
+                    }}
+                  >
+                    这是勤务内容勤务内容勤务内容勤务内容
+                  </TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell
+                    sx={{
+                      borderBottom: "none",
+                      padding: "4px",
+                      color: "white",
+                      textOverflow: "ellipsis",
+                      maxWidth: "17.6%",
+                      minWidth: "17.6%",
+                      whiteSpace: "nowrap",
+                      overflow: "hidden",
+                      textAlign: "center",
+                      paddingY: "10px",
+                    }}
+                  >
+                    2024-01-01
+                  </TableCell>
+                  <TableCell
+                    sx={{
+                      borderBottom: "none",
+                      padding: "4px",
+                      color: "white",
+                      textOverflow: "ellipsis",
+                      maxWidth: "23.5%",
+                      minWidth: "23.5%",
+                      whiteSpace: "nowrap",
+                      overflow: "hidden",
+                      textAlign: "center",
+                      paddingY: "10px",
+                    }}
+                  >
+                    清查整治
+                  </TableCell>
+                  <TableCell
+                    sx={{
+                      borderBottom: "none",
+                      padding: "4px",
+                      color: "white",
+                      textOverflow: "ellipsis",
+                      maxWidth: "58.8%",
+                      minWidth: "58.8%",
+                      whiteSpace: "nowrap",
+                      overflow: "hidden",
+                      paddingY: "10px",
+                    }}
+                  >
+                    这是勤务内容勤务内容勤务内容勤务内容
+                  </TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell
+                    sx={{
+                      borderBottom: "none",
+                      padding: "4px",
+                      color: "white",
+                      textOverflow: "ellipsis",
+                      maxWidth: "17.6%",
+                      minWidth: "17.6%",
+                      whiteSpace: "nowrap",
+                      overflow: "hidden",
+                      textAlign: "center",
+                      paddingY: "10px",
+                    }}
+                  >
+                    2024-01-01
+                  </TableCell>
+                  <TableCell
+                    sx={{
+                      borderBottom: "none",
+                      padding: "4px",
+                      color: "white",
+                      textOverflow: "ellipsis",
+                      maxWidth: "23.5%",
+                      minWidth: "23.5%",
+                      whiteSpace: "nowrap",
+                      overflow: "hidden",
+                      textAlign: "center",
+                      paddingY: "10px",
+                    }}
+                  >
+                    清查整治
+                  </TableCell>
+                  <TableCell
+                    sx={{
+                      borderBottom: "none",
+                      padding: "4px",
+                      color: "white",
+                      textOverflow: "ellipsis",
+                      maxWidth: "58.8%",
+                      minWidth: "58.8%",
+                      whiteSpace: "nowrap",
+                      overflow: "hidden",
+                      paddingY: "10px",
+                    }}
+                  >
+                    这是勤务内容勤务内容勤务内容勤务内容
+                  </TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell
+                    sx={{
+                      borderBottom: "none",
+                      padding: "4px",
+                      color: "white",
+                      textOverflow: "ellipsis",
+                      maxWidth: "17.6%",
+                      minWidth: "17.6%",
+                      whiteSpace: "nowrap",
+                      overflow: "hidden",
+                      textAlign: "center",
+                      paddingY: "10px",
+                    }}
+                  >
+                    2024-01-01
+                  </TableCell>
+                  <TableCell
+                    sx={{
+                      borderBottom: "none",
+                      padding: "4px",
+                      color: "white",
+                      textOverflow: "ellipsis",
+                      maxWidth: "23.5%",
+                      minWidth: "23.5%",
+                      whiteSpace: "nowrap",
+                      overflow: "hidden",
+                      textAlign: "center",
+                      paddingY: "10px",
+                    }}
+                  >
+                    清查整治
+                  </TableCell>
+                  <TableCell
+                    sx={{
+                      borderBottom: "none",
+                      padding: "4px",
+                      color: "white",
+                      textOverflow: "ellipsis",
+                      maxWidth: "58.8%",
+                      minWidth: "58.8%",
+                      whiteSpace: "nowrap",
+                      overflow: "hidden",
+                      paddingY: "10px",
+                    }}
+                  >
+                    这是勤务内容勤务内容勤务内容勤务内容
+                  </TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell
+                    sx={{
+                      borderBottom: "none",
+                      padding: "4px",
+                      color: "white",
+                      textOverflow: "ellipsis",
+                      maxWidth: "17.6%",
+                      minWidth: "17.6%",
+                      whiteSpace: "nowrap",
+                      overflow: "hidden",
+                      textAlign: "center",
+                      paddingY: "10px",
+                    }}
+                  >
+                    2024-01-01
+                  </TableCell>
+                  <TableCell
+                    sx={{
+                      borderBottom: "none",
+                      padding: "4px",
+                      color: "white",
+                      textOverflow: "ellipsis",
+                      maxWidth: "23.5%",
+                      minWidth: "23.5%",
+                      whiteSpace: "nowrap",
+                      overflow: "hidden",
+                      textAlign: "center",
+                      paddingY: "10px",
+                    }}
+                  >
+                    清查整治
+                  </TableCell>
+                  <TableCell
+                    sx={{
+                      borderBottom: "none",
+                      padding: "4px",
+                      color: "white",
+                      textOverflow: "ellipsis",
+                      maxWidth: "58.8%",
+                      minWidth: "58.8%",
+                      whiteSpace: "nowrap",
+                      overflow: "hidden",
+                      paddingY: "10px",
+                    }}
+                  >
+                    这是勤务内容勤务内容勤务内容勤务内容
+                  </TableCell>
+                </TableRow>
+              </TableBody>
             </TableContainer>
           </Paper>
 
@@ -1447,8 +2288,17 @@ const Dashboard = () => {
               </Button>
             </Box>
             {/* Add your content here */}
-            <TableContainer component={Paper} sx= {{ backgroundColor: 'transparent', marginTop: '20px',overflow: 'hidden',minWidth: '100%',boxShadow: "none",}}>
-                <TableHead>
+            <TableContainer
+              component={Paper}
+              sx={{
+                backgroundColor: "transparent",
+                marginTop: "20px",
+                overflow: "hidden",
+                minWidth: "100%",
+                boxShadow: "none",
+              }}
+            >
+              <TableHead>
                 <TableRow>
                   <TableCell
                     sx={{

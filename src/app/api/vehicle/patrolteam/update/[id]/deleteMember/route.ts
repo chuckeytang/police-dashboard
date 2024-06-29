@@ -7,7 +7,7 @@ const prisma = new PrismaClient();
 export async function PATCH(req: NextRequest) {
   const url = new URL(req.url);
   const id = url.pathname.split("/").slice(-2, -1)[0];
-  const { member_id } = await req.json();
+  const { member_id, shift } = await req.json();
 
   try {
     // 删除成员
@@ -15,6 +15,7 @@ export async function PATCH(req: NextRequest) {
       where: {
         patrol_team_id: Number(id),
         staff_id: member_id,
+        shift: shift,
       },
     });
 
