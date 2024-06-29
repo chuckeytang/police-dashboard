@@ -1,3 +1,5 @@
+'use client';
+
 import * as React from "react";
 import {
   Container,
@@ -6,10 +8,6 @@ import {
   Typography,
   Box,
   Button,
-  List,
-  ListItem,
-  ListItemText,
-  Table,
   TableBody,
   TableHead,
   TableCell,
@@ -24,10 +22,77 @@ import {
 import { PiPoliceCarFill } from "react-icons/pi";
 import { GrSchedule } from "react-icons/gr";
 import { HiMiniBuildingLibrary } from "react-icons/hi2";
-import { motion } from "framer-motion";
 import "animate.css";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { useRouter } from "next/navigation";
 
 const Dashboard = () => {
+    const router = useRouter();
+    const handleButtonClick = () => {
+      router.push(''); // 替换为你想跳转的目标URL
+    };
+
+    // 新增的状态变量
+    const [RecentData, setRecentData] = useState([]);
+    const [Workforce, setWorkforce] = useState([]);
+    const [Analysis, setAnalysis] = useState([]);
+    const [patrolteam, setpatrolteam] = useState([]);
+
+  
+    // 新增的 useEffect 钩子，用于获取数据
+    useEffect(() => {
+      const fetchRecentData = async () => {
+        try {
+          const response = await axios.get("api/recentduties/search");
+          console.log("Fetched recent duties data:",response.data);
+          setRecentData(response.data);
+        } catch (error) {
+          console.error("Error fetching staff data:", error);
+        }
+      };
+      fetchRecentData();
+    }, []);
+  
+    useEffect(()=> {
+      const fetchWorkforce = async () => {
+        try {
+          const response = await axios.get("api/workfocus/search");
+          console.log("Fetched workfocus data:",response.data);
+          setWorkforce(response.data);
+        }catch (error){
+          console.error("",error);
+        }
+      };
+      fetchWorkforce();
+    },[]);
+
+    useEffect(()=> {
+      const fetchAnalysis = async () => {
+        try {
+          const response = await axios.get("api/incidentanalysis/search");
+          console.log("Fetched analysis data:",response.data);
+          setAnalysis(response.data);
+        }catch (error){
+          console.error("",error);
+        }
+      };
+      fetchAnalysis();
+    },[]);
+
+    useEffect(()=> {
+      const fetchpatrolteam = async () => {
+        try {
+          const response = await axios.get("api/vehicle/patrolteam/search");
+          console.log("Fetched patrolteam data:",response.data);
+          setpatrolteam(response.data);
+        }catch (error){
+          console.error("",error);
+        }
+      };
+      fetchpatrolteam();
+    },[]);
+
   return (
     <Container
       maxWidth={false}
@@ -70,7 +135,7 @@ const Dashboard = () => {
               <Typography sx={{ ml: 2, fontSize: "1rem" }}>
                 今日备勤等级:
               </Typography>
-              <Button variant="contained" color="primary" sx={{ ml: "auto" }}>
+              <Button variant="contained" color="primary" sx={{ ml: "auto" }} onClick={handleButtonClick}>
                 编辑
               </Button>
             </Box>
@@ -428,7 +493,8 @@ const Dashboard = () => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                <TableRow>
+              {patrolteam.map((row,index) =>(
+                <TableRow key={index} >
                   <TableCell
                     sx={{
                       borderBottom: "none",
@@ -455,7 +521,7 @@ const Dashboard = () => {
                       overflow: "hidden",
                     }}
                   >
-                    0490
+                    {row.team_name}
                   </TableCell>
                   <TableCell
                     sx={{
@@ -471,7 +537,31 @@ const Dashboard = () => {
                       textAlign: "center",
                     }}
                   >
-                    张三 李四
+                    {row.members.filter(member => member.shift === "早班").map((member, memberIndex) => (
+                    <div key={memberIndex}>
+                    {member.staff.name}
+                    </div>
+                    ))}
+                    </TableCell>
+                  <TableCell
+                    sx={{
+                      borderBottom: "none",
+                      padding: "4px",
+                      color: "white",
+                      textOverflow: "ellipsis",
+                      maxWidth: "80px",
+                      minWidth: "80px",
+                      whiteSpace: "nowrap",
+                      overflow: "hidden",
+                      fontWeight: "bold",
+                      textAlign: "center",
+                    }}
+                  >
+                    {row.members.filter(member => member.shift === "中班").map((member, memberIndex) => (
+                    <div key={memberIndex}>
+                    {member.staff.name}
+                    </div>
+                    ))}
                   </TableCell>
                   <TableCell
                     sx={{
@@ -487,337 +577,14 @@ const Dashboard = () => {
                       textAlign: "center",
                     }}
                   >
-                    张三 李四
-                  </TableCell>
-                  <TableCell
-                    sx={{
-                      borderBottom: "none",
-                      padding: "4px",
-                      color: "white",
-                      textOverflow: "ellipsis",
-                      maxWidth: "80px",
-                      minWidth: "80px",
-                      whiteSpace: "nowrap",
-                      overflow: "hidden",
-                      fontWeight: "bold",
-                      textAlign: "center",
-                    }}
-                  >
-                    张三 李四
+                    {row.members.filter(member => member.shift === "晚班").map((member, memberIndex) => (
+                    <div key={memberIndex}>
+                    {member.staff.name}
+                    </div>
+                    ))}
                   </TableCell>
                 </TableRow>
-                <TableRow>
-                  <TableCell
-                    sx={{
-                      borderBottom: "none",
-                      padding: "4px",
-                      color: "white",
-                      textOverflow: "ellipsis",
-                      maxWidth: "50px",
-                      minWidth: "50px",
-                      whiteSpace: "nowrap",
-                      overflow: "hidden",
-                    }}
-                  >
-                    <PiPoliceCarFill fontSize={20} />
-                  </TableCell>
-                  <TableCell
-                    sx={{
-                      borderBottom: "none",
-                      padding: "4px",
-                      color: "lightblue",
-                      textOverflow: "ellipsis",
-                      maxWidth: "50px",
-                      minWidth: "50px",
-                      whiteSpace: "nowrap",
-                      overflow: "hidden",
-                    }}
-                  >
-                    0490
-                  </TableCell>
-                  <TableCell
-                    sx={{
-                      borderBottom: "none",
-                      padding: "4px",
-                      color: "white",
-                      textOverflow: "ellipsis",
-                      maxWidth: "80px",
-                      minWidth: "80px",
-                      whiteSpace: "nowrap",
-                      overflow: "hidden",
-                      fontWeight: "bold",
-                      textAlign: "center",
-                    }}
-                  >
-                    张三 李四
-                  </TableCell>
-                  <TableCell
-                    sx={{
-                      borderBottom: "none",
-                      padding: "4px",
-                      color: "white",
-                      textOverflow: "ellipsis",
-                      maxWidth: "80px",
-                      minWidth: "80px",
-                      whiteSpace: "nowrap",
-                      overflow: "hidden",
-                      fontWeight: "bold",
-                      textAlign: "center",
-                    }}
-                  >
-                    张三 李四
-                  </TableCell>
-                  <TableCell
-                    sx={{
-                      borderBottom: "none",
-                      padding: "4px",
-                      color: "white",
-                      textOverflow: "ellipsis",
-                      maxWidth: "80px",
-                      minWidth: "80px",
-                      whiteSpace: "nowrap",
-                      overflow: "hidden",
-                      fontWeight: "bold",
-                      textAlign: "center",
-                    }}
-                  >
-                    张三 李四
-                  </TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell
-                    sx={{
-                      borderBottom: "none",
-                      padding: "4px",
-                      color: "white",
-                      textOverflow: "ellipsis",
-                      maxWidth: "50px",
-                      minWidth: "50px",
-                      whiteSpace: "nowrap",
-                      overflow: "hidden",
-                    }}
-                  >
-                    <PiPoliceCarFill fontSize={20} />
-                  </TableCell>
-                  <TableCell
-                    sx={{
-                      borderBottom: "none",
-                      padding: "4px",
-                      color: "lightblue",
-                      textOverflow: "ellipsis",
-                      maxWidth: "50px",
-                      minWidth: "50px",
-                      whiteSpace: "nowrap",
-                      overflow: "hidden",
-                    }}
-                  >
-                    0490
-                  </TableCell>
-                  <TableCell
-                    sx={{
-                      borderBottom: "none",
-                      padding: "4px",
-                      color: "white",
-                      textOverflow: "ellipsis",
-                      maxWidth: "80px",
-                      minWidth: "80px",
-                      whiteSpace: "nowrap",
-                      overflow: "hidden",
-                      fontWeight: "bold",
-                      textAlign: "center",
-                    }}
-                  >
-                    张三 李四
-                  </TableCell>
-                  <TableCell
-                    sx={{
-                      borderBottom: "none",
-                      padding: "4px",
-                      color: "white",
-                      textOverflow: "ellipsis",
-                      maxWidth: "80px",
-                      minWidth: "80px",
-                      whiteSpace: "nowrap",
-                      overflow: "hidden",
-                      fontWeight: "bold",
-                      textAlign: "center",
-                    }}
-                  >
-                    张三 李四
-                  </TableCell>
-                  <TableCell
-                    sx={{
-                      borderBottom: "none",
-                      padding: "4px",
-                      color: "white",
-                      textOverflow: "ellipsis",
-                      maxWidth: "80px",
-                      minWidth: "80px",
-                      whiteSpace: "nowrap",
-                      overflow: "hidden",
-                      fontWeight: "bold",
-                      textAlign: "center",
-                    }}
-                  >
-                    张三 李四
-                  </TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell
-                    sx={{
-                      borderBottom: "none",
-                      padding: "4px",
-                      color: "white",
-                      textOverflow: "ellipsis",
-                      maxWidth: "50px",
-                      minWidth: "50px",
-                      whiteSpace: "nowrap",
-                      overflow: "hidden",
-                    }}
-                  >
-                    <PiPoliceCarFill fontSize={20} />
-                  </TableCell>
-                  <TableCell
-                    sx={{
-                      borderBottom: "none",
-                      padding: "4px",
-                      color: "lightblue",
-                      textOverflow: "ellipsis",
-                      maxWidth: "50px",
-                      minWidth: "50px",
-                      whiteSpace: "nowrap",
-                      overflow: "hidden",
-                    }}
-                  >
-                    0490
-                  </TableCell>
-                  <TableCell
-                    sx={{
-                      borderBottom: "none",
-                      padding: "4px",
-                      color: "white",
-                      textOverflow: "ellipsis",
-                      maxWidth: "80px",
-                      minWidth: "80px",
-                      whiteSpace: "nowrap",
-                      overflow: "hidden",
-                      fontWeight: "bold",
-                      textAlign: "center",
-                    }}
-                  >
-                    张三 李四
-                  </TableCell>
-                  <TableCell
-                    sx={{
-                      borderBottom: "none",
-                      padding: "4px",
-                      color: "white",
-                      textOverflow: "ellipsis",
-                      maxWidth: "80px",
-                      minWidth: "80px",
-                      whiteSpace: "nowrap",
-                      overflow: "hidden",
-                      fontWeight: "bold",
-                      textAlign: "center",
-                    }}
-                  >
-                    张三 李四
-                  </TableCell>
-                  <TableCell
-                    sx={{
-                      borderBottom: "none",
-                      padding: "4px",
-                      color: "white",
-                      textOverflow: "ellipsis",
-                      maxWidth: "80px",
-                      minWidth: "80px",
-                      whiteSpace: "nowrap",
-                      overflow: "hidden",
-                      fontWeight: "bold",
-                      textAlign: "center",
-                    }}
-                  >
-                    张三 李四
-                  </TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell
-                    sx={{
-                      borderBottom: "none",
-                      padding: "4px",
-                      color: "white",
-                      textOverflow: "ellipsis",
-                      maxWidth: "50px",
-                      minWidth: "50px",
-                      whiteSpace: "nowrap",
-                      overflow: "hidden",
-                    }}
-                  >
-                    <PiPoliceCarFill fontSize={20} />
-                  </TableCell>
-                  <TableCell
-                    sx={{
-                      borderBottom: "none",
-                      padding: "4px",
-                      color: "lightblue",
-                      textOverflow: "ellipsis",
-                      maxWidth: "50px",
-                      minWidth: "50px",
-                      whiteSpace: "nowrap",
-                      overflow: "hidden",
-                    }}
-                  >
-                    0490
-                  </TableCell>
-                  <TableCell
-                    sx={{
-                      borderBottom: "none",
-                      padding: "4px",
-                      color: "white",
-                      textOverflow: "ellipsis",
-                      maxWidth: "80px",
-                      minWidth: "80px",
-                      whiteSpace: "nowrap",
-                      overflow: "hidden",
-                      fontWeight: "bold",
-                      textAlign: "center",
-                    }}
-                  >
-                    张三 李四
-                  </TableCell>
-                  <TableCell
-                    sx={{
-                      borderBottom: "none",
-                      padding: "4px",
-                      color: "white",
-                      textOverflow: "ellipsis",
-                      maxWidth: "80px",
-                      minWidth: "80px",
-                      whiteSpace: "nowrap",
-                      overflow: "hidden",
-                      fontWeight: "bold",
-                      textAlign: "center",
-                    }}
-                  >
-                    张三 李四
-                  </TableCell>
-                  <TableCell
-                    sx={{
-                      borderBottom: "none",
-                      padding: "4px",
-                      color: "white",
-                      textOverflow: "ellipsis",
-                      maxWidth: "80px",
-                      minWidth: "80px",
-                      whiteSpace: "nowrap",
-                      overflow: "hidden",
-                      fontWeight: "bold",
-                      textAlign: "center",
-                    }}
-                  >
-                    张三 李四
-                  </TableCell>
-                </TableRow>
+              ))}
               </TableBody>
             </TableContainer>
           </Paper>
@@ -905,7 +672,8 @@ const Dashboard = () => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                <TableRow>
+                {Workforce.map((row,index) =>(
+                <TableRow key={index}>
                   <TableCell
                     sx={{
                       borderBottom: "none",
@@ -918,7 +686,7 @@ const Dashboard = () => {
                       overflow: "hidden",
                     }}
                   >
-                    1
+                    {row.id}
                   </TableCell>
                   <TableCell
                     sx={{
@@ -933,7 +701,7 @@ const Dashboard = () => {
                       textAlign: "center",
                     }}
                   >
-                    2024-01-01
+                    {row.focus_date}
                   </TableCell>
                   <TableCell
                     sx={{
@@ -947,195 +715,16 @@ const Dashboard = () => {
                       overflow: "hidden",
                     }}
                   >
-                    定海社区晚上盗窃多发,需加派人手
+                    {row.content}
                   </TableCell>
                 </TableRow>
-                <TableRow>
-                  <TableCell
-                    sx={{
-                      borderBottom: "none",
-                      padding: "4px",
-                      color: "white",
-                      textOverflow: "ellipsis",
-                      maxWidth: "40px",
-                      minWidth: "40px",
-                      whiteSpace: "nowrap",
-                      overflow: "hidden",
-                    }}
-                  >
-                    2
-                  </TableCell>
-                  <TableCell
-                    sx={{
-                      borderBottom: "none",
-                      padding: "4px",
-                      color: "white",
-                      textOverflow: "ellipsis",
-                      maxWidth: "90px",
-                      minWidth: "90px",
-                      whiteSpace: "nowrap",
-                      overflow: "hidden",
-                      textAlign: "center",
-                    }}
-                  >
-                    2024-01-01
-                  </TableCell>
-                  <TableCell
-                    sx={{
-                      borderBottom: "none",
-                      padding: "4px",
-                      color: "white",
-                      textOverflow: "ellipsis",
-                      maxWidth: "210px",
-                      minWidth: "210px",
-                      whiteSpace: "nowrap",
-                      overflow: "hidden",
-                    }}
-                  >
-                    定海社区晚上盗窃多发,需加派人手
-                  </TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell
-                    sx={{
-                      borderBottom: "none",
-                      padding: "4px",
-                      color: "white",
-                      textOverflow: "ellipsis",
-                      maxWidth: "40px",
-                      minWidth: "40px",
-                      whiteSpace: "nowrap",
-                      overflow: "hidden",
-                    }}
-                  >
-                    3
-                  </TableCell>
-                  <TableCell
-                    sx={{
-                      borderBottom: "none",
-                      padding: "4px",
-                      color: "white",
-                      textOverflow: "ellipsis",
-                      maxWidth: "90px",
-                      minWidth: "90px",
-                      whiteSpace: "nowrap",
-                      overflow: "hidden",
-                      textAlign: "center",
-                    }}
-                  >
-                    2024-01-01
-                  </TableCell>
-                  <TableCell
-                    sx={{
-                      borderBottom: "none",
-                      padding: "4px",
-                      color: "white",
-                      textOverflow: "ellipsis",
-                      maxWidth: "210px",
-                      minWidth: "210px",
-                      whiteSpace: "nowrap",
-                      overflow: "hidden",
-                    }}
-                  >
-                    定海社区晚上盗窃多发,需加派人手
-                  </TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell
-                    sx={{
-                      borderBottom: "none",
-                      padding: "4px",
-                      color: "white",
-                      textOverflow: "ellipsis",
-                      maxWidth: "40px",
-                      minWidth: "40px",
-                      whiteSpace: "nowrap",
-                      overflow: "hidden",
-                    }}
-                  >
-                    4
-                  </TableCell>
-                  <TableCell
-                    sx={{
-                      borderBottom: "none",
-                      padding: "4px",
-                      color: "white",
-                      textOverflow: "ellipsis",
-                      maxWidth: "90px",
-                      minWidth: "90px",
-                      whiteSpace: "nowrap",
-                      overflow: "hidden",
-                      textAlign: "center",
-                    }}
-                  >
-                    2024-01-01
-                  </TableCell>
-                  <TableCell
-                    sx={{
-                      borderBottom: "none",
-                      padding: "4px",
-                      color: "white",
-                      textOverflow: "ellipsis",
-                      maxWidth: "210px",
-                      minWidth: "210px",
-                      whiteSpace: "nowrap",
-                      overflow: "hidden",
-                    }}
-                  >
-                    定海社区晚上盗窃多发,需加派人手
-                  </TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell
-                    sx={{
-                      borderBottom: "none",
-                      padding: "4px",
-                      color: "white",
-                      textOverflow: "ellipsis",
-                      maxWidth: "40px",
-                      minWidth: "40px",
-                      whiteSpace: "nowrap",
-                      overflow: "hidden",
-                    }}
-                  >
-                    5
-                  </TableCell>
-                  <TableCell
-                    sx={{
-                      borderBottom: "none",
-                      padding: "4px",
-                      color: "white",
-                      textOverflow: "ellipsis",
-                      maxWidth: "90px",
-                      minWidth: "90px",
-                      whiteSpace: "nowrap",
-                      overflow: "hidden",
-                      textAlign: "center",
-                    }}
-                  >
-                    2024-01-01
-                  </TableCell>
-                  <TableCell
-                    sx={{
-                      borderBottom: "none",
-                      padding: "4px",
-                      color: "white",
-                      textOverflow: "ellipsis",
-                      maxWidth: "210px",
-                      minWidth: "210px",
-                      whiteSpace: "nowrap",
-                      overflow: "hidden",
-                    }}
-                  >
-                    定海社区晚上盗窃多发,需加派人手
-                  </TableCell>
-                </TableRow>
+                ))}
               </TableBody>
             </TableContainer>
           </Paper>
         </Grid>
 
-        <Grid item xs={6}>
+        <Grid item xs={6} position="relative">
           {/* 居中显示的文本 */}
           <Typography
             className="animate__animated animate__fadeIn " // 添加动画类
@@ -1158,6 +747,24 @@ const Dashboard = () => {
             component="img"
             src="/source/bg.jpg" // 替换为你的图片URL
             alt="map"
+            sx={{
+              width: "100%", // 图片宽度，占容器的80%
+              height: "100%", // 保持图片的原始比例
+              maxWidth: "960px", // 最大宽度限制，避免图片过大
+              maxHeight: "440px", // 最大高度限制，保持16:9比例
+              borderRadius: 2, // 圆角
+              zIndex: -1,
+              boxShadow: "none",
+              position: "absolute",
+              transform: "scale(1.5)",
+              top: 80,
+              left: 0,
+            }}
+            mt={4}
+          ></Box>
+
+          <Box
+            className="animate__animated animate__fadeIn"
             sx={{
               width: "100%", // 图片宽度，占容器的80%
               height: "100%", // 保持图片的原始比例
@@ -1304,41 +911,15 @@ const Dashboard = () => {
                 </TableRow>
               </TableHead>
             <TableBody>
-            <TableRow>
-                  <TableCell sx={{ borderBottom: 'none', padding: '2px',color: 'white',textOverflow: 'ellipsis', maxWidth: '16.4%', minWidth: '16.4%',whiteSpace: 'nowrap', overflow: 'hidden',paddingY:'6px',paddingRight:'10px' }}>2024-01-01</TableCell>
-                  <TableCell sx={{ borderBottom: 'none', padding: '2px',color: 'white',textOverflow: 'ellipsis', maxWidth: '16.4%',minWidth: '16.4%', whiteSpace: 'nowrap', overflow: 'hidden',paddingY:'6px',paddingRight:'10px'}}>报警类</TableCell>
-                  <TableCell sx={{ borderBottom: 'none', padding: '2px',color: 'white',textOverflow: 'ellipsis', maxWidth: '23.8%',minWidth: '23.8%', whiteSpace: 'nowrap', overflow: 'hidden',textAlign:"auto",paddingY:'6px' ,paddingRight:'10px'}}>侵犯人身安全</TableCell>
-                  <TableCell sx={{ borderBottom: 'none', padding: '2px',color: 'white',textOverflow: 'ellipsis', maxWidth: '26.8%',minWidth: '26.8%', whiteSpace: 'nowrap', overflow: 'hidden',textAlign:"auto",paddingY:'6px',paddingRight:'10px' }}>A侵犯B人身安全,人身安全</TableCell>
-                  <TableCell sx={{ borderBottom: 'none', padding: '2px',color: 'white',textOverflow: 'ellipsis', maxWidth: '16.4%',minWidth: '16.4%', whiteSpace: 'nowrap', overflow: 'hidden',textAlign:"center",paddingY:'6px' ,paddingRight:'10px'}}>张三</TableCell>
+            {Analysis.map((row,index) =>(
+            <TableRow key={index}>
+                  <TableCell sx={{ borderBottom: 'none', padding: '2px',color: 'white',textOverflow: 'ellipsis', maxWidth: '16.4%', minWidth: '16.4%',whiteSpace: 'nowrap', overflow: 'hidden',paddingY:'6px',paddingRight:'10px' }}>{row.report_time}</TableCell>
+                  <TableCell sx={{ borderBottom: 'none', padding: '2px',color: 'white',textOverflow: 'ellipsis', maxWidth: '16.4%',minWidth: '16.4%', whiteSpace: 'nowrap', overflow: 'hidden',paddingY:'6px',paddingRight:'10px'}}>{row.incident_category}</TableCell>
+                  <TableCell sx={{ borderBottom: 'none', padding: '2px',color: 'white',textOverflow: 'ellipsis', maxWidth: '23.8%',minWidth: '23.8%', whiteSpace: 'nowrap', overflow: 'hidden',textAlign:"auto",paddingY:'6px' ,paddingRight:'10px'}}>{row.report_source}</TableCell>
+                  <TableCell sx={{ borderBottom: 'none', padding: '2px',color: 'white',textOverflow: 'ellipsis', maxWidth: '26.8%',minWidth: '26.8%', whiteSpace: 'nowrap', overflow: 'hidden',textAlign:"auto",paddingY:'6px',paddingRight:'10px' }}>{row.incident_details}</TableCell>
+                  <TableCell sx={{ borderBottom: 'none', padding: '2px',color: 'white',textOverflow: 'ellipsis', maxWidth: '16.4%',minWidth: '16.4%', whiteSpace: 'nowrap', overflow: 'hidden',textAlign:"center",paddingY:'6px' ,paddingRight:'10px'}}>{row.receiver}</TableCell>
                 </TableRow>
-                <TableRow>
-                  <TableCell sx={{ borderBottom: 'none', padding: '2px',color: 'white',textOverflow: 'ellipsis', maxWidth: '16.4%', minWidth: '16.4%',whiteSpace: 'nowrap', overflow: 'hidden',paddingY:'6px',paddingRight:'10px' }}>2024-01-01</TableCell>
-                  <TableCell sx={{ borderBottom: 'none', padding: '2px',color: 'white',textOverflow: 'ellipsis', maxWidth: '16.4%',minWidth: '16.4%', whiteSpace: 'nowrap', overflow: 'hidden',paddingY:'6px',paddingRight:'10px'}}>报警类</TableCell>
-                  <TableCell sx={{ borderBottom: 'none', padding: '2px',color: 'white',textOverflow: 'ellipsis', maxWidth: '23.8%',minWidth: '23.8%', whiteSpace: 'nowrap', overflow: 'hidden',textAlign:"auto",paddingY:'6px',paddingRight:'10px' }}>侵犯人身安全</TableCell>
-                  <TableCell sx={{ borderBottom: 'none', padding: '2px',color: 'white',textOverflow: 'ellipsis', maxWidth: '26.8%',minWidth: '26.8%', whiteSpace: 'nowrap', overflow: 'hidden',textAlign:"auto",paddingY:'6px',paddingRight:'10px' }}>A侵犯B人身安全,人身安全</TableCell>
-                  <TableCell sx={{ borderBottom: 'none', padding: '2px',color: 'white',textOverflow: 'ellipsis', maxWidth: '16.4%',minWidth: '16.4%', whiteSpace: 'nowrap', overflow: 'hidden',textAlign:"center",paddingY:'6px' ,paddingRight:'10px'}}>张三</TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell sx={{ borderBottom: 'none', padding: '2px',color: 'white',textOverflow: 'ellipsis', maxWidth: '16.4%', minWidth: '16.4%',whiteSpace: 'nowrap', overflow: 'hidden',paddingY:'6px' ,paddingRight:'10px'}}>2024-01-01</TableCell>
-                  <TableCell sx={{ borderBottom: 'none', padding: '2px',color: 'white',textOverflow: 'ellipsis', maxWidth: '16.4%',minWidth: '16.4%', whiteSpace: 'nowrap', overflow: 'hidden',paddingY:'6px',paddingRight:'10px'}}>报警类</TableCell>
-                  <TableCell sx={{ borderBottom: 'none', padding: '2px',color: 'white',textOverflow: 'ellipsis', maxWidth: '23.8%',minWidth: '23.8%', whiteSpace: 'nowrap', overflow: 'hidden',textAlign:"auto",paddingY:'6px' ,paddingRight:'10px'}}>侵犯人身安全</TableCell>
-                  <TableCell sx={{ borderBottom: 'none', padding: '2px',color: 'white',textOverflow: 'ellipsis', maxWidth: '26.8%',minWidth: '26.8%', whiteSpace: 'nowrap', overflow: 'hidden',textAlign:"auto",paddingY:'6px',paddingRight:'10px' }}>A侵犯B人身安全,人身安全</TableCell>
-                  <TableCell sx={{ borderBottom: 'none', padding: '2px',color: 'white',textOverflow: 'ellipsis', maxWidth: '16.4%',minWidth: '16.4%', whiteSpace: 'nowrap', overflow: 'hidden',textAlign:"center",paddingY:'6px' ,paddingRight:'10px'}}>张三</TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell sx={{ borderBottom: 'none', padding: '2px',color: 'white',textOverflow: 'ellipsis', maxWidth: '16.4%', minWidth: '16.4%',whiteSpace: 'nowrap', overflow: 'hidden',paddingY:'6px' ,paddingRight:'10px'}}>2024-01-01</TableCell>
-                  <TableCell sx={{ borderBottom: 'none', padding: '2px',color: 'white',textOverflow: 'ellipsis', maxWidth: '16.4%',minWidth: '16.4%', whiteSpace: 'nowrap', overflow: 'hidden',paddingY:'6px',paddingRight:'10px'}}>报警类</TableCell>
-                  <TableCell sx={{ borderBottom: 'none', padding: '2px',color: 'white',textOverflow: 'ellipsis', maxWidth: '23.8%',minWidth: '23.8%', whiteSpace: 'nowrap', overflow: 'hidden',textAlign:"auto",paddingY:'6px',paddingRight:'10px' }}>侵犯人身安全</TableCell>
-                  <TableCell sx={{ borderBottom: 'none', padding: '2px',color: 'white',textOverflow: 'ellipsis', maxWidth: '26.8%',minWidth: '26.8%', whiteSpace: 'nowrap', overflow: 'hidden',textAlign:"auto",paddingY:'6px',paddingRight:'10px' }}>A侵犯B人身安全,人身安全</TableCell>
-                  <TableCell sx={{ borderBottom: 'none', padding: '2px',color: 'white',textOverflow: 'ellipsis', maxWidth: '16.4%',minWidth: '16.4%', whiteSpace: 'nowrap', overflow: 'hidden',textAlign:"center",paddingY:'6px',paddingRight:'10px'}}>张三</TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell sx={{ borderBottom: 'none', padding: '2px',color: 'white',textOverflow: 'ellipsis', maxWidth: '16.4%', minWidth: '16.4%',whiteSpace: 'nowrap', overflow: 'hidden',paddingY:'6px' ,paddingRight:'10px'}}>2024-01-01</TableCell>
-                  <TableCell sx={{ borderBottom: 'none', padding: '2px',color: 'white',textOverflow: 'ellipsis', maxWidth: '16.4%',minWidth: '16.4%', whiteSpace: 'nowrap', overflow: 'hidden',paddingY:'6px',paddingRight:'10px'}}>报警类</TableCell>
-                  <TableCell sx={{ borderBottom: 'none', padding: '2px',color: 'white',textOverflow: 'ellipsis', maxWidth: '23.8%',minWidth: '23.8%', whiteSpace: 'nowrap', overflow: 'hidden',textAlign:"auto" ,paddingY:'6px',paddingRight:'10px'}}>侵犯人身安全</TableCell>
-                  <TableCell sx={{ borderBottom: 'none', padding: '2px',color: 'white',textOverflow: 'ellipsis', maxWidth: '26.8%',minWidth: '26.8%', whiteSpace: 'nowrap', overflow: 'hidden',textAlign:"auto",paddingY:'6px' ,paddingRight:'10px'}}>A侵犯B人身安全,人身安全</TableCell>
-                  <TableCell sx={{ borderBottom: 'none', padding: '2px',color: 'white',textOverflow: 'ellipsis', maxWidth: '16.4%',minWidth: '16.4%', whiteSpace: 'nowrap', overflow: 'hidden',textAlign:"center" ,paddingY:'6px',paddingRight:'10px'}}>张三</TableCell>
-                </TableRow>
+            ))}
               </TableBody>
             </TableContainer>
           </Paper>
@@ -1374,51 +955,13 @@ const Dashboard = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-            <TableRow>
-                <TableCell sx={{ borderBottom: 'none', padding: '4px',color: 'white',textOverflow: 'ellipsis', maxWidth: '17.6%', minWidth: '17.6%',whiteSpace: 'nowrap', overflow: 'hidden',textAlign:"center",paddingY:'10px' }}>2024-01-01</TableCell>
-                <TableCell sx={{ borderBottom: 'none', padding: '4px',color: 'white',textOverflow: 'ellipsis', maxWidth: '23.5%',minWidth: '23.5%', whiteSpace: 'nowrap', overflow: 'hidden',textAlign:"center",paddingY:'10px' }}>清查整治</TableCell>
-                <TableCell sx={{ borderBottom: 'none', padding: '4px',color: 'white',textOverflow: 'ellipsis', maxWidth: '58.8%',minWidth: '58.8%', whiteSpace: 'nowrap', overflow: 'hidden',paddingY:'10px'}}>这是勤务内容勤务内容勤务内容勤务内容</TableCell>
+            {RecentData.map((row, index) => (
+            <TableRow key={index}>
+                <TableCell sx={{ borderBottom: 'none', padding: '4px',color: 'white',textOverflow: 'ellipsis', maxWidth: '17.6%', minWidth: '17.6%',whiteSpace: 'nowrap', overflow: 'hidden',textAlign:"center",paddingY:'10px' }}>{row.duty_date}</TableCell>
+                <TableCell sx={{ borderBottom: 'none', padding: '4px',color: 'white',textOverflow: 'ellipsis', maxWidth: '23.5%',minWidth: '23.5%', whiteSpace: 'nowrap', overflow: 'hidden',textAlign:"center",paddingY:'10px' }}>{row.duty_type}</TableCell>
+                <TableCell sx={{ borderBottom: 'none', padding: '4px',color: 'white',textOverflow: 'ellipsis', maxWidth: '58.8%',minWidth: '58.8%', whiteSpace: 'nowrap', overflow: 'hidden',paddingY:'10px'}}>{row.content}</TableCell>
               </TableRow>
-              <TableRow>
-                <TableCell sx={{ borderBottom: 'none', padding: '4px',color: 'white',textOverflow: 'ellipsis', maxWidth: '17.6%', minWidth: '17.6%',whiteSpace: 'nowrap', overflow: 'hidden',textAlign:"center",paddingY:'10px' }}>2024-01-01</TableCell>
-                <TableCell sx={{ borderBottom: 'none', padding: '4px',color: 'white',textOverflow: 'ellipsis', maxWidth: '23.5%',minWidth: '23.5%', whiteSpace: 'nowrap', overflow: 'hidden',textAlign:"center",paddingY:'10px' }}>清查整治</TableCell>
-                <TableCell sx={{ borderBottom: 'none', padding: '4px',color: 'white',textOverflow: 'ellipsis', maxWidth: '58.8%',minWidth: '58.8%', whiteSpace: 'nowrap', overflow: 'hidden',paddingY:'10px'}}>这是勤务内容勤务内容勤务内容勤务内容</TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell sx={{ borderBottom: 'none', padding: '4px',color: 'white',textOverflow: 'ellipsis', maxWidth: '17.6%', minWidth: '17.6%',whiteSpace: 'nowrap', overflow: 'hidden',textAlign:"center",paddingY:'10px' }}>2024-01-01</TableCell>
-                <TableCell sx={{ borderBottom: 'none', padding: '4px',color: 'white',textOverflow: 'ellipsis', maxWidth: '23.5%',minWidth: '23.5%', whiteSpace: 'nowrap', overflow: 'hidden',textAlign:"center",paddingY:'10px' }}>清查整治</TableCell>
-                <TableCell sx={{ borderBottom: 'none', padding: '4px',color: 'white',textOverflow: 'ellipsis', maxWidth: '58.8%',minWidth: '58.8%', whiteSpace: 'nowrap', overflow: 'hidden',paddingY:'10px'}}>这是勤务内容勤务内容勤务内容勤务内容</TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell sx={{ borderBottom: 'none', padding: '4px',color: 'white',textOverflow: 'ellipsis', maxWidth: '17.6%', minWidth: '17.6%',whiteSpace: 'nowrap', overflow: 'hidden',textAlign:"center",paddingY:'10px' }}>2024-01-01</TableCell>
-                <TableCell sx={{ borderBottom: 'none', padding: '4px',color: 'white',textOverflow: 'ellipsis', maxWidth: '23.5%',minWidth: '23.5%', whiteSpace: 'nowrap', overflow: 'hidden',textAlign:"center",paddingY:'10px'  }}>清查整治</TableCell>
-                <TableCell sx={{ borderBottom: 'none', padding: '4px',color: 'white',textOverflow: 'ellipsis', maxWidth: '58.8%',minWidth: '58.8%', whiteSpace: 'nowrap', overflow: 'hidden',paddingY:'10px'}}>这是勤务内容勤务内容勤务内容勤务内容</TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell sx={{ borderBottom: 'none', padding: '4px',color: 'white',textOverflow: 'ellipsis', maxWidth: '17.6%', minWidth: '17.6%',whiteSpace: 'nowrap', overflow: 'hidden',textAlign:"center",paddingY:'10px' }}>2024-01-01</TableCell>
-                <TableCell sx={{ borderBottom: 'none', padding: '4px',color: 'white',textOverflow: 'ellipsis', maxWidth: '23.5%',minWidth: '23.5%', whiteSpace: 'nowrap', overflow: 'hidden',textAlign:"center",paddingY:'10px' }}>清查整治</TableCell>
-                <TableCell sx={{ borderBottom: 'none', padding: '4px',color: 'white',textOverflow: 'ellipsis', maxWidth: '58.8%',minWidth: '58.8%', whiteSpace: 'nowrap', overflow: 'hidden',paddingY:'10px'}}>这是勤务内容勤务内容勤务内容勤务内容</TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell sx={{ borderBottom: 'none', padding: '4px',color: 'white',textOverflow: 'ellipsis', maxWidth: '17.6%', minWidth: '17.6%',whiteSpace: 'nowrap', overflow: 'hidden',textAlign:"center",paddingY:'10px' }}>2024-01-01</TableCell>
-                <TableCell sx={{ borderBottom: 'none', padding: '4px',color: 'white',textOverflow: 'ellipsis', maxWidth: '23.5%',minWidth: '23.5%', whiteSpace: 'nowrap', overflow: 'hidden',textAlign:"center",paddingY:'10px' }}>清查整治</TableCell>
-                <TableCell sx={{ borderBottom: 'none', padding: '4px',color: 'white',textOverflow: 'ellipsis', maxWidth: '58.8%',minWidth: '58.8%', whiteSpace: 'nowrap', overflow: 'hidden',paddingY:'10px'}}>这是勤务内容勤务内容勤务内容勤务内容</TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell sx={{ borderBottom: 'none', padding: '4px',color: 'white',textOverflow: 'ellipsis', maxWidth: '17.6%', minWidth: '17.6%',whiteSpace: 'nowrap', overflow: 'hidden',textAlign:"center",paddingY:'10px' }}>2024-01-01</TableCell>
-                <TableCell sx={{ borderBottom: 'none', padding: '4px',color: 'white',textOverflow: 'ellipsis', maxWidth: '23.5%',minWidth: '23.5%', whiteSpace: 'nowrap', overflow: 'hidden',textAlign:"center",paddingY:'10px' }}>清查整治</TableCell>
-                <TableCell sx={{ borderBottom: 'none', padding: '4px',color: 'white',textOverflow: 'ellipsis', maxWidth: '58.8%',minWidth: '58.8%', whiteSpace: 'nowrap', overflow: 'hidden',paddingY:'10px'}}>这是勤务内容勤务内容勤务内容勤务内容</TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell sx={{ borderBottom: 'none', padding: '4px',color: 'white',textOverflow: 'ellipsis', maxWidth: '17.6%', minWidth: '17.6%',whiteSpace: 'nowrap', overflow: 'hidden',textAlign:"center",paddingY:'10px' }}>2024-01-01</TableCell>
-                <TableCell sx={{ borderBottom: 'none', padding: '4px',color: 'white',textOverflow: 'ellipsis', maxWidth: '23.5%',minWidth: '23.5%', whiteSpace: 'nowrap', overflow: 'hidden',textAlign:"center",paddingY:'10px' }}>清查整治</TableCell>
-                <TableCell sx={{ borderBottom: 'none', padding: '4px',color: 'white',textOverflow: 'ellipsis', maxWidth: '58.8%',minWidth: '58.8%', whiteSpace: 'nowrap', overflow: 'hidden',paddingY:'10px'}}>这是勤务内容勤务内容勤务内容勤务内容</TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell sx={{ borderBottom: 'none', padding: '4px',color: 'white',textOverflow: 'ellipsis', maxWidth: '17.6%', minWidth: '17.6%',whiteSpace: 'nowrap', overflow: 'hidden',textAlign:"center",paddingY:'10px' }}>2024-01-01</TableCell>
-                <TableCell sx={{ borderBottom: 'none', padding: '4px',color: 'white',textOverflow: 'ellipsis', maxWidth: '23.5%',minWidth: '23.5%', whiteSpace: 'nowrap', overflow: 'hidden',textAlign:"center",paddingY:'10px' }}>清查整治</TableCell>
-                <TableCell sx={{ borderBottom: 'none', padding: '4px',color: 'white',textOverflow: 'ellipsis', maxWidth: '58.8%',minWidth: '58.8%', whiteSpace: 'nowrap', overflow: 'hidden',paddingY:'10px'}}>这是勤务内容勤务内容勤务内容勤务内容</TableCell>
-              </TableRow>
+            ))}
             </TableBody>
             </TableContainer>
           </Paper>
