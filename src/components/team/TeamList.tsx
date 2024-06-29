@@ -1,12 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {
-  List,
-  useListContext,
-  Loading,
-  Filter,
-  TextInput,
-  FilterProps,
-} from "react-admin";
+import { List, useListContext, Loading } from "react-admin";
 import {
   Card,
   CardContent,
@@ -21,13 +14,12 @@ import {
   DialogContentText,
   DialogTitle,
   TextField,
-  InputLabel,
   IconButton,
 } from "@mui/material";
-import Link from "next/link";
 import axios from "axios";
 import { Staff, Team } from "@/types";
-import DeleteIcon from "@mui/icons-material/Delete"; // 需要添加这个导入
+import DeleteIcon from "@mui/icons-material/Delete";
+import { AiOutlinePlusCircle as AddIcon } from "react-icons/ai";
 
 const TeamDetails = ({
   team,
@@ -188,13 +180,7 @@ const TeamDetails = ({
               </Card>
             </Grid>
           ))}
-          <div className="flex flex-col">
-            <Button
-              variant="contained"
-              onClick={() => handleAddMember(selectedMemberId)}
-            >
-              添加成员
-            </Button>
+          <div className="flex">
             <TextField
               label="选择成员"
               select
@@ -214,6 +200,10 @@ const TeamDetails = ({
                 </option>
               ))}
             </TextField>
+            <Button onClick={() => handleAddMember(selectedMemberId)}>
+              添加
+              <AddIcon />
+            </Button>
           </div>
         </div>
       </div>
@@ -256,13 +246,8 @@ const TeamList = () => {
       <div className="border-r border-gray-200 p-4">
         <div className="flex justify-between items-center mb-4">
           <div style={{ display: "inline" }}>班组目录 </div>
-          <Button
-            variant="contained"
-            color="primary"
-            size="small"
-            onClick={handleClickOpen}
-          >
-            <div className="text-white">+</div>
+          <Button onClick={handleClickOpen}>
+            <AddIcon />
           </Button>
           <Dialog open={open} onClose={handleClose}>
             <DialogTitle>添加新的班组</DialogTitle>
@@ -318,7 +303,7 @@ const TeamList = () => {
 };
 
 const TeamListWrapper = () => (
-  <List>
+  <List actions={false}>
     <TeamList />
   </List>
 );

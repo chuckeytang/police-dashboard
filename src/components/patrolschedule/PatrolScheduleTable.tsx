@@ -119,7 +119,7 @@ const PatrolScheduleTableWrapper = () => {
       .split("T")[0],
   };
   return (
-    <List filter={filter} pagination={false} empty={false}>
+    <List filter={filter} pagination={false} empty={false} actions={false}>
       <PatrolScheduleTable />
     </List>
   );

@@ -17,7 +17,6 @@ import {
   FormControl,
   InputLabel,
   MenuItem,
-  colors,
 } from "@mui/material";
 import { PiPoliceCarFill } from "react-icons/pi";
 import { GrSchedule } from "react-icons/gr";
@@ -788,7 +787,7 @@ const Dashboard = () => {
               boxShadow: "none",
               border: "2px solid #1e3a8a",
               color: "white",
-              marginTop: 3
+              marginTop: 3,
             }}
           >
             <Box sx={{ display: "flex", alignItems: "center" }}>
@@ -827,8 +826,16 @@ const Dashboard = () => {
               </Button>
             </Box>
 
-            <TableContainer component={Paper} sx= {{ backgroundColor: 'transparent', marginTop: '15px',overflow: 'hidden',boxShadow: "none"}}>
-            <TableHead>
+            <TableContainer
+              component={Paper}
+              sx={{
+                backgroundColor: "transparent",
+                marginTop: "15px",
+                overflow: "hidden",
+                boxShadow: "none",
+              }}
+            >
+              <TableHead>
                 <TableRow>
                   <TableCell
                     sx={{
@@ -990,8 +997,17 @@ const Dashboard = () => {
               </Button>
             </Box>
             {/* Add your content here */}
-            <TableContainer component={Paper} sx= {{ backgroundColor: 'transparent', marginTop: '20px',overflow: 'hidden',minWidth: '100%',boxShadow: "none",}}>
-                <TableHead>
+            <TableContainer
+              component={Paper}
+              sx={{
+                backgroundColor: "transparent",
+                marginTop: "20px",
+                overflow: "hidden",
+                minWidth: "100%",
+                boxShadow: "none",
+              }}
+            >
+              <TableHead>
                 <TableRow>
                   <TableCell
                     sx={{
