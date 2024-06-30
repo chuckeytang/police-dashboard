@@ -1,4 +1,4 @@
-// pages/api/vehicle/patrolteam/add.ts
+// pages/api/vehicle/patrolTeam/add.ts
 import { NextRequest, NextResponse } from "next/server";
 import { PrismaClient } from "@prisma/client";
 
@@ -11,7 +11,7 @@ export async function POST(req: NextRequest) {
   const createData: any = { team_name };
 
   if (vehicle_id) {
-    createData.PatrolVehicleAssignments = {
+    createData.patrol_vehicle_assignments = {
       create: {
         vehicle_id: vehicle_id,
       },
@@ -19,7 +19,7 @@ export async function POST(req: NextRequest) {
   }
 
   if (members) {
-    createData.PatrolStaffAssignments = {
+    createData.patrol_staff_assignments = {
       create: members.map((member: { id: number; shift: string }) => ({
         staff_id: member.id,
         shift: member.shift,
@@ -31,8 +31,8 @@ export async function POST(req: NextRequest) {
     const newPatrolTeam = await prisma.patrolTeam.create({
       data: createData,
       include: {
-        PatrolVehicleAssignments: true,
-        PatrolStaffAssignments: {
+        patrol_vehicle_assignments: true,
+        patrol_staff_assignments: {
           include: {
             staff: true,
           },

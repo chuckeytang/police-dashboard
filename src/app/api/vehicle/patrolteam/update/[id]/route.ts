@@ -1,4 +1,4 @@
-// pages/api/vehicle/patrolteam/update/[id].ts
+// pages/api/vehicle/patrolTeam/update/[id].ts
 import { NextRequest, NextResponse } from "next/server";
 import { PrismaClient } from "@prisma/client";
 import { URL } from "url";
@@ -13,7 +13,7 @@ export async function PATCH(req: NextRequest) {
 
   try {
     const updateData = {
-      PatrolVehicleAssignments: data.vehicle_id
+      patrol_vehicle_assignments: data.vehicle_id
         ? {
             deleteMany: {}, // 清空现有的车辆分配
             create: {
@@ -23,7 +23,7 @@ export async function PATCH(req: NextRequest) {
             },
           }
         : undefined,
-      PatrolStaffAssignments: data.members
+      patrol_staff_assignments: data.members
         ? {
             deleteMany: {}, // 清空现有的员工分配
             create: data.members.map(
@@ -53,12 +53,12 @@ export async function PATCH(req: NextRequest) {
     const updatedPatrolTeam = await prisma.patrolTeam.findUnique({
       where: { id: Number(id) },
       include: {
-        PatrolVehicleAssignments: {
+        patrol_vehicle_assignments: {
           include: {
             vehicle: true,
           },
         },
-        PatrolStaffAssignments: {
+        patrol_staff_assignments: {
           include: {
             staff: true,
           },
@@ -68,15 +68,16 @@ export async function PATCH(req: NextRequest) {
 
     // 格式化成员信息
     const members = updatedPatrolTeam
-      ? updatedPatrolTeam.PatrolStaffAssignments.map((psa) => ({
+      ? updatedPatrolTeam.patrol_staff_assignments.map((psa) => ({
           ...psa,
           shift: psa.shift,
         }))
       : [];
 
     const vehicle =
-      updatedPatrolTeam && updatedPatrolTeam.PatrolVehicleAssignments.length > 0
-        ? updatedPatrolTeam.PatrolVehicleAssignments[0].vehicle
+      updatedPatrolTeam &&
+      updatedPatrolTeam.patrol_vehicle_assignments.length > 0
+        ? updatedPatrolTeam.patrol_vehicle_assignments[0].vehicle
         : null;
 
     return NextResponse.json(

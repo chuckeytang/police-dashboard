@@ -1,4 +1,4 @@
-// pages/api/vehicle/patrolteam/search.ts
+// pages/api/vehicle/patrolTeam/search.ts
 import { NextRequest, NextResponse } from "next/server";
 import { PrismaClient } from "@prisma/client";
 
@@ -8,12 +8,12 @@ export async function GET(req: NextRequest) {
   try {
     const patrolTeams = await prisma.patrolTeam.findMany({
       include: {
-        PatrolVehicleAssignments: {
+        patrol_vehicle_assignments: {
           include: {
             vehicle: true,
           },
         },
-        PatrolStaffAssignments: {
+        patrol_staff_assignments: {
           include: {
             staff: true,
           },

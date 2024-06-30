@@ -13,20 +13,20 @@ import VehicleList from "@/components/vehicle/VehicleList";
 import VehicleShow from "@/components/vehicle/VehicleShow";
 import VehicleEdit from "@/components/vehicle/VehicleEdit";
 import VehicleCreate from "@/components/vehicle/VehicleCreate";
-import PatrolTeamList from "@/components/patrolteam/PatrolTeamList";
-import PatrolScheduleTable from "@/components/patrolschedule/PatrolScheduleTable";
-import WorkFocusList from "@/components/workfocus/WorkFocusList";
-import WorkFocusShow from "@/components/workfocus/WorkFocusShow";
-import WorkFocusEdit from "@/components/workfocus/WorkFocusEdit";
-import WorkFocusCreate from "@/components/workfocus/WorkFocusCreate";
-import IncidentAnalysisList from "@/components/incidentanalysis/IncidentAnalysisList";
-import IncidentAnalysisShow from "@/components/incidentanalysis/IncidentAnalysisShow";
-import IncidentAnalysisEdit from "@/components/incidentanalysis/IncidentAnalysisEdit";
-import IncidentAnalysisCreate from "@/components/incidentanalysis/IncidentAnalysisCreate";
-import RecentDutiesList from "@/components/recentduties/RecentDutiesList";
-import RecentDutiesCreate from "@/components/recentduties/RecentDutiesCreate";
-import RecentDutiesEdit from "@/components/recentduties/RecentDutiesEdit";
-import RecentDutiesShow from "@/components/recentduties/RecentDutiesShow";
+import PatrolTeamList from "@/components/patrolTeam/PatrolTeamList";
+import PatrolScheduleTable from "@/components/patrolSchedule/PatrolScheduleTable";
+import WorkFocusList from "@/components/workFocus/WorkFocusList";
+import WorkFocusShow from "@/components/workFocus/WorkFocusShow";
+import WorkFocusEdit from "@/components/workFocus/WorkFocusEdit";
+import WorkFocusCreate from "@/components/workFocus/WorkFocusCreate";
+import IncidentAnalysisList from "@/components/incidentAnalysis/IncidentAnalysisList";
+import IncidentAnalysisShow from "@/components/incidentAnalysis/IncidentAnalysisShow";
+import IncidentAnalysisEdit from "@/components/incidentAnalysis/IncidentAnalysisEdit";
+import IncidentAnalysisCreate from "@/components/incidentAnalysis/IncidentAnalysisCreate";
+import RecentDutiesList from "@/components/recentDuties/RecentDutiesList";
+import RecentDutiesCreate from "@/components/recentDuties/RecentDutiesCreate";
+import RecentDutiesEdit from "@/components/recentDuties/RecentDutiesEdit";
+import RecentDutiesShow from "@/components/recentDuties/RecentDutiesShow";
 import Loading from "@/components/common/Loading";
 import { CustomDashboardMenuItem } from "@/components/common/CustomButtons";
 import i18nProvider from "@/components/common/i18nProvider";
@@ -78,14 +78,14 @@ const CustomMenu = () => {
         {otherOpen && (
           <div className="flex flex-col pl-4">
             <Menu.Item to="/vehicle/vehicle" primaryText="车辆录入" />
-            <Menu.Item to="/vehicle/patrolschedule" primaryText="巡逻排班" />
-            <Menu.Item to="/vehicle/patrolteam" primaryText="巡逻勤组" />
+            <Menu.Item to="/vehicle/patrolSchedule" primaryText="巡逻排班" />
+            <Menu.Item to="/vehicle/patrolTeam" primaryText="巡逻勤组" />
           </div>
         )}
       </CustomMenuItem>
-      <Menu.Item to="/workfocus" primaryText="工作重点" />
-      <Menu.Item to="/incidentanalysis" primaryText="警情分析" />
-      <Menu.Item to="/recentduties" primaryText="近期勤务" />
+      <Menu.Item to="/workFocus" primaryText="工作重点" />
+      <Menu.Item to="/incidentAnalysis" primaryText="警情分析" />
+      <Menu.Item to="/recentDuties" primaryText="近期勤务" />
     </Menu>
   );
 };
@@ -128,17 +128,17 @@ const AdminPageContent = () => (
       options={{ label: "车辆录入" }}
     />
     <Resource
-      name="vehicle/patrolteam"
+      name="vehicle/patrolTeam"
       list={PatrolTeamList}
       options={{ label: "巡逻勤组" }}
     />
     <Resource
-      name="vehicle/patrolschedule"
+      name="vehicle/patrolSchedule"
       list={PatrolScheduleTable}
       options={{ label: "巡逻排班" }}
     />
     <Resource
-      name="workfocus"
+      name="workFocus"
       list={WorkFocusList}
       show={WorkFocusShow}
       edit={WorkFocusEdit}
@@ -146,7 +146,7 @@ const AdminPageContent = () => (
       options={{ label: "工作重点" }}
     />
     <Resource
-      name="incidentanalysis"
+      name="incidentAnalysis"
       list={IncidentAnalysisList}
       show={IncidentAnalysisShow}
       edit={IncidentAnalysisEdit}
@@ -154,7 +154,7 @@ const AdminPageContent = () => (
       options={{ label: "警情分析" }}
     />
     <Resource
-      name="recentduties"
+      name="recentDuties"
       list={RecentDutiesList}
       show={RecentDutiesShow}
       edit={RecentDutiesEdit}

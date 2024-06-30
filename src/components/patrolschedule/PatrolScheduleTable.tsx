@@ -24,7 +24,7 @@ const PatrolScheduleTable = () => {
   useEffect(() => {
     // 获取所有的巡逻组
     const fetchTeams = async () => {
-      const response = await axios.get("/api/vehicle/patrolteam/search");
+      const response = await axios.get("/api/vehicle/patrolTeam/search");
       setAllTeams(response.data);
     };
 
@@ -43,7 +43,7 @@ const PatrolScheduleTable = () => {
           .toString()
           .padStart(2, "0")}`;
 
-        const response = await axios.post("/api/vehicle/patrolschedule/add", {
+        const response = await axios.post("/api/vehicle/patrolSchedule/add", {
           schedule_date: localDate,
           patrol_team_id: selectedTeam,
         });
@@ -67,7 +67,7 @@ const PatrolScheduleTable = () => {
           .toString()
           .padStart(2, "0")}`;
 
-        await axios.delete("/api/vehicle/patrolschedule/delete", {
+        await axios.delete("/api/vehicle/patrolSchedule/delete", {
           data: { schedule_date: localDate },
         });
       }

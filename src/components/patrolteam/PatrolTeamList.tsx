@@ -29,12 +29,12 @@ const PatrolTeamDetails = ({
   onTeamUpdate: (updatedTeam: PatrolTeam) => void;
 }) => {
   const [vehicle, setVehicle] = useState<Vehicle | null>(
-    team?.PatrolVehicleAssignments
-      ? team?.PatrolVehicleAssignments[0]?.vehicle || null
+    team?.patrol_vehicle_assignments
+      ? team?.patrol_vehicle_assignments[0]?.vehicle || null
       : null
   );
   const [members, setMembers] = useState<PatrolStaffAssignment[]>(
-    team?.PatrolStaffAssignments || []
+    team?.patrol_staff_assignments || []
   );
   const [selectedVehicleId, setSelectedVehicleId] = useState<number>(0);
   const [selectedMemberId, setSelectedMemberId] = useState<{
@@ -69,10 +69,10 @@ const PatrolTeamDetails = ({
   useEffect(() => {
     // 更新 members 和 vehicle 状态
     if (team) {
-      setMembers(team.PatrolStaffAssignments || []);
+      setMembers(team.patrol_staff_assignments || []);
       setVehicle(
-        team.PatrolVehicleAssignments
-          ? team.PatrolVehicleAssignments[0]?.vehicle || null
+        team.patrol_vehicle_assignments
+          ? team.patrol_vehicle_assignments[0]?.vehicle || null
           : null
       );
     }
@@ -83,14 +83,14 @@ const PatrolTeamDetails = ({
 
     try {
       const response = await axios.patch(
-        `/api/vehicle/patrolteam/update/${team.id}`,
+        `/api/vehicle/patrolTeam/update/${team.id}`,
         {
           vehicle_id: newVehicleId,
         }
       );
       onTeamUpdate(response.data);
       setVehicle(
-        response.data.PatrolVehicleAssignments[0]?.vehicle.plate_number
+        response.data.patrol_vehicle_assignments[0]?.vehicle.plate_number
       ); // 更新 vehicle 车牌号
     } catch (error) {
       console.error("Failed to update vehicle:", error);
@@ -102,14 +102,14 @@ const PatrolTeamDetails = ({
 
     try {
       const response = await axios.patch(
-        `/api/vehicle/patrolteam/update/${team.id}/deleteMember`,
+        `/api/vehicle/patrolTeam/update/${team.id}/deleteMember`,
         {
           member_id: memberId,
           shift: shift,
         }
       );
       onTeamUpdate(response.data);
-      setMembers(response.data.PatrolStaffAssignments); // 更新 members 列表
+      setMembers(response.data.patrol_staff_assignments); // 更新 members 列表
     } catch (error) {
       console.error("Failed to delete member:", error);
     }
@@ -120,14 +120,14 @@ const PatrolTeamDetails = ({
 
     try {
       const response = await axios.patch(
-        `/api/vehicle/patrolteam/update/${team.id}/addMember`,
+        `/api/vehicle/patrolTeam/update/${team.id}/addMember`,
         {
           member_id: newMemberId,
           shift: shift,
         }
       );
       onTeamUpdate(response.data);
-      setMembers(response.data.PatrolStaffAssignments); // 更新 members 列表
+      setMembers(response.data.patrol_staff_assignments); // 更新 members 列表
       setSelectedMemberId((prev) => ({
         ...prev,
         [shift]: 0,
@@ -278,7 +278,7 @@ const PatrolTeamList = () => {
 
   const handleAddTeam = async () => {
     try {
-      const response = await axios.post("/api/vehicle/patrolteam/add", {
+      const response = await axios.post("/api/vehicle/patrolTeam/add", {
         team_name: newTeamName,
       });
       refetch(); // 重新获取数据

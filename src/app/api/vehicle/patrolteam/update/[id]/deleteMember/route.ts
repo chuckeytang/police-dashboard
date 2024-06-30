@@ -23,12 +23,12 @@ export async function PATCH(req: NextRequest) {
     const updatedPatrolTeam = await prisma.patrolTeam.findUnique({
       where: { id: Number(id) },
       include: {
-        PatrolVehicleAssignments: {
+        patrol_vehicle_assignments: {
           include: {
             vehicle: true,
           },
         },
-        PatrolStaffAssignments: {
+        patrol_staff_assignments: {
           include: {
             staff: true,
           },
@@ -37,15 +37,16 @@ export async function PATCH(req: NextRequest) {
     });
 
     const members = updatedPatrolTeam
-      ? updatedPatrolTeam.PatrolStaffAssignments.map((psa) => ({
+      ? updatedPatrolTeam.patrol_staff_assignments.map((psa) => ({
           ...psa,
           shift: psa.shift,
         }))
       : [];
 
     const vehicle =
-      updatedPatrolTeam && updatedPatrolTeam.PatrolVehicleAssignments.length > 0
-        ? updatedPatrolTeam.PatrolVehicleAssignments[0].vehicle
+      updatedPatrolTeam &&
+      updatedPatrolTeam.patrol_vehicle_assignments.length > 0
+        ? updatedPatrolTeam.patrol_vehicle_assignments[0].vehicle
         : null;
 
     return NextResponse.json(

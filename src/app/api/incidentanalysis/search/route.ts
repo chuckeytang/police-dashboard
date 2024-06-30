@@ -31,10 +31,18 @@ export async function GET(req: NextRequest) {
                 ],
               }
             : {},
-          report_time_gte ? { report_time: { gte: new Date(report_time_gte) } } : {},
-          report_time_lte ? { report_time: { lte: new Date(report_time_lte) } } : {},
-          response_time_gte ? { response_time: { gte: new Date(response_time_gte) } } : {},
-          response_time_lte ? { response_time: { lte: new Date(response_time_lte) } } : {},
+          report_time_gte
+            ? { report_time: { gte: new Date(report_time_gte) } }
+            : {},
+          report_time_lte
+            ? { report_time: { lte: new Date(report_time_lte) } }
+            : {},
+          response_time_gte
+            ? { response_time: { gte: new Date(response_time_gte) } }
+            : {},
+          response_time_lte
+            ? { response_time: { lte: new Date(response_time_lte) } }
+            : {},
           incident_status ? { incident_status: incident_status } : {},
         ],
       },

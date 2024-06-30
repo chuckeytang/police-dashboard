@@ -21,7 +21,7 @@ model Staff {
   updated_at    DateTime  @updatedAt
   Team          Team[]    @relation("TeamLeader")
   TeamMembers   TeamMember[]
-  PatrolStaffAssignments PatrolStaffAssignment[]
+  patrol_staff_assignments PatrolStaffAssignment[]
 }
 
 model Team {
@@ -58,7 +58,7 @@ model Vehicle {
   return_time  DateTime?
   created_at   DateTime  @default(now())
   updated_at   DateTime  @updatedAt
-  PatrolVehicleAssignments PatrolVehicleAssignment[]
+  patrol_vehicle_assignments PatrolVehicleAssignment[]
 }
 
 model PatrolTeam {
@@ -66,8 +66,8 @@ model PatrolTeam {
   team_name  String
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
-  PatrolVehicleAssignments PatrolVehicleAssignment[]
-  PatrolStaffAssignments PatrolStaffAssignment[]
+  patrol_vehicle_assignments PatrolVehicleAssignment[]
+  patrol_staff_assignments PatrolStaffAssignment[]
   schedules    PatrolSchedule[] @relation("PatrolTeam")
 }
 
@@ -114,34 +114,35 @@ model PatrolSchedule {
 
 model WorkFocus {
   id         Int      @id @default(autoincrement())
-  focus_date DateTime
-  content    String
+  focus_date DateTime   //时间
+  content    String     //工作内容
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
 }
 
 model IncidentAnalysis {
-  id                Int      @id @default(autoincrement())
-  incident_number   String
-  receiver          String
-  report_time       DateTime
-  contact_number    String
-  reporter          String
-  incident_category String
-  report_source     String
-  incident_location String
-  incident_details  String
-  incident_status   String
-  response_time     DateTime
-  created_at        DateTime @default(now())
-  updated_at        DateTime @updatedAt
+  id                Int      @id @default(autoincrement()) // 唯一标识符
+  incident_number   String   // 事件单编号
+  receiver          String   // 接警员
+  report_time       DateTime // 报警时间
+  contact_number    String   // 联系电话
+  reporter          String   // 报警人
+  incident_category String   // 警情类别
+  report_source     String   // 报警案由
+  incident_location String   // 事发地址
+  incident_details  String   // 事件详情
+  incident_status   String   // 事件状态
+  response_time     DateTime // 处警时间
+  created_at        DateTime @default(now()) // 创建时间
+  updated_at        DateTime @updatedAt      // 更新时间
 }
 
 model RecentDuties {
   id         Int      @id @default(autoincrement())
-  duty_date  DateTime
-  duty_type  String
-  content    String
+  duty_date  DateTime   //时间
+  duty_type  String     //勤务类型
+  content    String     //工作内容
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
 }
+

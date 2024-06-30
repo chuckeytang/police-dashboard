@@ -1,4 +1,4 @@
-// pages/api/vehicle/patrolteam/delete.ts
+// pages/api/vehicle/patrolTeam/delete.ts
 import { NextRequest, NextResponse } from "next/server";
 import { PrismaClient } from "@prisma/client";
 
