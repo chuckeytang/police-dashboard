@@ -4,12 +4,12 @@ import * as React from "react";
 import { Container, Grid, Typography, Box } from "@mui/material";
 import { HiMiniBuildingLibrary } from "react-icons/hi2";
 import "animate.css";
-import PoliceIncidentTable from "@/components/dashboard/PoliceIncidentTable";
-import RecentDutiesTable from "@/components/dashboard/RecentDutiesTable";
-import IncidentAnalysisTable from "@/components/dashboard/IncidentAnalysisTable";
-import WorkforceTable from "@/components/dashboard/WorkforceTable";
-import PatrolTeamTable from "@/components/dashboard/PatrolTeamTable";
-import DutyManagementTable from "@/components/dashboard/DutyManagementTable";
+import PoliceIncidentTable from "@/components1/dashboard/PoliceIncidentTable";
+import RecentDutiesTable from "@/components1/dashboard/RecentDutiesTable";
+import IncidentAnalysisTable from "@/components1/dashboard/IncidentAnalysisTable";
+import WorkforceTable from "@/components1/dashboard/WorkforceTable";
+import PatrolTeamTable from "@/components1/dashboard/PatrolTeamTable";
+import DutyManagementTable from "@/components1/dashboard/DutyManagementTable";
 
 const Dashboard = () => {
   return (
