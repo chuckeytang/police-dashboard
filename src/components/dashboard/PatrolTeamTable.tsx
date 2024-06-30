@@ -190,7 +190,22 @@ const PatrolTeamTable: React.FC = () => {
           height: "364px",
         }}
       >
-        <Typography variant="h6">街面巡逻</Typography>
+        <Box className="flex items-center">
+          <Typography variant="h6">街面巡逻</Typography>
+          {/* <Typography className="ml-2 text-sm">今日备勤车辆:</Typography> */}
+          <Button
+            variant="contained"
+            onClick={handleButtonClick}
+            sx={{
+              backgroundColor: "#1e3a8aa3",
+              ml: "auto",
+              width: "40px",
+              height: "32px",
+            }}
+          >
+            编辑
+          </Button>
+        </Box>
         <Typography className="text-sky-300">今日无值班巡逻班组</Typography>
       </Paper>
     );

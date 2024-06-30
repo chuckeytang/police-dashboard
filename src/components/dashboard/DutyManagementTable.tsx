@@ -151,7 +151,16 @@ const DutyManagementTable: React.FC = () => {
           height: "365px",
         }}
       >
-        <Typography variant="h6">勤务管理</Typography>
+        <Box sx={{ display: "flex", alignItems: "center" }}>
+          <Typography variant="h6">勤务管理</Typography>
+          <Button
+            variant="contained"
+            onClick={handleButtonClick}
+            className="bg-[#1e3a8aa3] ml-auto w-10 h-8"
+          >
+            编辑
+          </Button>
+        </Box>
         <Typography className="text-sky-300">今日无值班班组</Typography>
       </Paper>
     );
