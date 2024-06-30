@@ -15,71 +15,20 @@ import {
   Paper,
   Select,
   Typography,
+  Skeleton,
+  SelectChangeEvent,
 } from "@mui/material";
-import DbTableCell from "./DbTableCell";
+import { DbTableBodyCell, DbTableHeaderCell } from "./DbTableCell";
 import { IncidentAnalysis } from "@/types";
 
 const IncidentAnalysisTableHead: React.FC = () => (
   <TableHead>
     <TableRow>
-      <DbTableCell
-        sx={{
-          color: "#7DF9FF",
-          textOverflow: "ellipsis",
-          maxWidth: "16.4%",
-          minWidth: "16.4%",
-          paddingRight: "10px",
-        }}
-      >
-        报警时间
-      </DbTableCell>
-      <DbTableCell
-        sx={{
-          color: "#7DF9FF",
-          textOverflow: "ellipsis",
-          maxWidth: "16.4%",
-          minWidth: "16.4%",
-          paddingRight: "10px",
-        }}
-      >
-        警情类型
-      </DbTableCell>
-      <DbTableCell
-        sx={{
-          color: "#7DF9FF",
-          textOverflow: "ellipsis",
-          maxWidth: "23.8%",
-          minWidth: "23.8%",
-          textAlign: "auto",
-          paddingRight: "10px",
-        }}
-      >
-        案由
-      </DbTableCell>
-      <DbTableCell
-        sx={{
-          color: "#7DF9FF",
-          textOverflow: "ellipsis",
-          maxWidth: "26.8%",
-          minWidth: "26.8%",
-          textAlign: "auto",
-          paddingRight: "10px",
-        }}
-      >
-        详情
-      </DbTableCell>
-      <DbTableCell
-        sx={{
-          color: "#7DF9FF",
-          textOverflow: "ellipsis",
-          maxWidth: "16.4%",
-          minWidth: "16.4%",
-          textAlign: "center",
-          paddingRight: "10px",
-        }}
-      >
-        责任民警
-      </DbTableCell>
+      <DbTableHeaderCell>报警时间</DbTableHeaderCell>
+      <DbTableHeaderCell>警情类型</DbTableHeaderCell>
+      <DbTableHeaderCell>案由</DbTableHeaderCell>
+      <DbTableHeaderCell>详情</DbTableHeaderCell>
+      <DbTableHeaderCell>责任民警</DbTableHeaderCell>
     </TableRow>
   </TableHead>
 );
@@ -94,69 +43,11 @@ const IncidentAnalysisTableBody: React.FC<IncidentAnalysisTableBodyProps> = ({
   <TableBody>
     {analysisData.map((row, index) => (
       <TableRow key={index}>
-        <DbTableCell
-          sx={{
-            color: "white",
-            textOverflow: "ellipsis",
-            maxWidth: "16.4%",
-            minWidth: "16.4%",
-            paddingY: "6px",
-            paddingRight: "10px",
-          }}
-        >
-          {row.report_time}
-        </DbTableCell>
-        <DbTableCell
-          sx={{
-            color: "white",
-            textOverflow: "ellipsis",
-            maxWidth: "16.4%",
-            minWidth: "16.4%",
-            paddingY: "6px",
-            paddingRight: "10px",
-          }}
-        >
-          {row.incident_category}
-        </DbTableCell>
-        <DbTableCell
-          sx={{
-            color: "white",
-            textOverflow: "ellipsis",
-            maxWidth: "23.8%",
-            minWidth: "23.8%",
-            textAlign: "auto",
-            paddingY: "6px",
-            paddingRight: "10px",
-          }}
-        >
-          {row.report_source}
-        </DbTableCell>
-        <DbTableCell
-          sx={{
-            color: "white",
-            textOverflow: "ellipsis",
-            maxWidth: "26.8%",
-            minWidth: "26.8%",
-            textAlign: "auto",
-            paddingY: "6px",
-            paddingRight: "10px",
-          }}
-        >
-          {row.incident_details}
-        </DbTableCell>
-        <DbTableCell
-          sx={{
-            color: "white",
-            textOverflow: "ellipsis",
-            maxWidth: "16.4%",
-            minWidth: "16.4%",
-            textAlign: "center",
-            paddingY: "6px",
-            paddingRight: "10px",
-          }}
-        >
-          {row.receiver}
-        </DbTableCell>
+        <DbTableBodyCell>{row.report_time}</DbTableBodyCell>
+        <DbTableBodyCell>{row.incident_category}</DbTableBodyCell>
+        <DbTableBodyCell>{row.report_source}</DbTableBodyCell>
+        <DbTableBodyCell>{row.incident_details}</DbTableBodyCell>
+        <DbTableBodyCell>{row.receiver}</DbTableBodyCell>
       </TableRow>
     ))}
   </TableBody>
@@ -164,48 +55,103 @@ const IncidentAnalysisTableBody: React.FC<IncidentAnalysisTableBodyProps> = ({
 
 const IncidentAnalysisTable: React.FC = () => {
   const [analysisData, setAnalysisData] = useState<IncidentAnalysis[]>([]);
+  const [selectedCategory, setSelectedCategory] = useState("");
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const fetchAnalysisData = async () => {
+    const fetchAnalysisData = async (incident_category = "") => {
+      setIsLoading(true);
       try {
-        const response = await axios.get("api/incidentAnalysis/search");
+        const response = await axios.get("api/incidentAnalysis/search", {
+          params: { incident_category },
+        });
         console.log("Fetched incident analysis data:", response.data);
         setAnalysisData(response.data);
       } catch (error) {
         console.error("Error fetching incident analysis data:", error);
+      } finally {
+        setIsLoading(false);
       }
     };
-    fetchAnalysisData();
-  }, []);
+    fetchAnalysisData(selectedCategory);
+  }, [selectedCategory]);
+
+  const handleCategoryChange = (
+    event: SelectChangeEvent<typeof selectedCategory>
+  ) => {
+    setSelectedCategory(event.target.value as string);
+  };
 
   const handleButtonClick = () => {
     window.location.href = "/admin#/incidentAnalysis";
   };
 
+  if (isLoading) {
+    return (
+      <Paper
+        className="animate__animated animate__zoomInRight"
+        sx={{
+          p: 2,
+          display: "flex",
+          flexDirection: "column",
+          mt: 1,
+          backgroundColor: "#003366a3",
+          boxShadow: "none",
+          border: "2px solid #1e3a8a",
+          color: "white",
+          height: "240px",
+        }}
+      >
+        <Typography variant="h6">警情分析</Typography>
+        <Typography sx={{ color: "skyblue" }}>加载中...</Typography>
+        <Skeleton variant="text" width="40%" />
+        <Skeleton
+          variant="rectangular"
+          width="100%"
+          height={50}
+          sx={{ mt: 2 }}
+        />
+        <Skeleton
+          variant="rectangular"
+          width="100%"
+          height={50}
+          sx={{ mt: 2 }}
+        />
+      </Paper>
+    );
+  }
+
   return (
     <Paper
-      className="animate__animated animate__zoomInUp "
+      className="animate__animated animate__zoomInRight"
       sx={{
         p: 2,
         display: "flex",
         flexDirection: "column",
-        height: "35vh",
-        backgroundColor: "#003366",
+        mt: 1,
+        backgroundColor: "#003366a3",
         boxShadow: "none",
         border: "2px solid #1e3a8a",
         color: "white",
-        marginTop: 3,
+        height: "240px",
       }}
     >
       <Box sx={{ display: "flex", alignItems: "center" }}>
         <Typography variant="h6">警情分析</Typography>
         <Box sx={{ ml: 4 }}>
-          <FormControl sx={{ minWidth: 120, ml: "center" }} size="small">
+          <FormControl
+            sx={{ width: 120, height: 30, ml: "center" }}
+            size="small"
+          >
             <InputLabel id="select-label" sx={{ color: "white" }}>
               警情类型
             </InputLabel>
             <Select
               labelId="select-label"
+              value={selectedCategory}
+              onChange={(event: SelectChangeEvent<string>) =>
+                handleCategoryChange(event)
+              }
               label="选择选项"
               sx={{
                 color: "white",
@@ -216,23 +162,32 @@ const IncidentAnalysisTable: React.FC = () => {
               }}
               MenuProps={{
                 PaperProps: {
-                  sx: { backgroundColor: "#003366", color: "black" },
+                  sx: {
+                    backgroundColor: "#003366",
+                    color: "white",
+                    fontSize: 1,
+                  },
                 },
               }}
             >
-              <MenuItem value={1}>警情分析</MenuItem>
-              <MenuItem value={2}>Every Night</MenuItem>
-              <MenuItem value={3}>Weeknights</MenuItem>
-              <MenuItem value={4}>Weekends</MenuItem>
-              <MenuItem value={5}>Weekly</MenuItem>
+              <MenuItem value="">全部</MenuItem>
+              <MenuItem value={"盗窃"}>盗窃</MenuItem>
+              <MenuItem value={"交通事故"}>交通事故</MenuItem>
+              <MenuItem value={"火灾"}>火灾</MenuItem>
+              <MenuItem value={"打架斗殴"}>打架斗殴</MenuItem>
+              <MenuItem value={"诈骗"}>诈骗</MenuItem>
             </Select>
           </FormControl>
         </Box>
         <Button
           variant="contained"
-          color="primary"
-          sx={{ ml: "auto" }}
           onClick={handleButtonClick}
+          sx={{
+            backgroundColor: "#1e3a8aa3",
+            ml: "auto",
+            width: "40px",
+            height: "32px",
+          }}
         >
           编辑
         </Button>

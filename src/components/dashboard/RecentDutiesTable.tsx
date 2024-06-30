@@ -11,57 +11,17 @@ import {
   Button,
   Paper,
   Typography,
+  Skeleton,
 } from "@mui/material";
-import DbTableCell from "./DbTableCell";
+import { DbTableBodyCell, DbTableCell, DbTableHeaderCell } from "./DbTableCell";
 import { RecentDuties } from "@/types";
 
 const RecentDutiesTableHead: React.FC = () => (
   <TableHead>
     <TableRow>
-      <DbTableCell
-        sx={{
-          borderBottom: "none",
-          padding: "4px",
-          color: "lightblue",
-          textOverflow: "ellipsis",
-          maxWidth: "17.6%",
-          minWidth: "17.6%",
-          whiteSpace: "nowrap",
-          overflow: "hidden",
-          textAlign: "center",
-        }}
-      >
-        时间
-      </DbTableCell>
-      <DbTableCell
-        sx={{
-          borderBottom: "none",
-          padding: "4px",
-          color: "lightblue",
-          textOverflow: "ellipsis",
-          maxWidth: "23.5%",
-          minWidth: "23.5%",
-          whiteSpace: "nowrap",
-          overflow: "hidden",
-          textAlign: "center",
-        }}
-      >
-        勤务类型
-      </DbTableCell>
-      <DbTableCell
-        sx={{
-          borderBottom: "none",
-          padding: "4px",
-          color: "lightblue",
-          textOverflow: "ellipsis",
-          maxWidth: "58.8%",
-          minWidth: "58.8%",
-          whiteSpace: "nowrap",
-          overflow: "hidden",
-        }}
-      >
-        勤务内容
-      </DbTableCell>
+      <DbTableHeaderCell>时间</DbTableHeaderCell>
+      <DbTableHeaderCell>勤务类型</DbTableHeaderCell>
+      <DbTableHeaderCell>勤务内容</DbTableHeaderCell>
     </TableRow>
   </TableHead>
 );
@@ -76,53 +36,9 @@ const RecentDutiesTableBody: React.FC<RecentDutiesTableBodyProps> = ({
   <TableBody>
     {recentData.map((row, index) => (
       <TableRow key={index}>
-        <DbTableCell
-          sx={{
-            borderBottom: "none",
-            padding: "4px",
-            color: "white",
-            textOverflow: "ellipsis",
-            maxWidth: "17.6%",
-            minWidth: "17.6%",
-            whiteSpace: "nowrap",
-            overflow: "hidden",
-            textAlign: "center",
-            paddingY: "10px",
-          }}
-        >
-          {row.duty_date}
-        </DbTableCell>
-        <DbTableCell
-          sx={{
-            borderBottom: "none",
-            padding: "4px",
-            color: "white",
-            textOverflow: "ellipsis",
-            maxWidth: "23.5%",
-            minWidth: "23.5%",
-            whiteSpace: "nowrap",
-            overflow: "hidden",
-            textAlign: "center",
-            paddingY: "10px",
-          }}
-        >
-          {row.duty_type}
-        </DbTableCell>
-        <DbTableCell
-          sx={{
-            borderBottom: "none",
-            padding: "4px",
-            color: "white",
-            textOverflow: "ellipsis",
-            maxWidth: "58.8%",
-            minWidth: "58.8%",
-            whiteSpace: "nowrap",
-            overflow: "hidden",
-            paddingY: "10px",
-          }}
-        >
-          {row.content}
-        </DbTableCell>
+        <DbTableBodyCell>{row.duty_date}</DbTableBodyCell>
+        <DbTableBodyCell>{row.duty_type}</DbTableBodyCell>
+        <DbTableBodyCell>{row.content}</DbTableBodyCell>
       </TableRow>
     ))}
   </TableBody>
@@ -130,15 +46,23 @@ const RecentDutiesTableBody: React.FC<RecentDutiesTableBodyProps> = ({
 
 const RecentDutiesTable: React.FC = () => {
   const [recentData, setRecentData] = useState<RecentDuties[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const fetchRecentData = async () => {
       try {
         const response = await axios.get("/api/recentDuties/search");
+        for (let i = 0; i < response.data.length; i++) {
+          response.data[i].duty_date = new Date(
+            response.data[i].duty_date
+          ).toLocaleDateString();
+        }
         console.log("Fetched recent duties data:", response.data);
         setRecentData(response.data);
       } catch (error) {
         console.error("Error fetching recent duties data:", error);
+      } finally {
+        setIsLoading(false);
       }
     };
     fetchRecentData();
@@ -148,42 +72,73 @@ const RecentDutiesTable: React.FC = () => {
     window.location.href = "/admin#/recentDuties";
   };
 
+  if (isLoading) {
+    return (
+      <Paper
+        className="animate__animated animate__zoomInRight"
+        sx={{
+          p: 2,
+          display: "flex",
+          flexDirection: "column",
+          mt: 1,
+          backgroundColor: "#003366a3",
+          boxShadow: "none",
+          border: "2px solid #1e3a8a",
+          color: "white",
+          height: "240px",
+        }}
+      >
+        <Typography variant="h6">近期勤务</Typography>
+        <Typography sx={{ color: "skyblue" }}>加载中...</Typography>
+        <Skeleton variant="text" width="40%" />
+        <Skeleton
+          variant="rectangular"
+          width="100%"
+          height={50}
+          sx={{ mt: 2 }}
+        />
+        <Skeleton
+          variant="rectangular"
+          width="100%"
+          height={50}
+          sx={{ mt: 2 }}
+        />
+      </Paper>
+    );
+  }
+
   return (
     <Paper
-      className="animate__animated animate__zoomInRight "
+      className="animate__animated animate__zoomInRight"
       sx={{
         p: 2,
         display: "flex",
         flexDirection: "column",
-        mt: 2,
-        backgroundColor: "#003366",
+        mt: 1,
+        backgroundColor: "#003366a3",
         boxShadow: "none",
         border: "2px solid #1e3a8a",
         color: "white",
-        height: "63vh",
+        height: "240px",
       }}
     >
       <Box sx={{ display: "flex", alignItems: "center" }}>
         <Typography variant="h6">近期勤务</Typography>
         <Button
           variant="contained"
-          color="primary"
-          sx={{ ml: "auto" }}
           onClick={handleButtonClick}
+          className="bg-[#1e3a8aa3] ml-auto w-10 h-8"
         >
           编辑
         </Button>
       </Box>
-      {/* Add your content here */}
       <TableContainer
         component={Paper}
         sx={{
           backgroundColor: "transparent",
-          marginTop: "30px",
+          marginTop: "15px",
           overflow: "hidden",
-          minWidth: "100%",
           boxShadow: "none",
-          Width: "100%",
         }}
       >
         <TableContainer>

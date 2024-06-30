@@ -21,7 +21,7 @@ const DateRangePicker = ({
   };
 
   return (
-    <div style={{ display: "flex", alignItems: "center" }}>
+    <div className="flex">
       <DatePicker
         selected={startDate}
         onChange={handleStartDateChange}
@@ -29,8 +29,8 @@ const DateRangePicker = ({
         startDate={startDate ? startDate : undefined}
         endDate={endDate ? endDate : undefined}
         placeholderText="开始日期"
+        className="w-24 text-xs bg-transparent border-[#1e3a8a] border-2 focus:border-sky-300 focus:ring-sky-300 px-2 py-1 rounded"
       />
-      <span style={{ margin: "0 10px" }}>到</span>
       <DatePicker
         selected={endDate}
         onChange={handleEndDateChange}
@@ -39,6 +39,7 @@ const DateRangePicker = ({
         endDate={endDate ? endDate : undefined}
         minDate={startDate ? startDate : undefined}
         placeholderText="结束日期"
+        className="ml-2 w-24 text-xs bg-transparent border-[#1e3a8a] border-2 focus:border-sky-300 focus:ring-sky-300 px-2 py-1 rounded"
       />
     </div>
   );

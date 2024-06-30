@@ -11,6 +11,7 @@ export async function GET(req: NextRequest) {
   const response_time_gte = searchParams.get("response_time_gte");
   const response_time_lte = searchParams.get("response_time_lte");
   const incident_status = searchParams.get("incident_status");
+  const incident_category = searchParams.get("incident_category");
   const sort = searchParams.get("_sort") || "id";
   const order = searchParams.get("_order") || "ASC";
 
@@ -44,6 +45,7 @@ export async function GET(req: NextRequest) {
             ? { response_time: { lte: new Date(response_time_lte) } }
             : {},
           incident_status ? { incident_status: incident_status } : {},
+          incident_category ? { incident_category: incident_category } : {},
         ],
       },
       orderBy: {

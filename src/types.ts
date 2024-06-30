@@ -11,6 +11,7 @@ export interface Staff {
   created_at: Date;
   updated_at: Date;
   team?: Team[]; // Optional since Staff can be part of multiple teams
+  is_leader?: boolean;
   teamMembers?: TeamMember[];
   patrol_staff_assignments?: PatrolStaffAssignment[];
 }

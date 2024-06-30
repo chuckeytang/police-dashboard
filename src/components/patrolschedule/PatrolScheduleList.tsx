@@ -42,9 +42,11 @@ const PatrolScheduleList: React.FC<PatrolScheduleListProps> = ({
 
   const handleSelectSlot = (slot: any) => {
     const today = new Date();
+    const yesterday = new Date(today);
+    yesterday.setDate(today.getDate() - 1);
     const selected = new Date(slot.start);
 
-    if (selected < today) {
+    if (selected < yesterday) {
       setAlertDialogOpen(true);
     } else {
       setSelectedDate(slot.start);
@@ -93,7 +95,7 @@ const PatrolScheduleList: React.FC<PatrolScheduleListProps> = ({
         open={alertDialogOpen}
         onClose={handleCloseAlertDialog}
         title="提示"
-        message="请选择明日及以后的日期创建排班。"
+        message="请选择今日及以后的日期创建排班。"
       />
     </div>
   );

@@ -10,44 +10,17 @@ import {
   Button,
   Paper,
   Typography,
+  Skeleton,
 } from "@mui/material";
 import { Workforce } from "@/types";
-import DbTableCell from "./DbTableCell";
+import { DbTableBodyCell, DbTableHeaderCell } from "./DbTableCell";
 
 const WorkforceTableHead: React.FC = () => (
   <TableHead>
     <TableRow>
-      <DbTableCell
-        sx={{
-          color: "lightblue",
-          textOverflow: "ellipsis",
-          maxWidth: "40px",
-          minWidth: "40px",
-        }}
-      >
-        序号
-      </DbTableCell>
-      <DbTableCell
-        sx={{
-          color: "lightblue",
-          textOverflow: "ellipsis",
-          maxWidth: "90px",
-          minWidth: "90px",
-          textAlign: "center",
-        }}
-      >
-        时间
-      </DbTableCell>
-      <DbTableCell
-        sx={{
-          color: "lightblue",
-          textOverflow: "ellipsis",
-          maxWidth: "210px",
-          minWidth: "210px",
-        }}
-      >
-        工作内容
-      </DbTableCell>
+      <DbTableHeaderCell>序号</DbTableHeaderCell>
+      <DbTableHeaderCell>时间</DbTableHeaderCell>
+      <DbTableHeaderCell>工作内容</DbTableHeaderCell>
     </TableRow>
   </TableHead>
 );
@@ -62,37 +35,9 @@ const WorkforceTableBody: React.FC<WorkforceTableBodyProps> = ({
   <TableBody>
     {workforceData.map((row, index) => (
       <TableRow key={index}>
-        <DbTableCell
-          sx={{
-            color: "white",
-            textOverflow: "ellipsis",
-            maxWidth: "40px",
-            minWidth: "40px",
-          }}
-        >
-          {row.id}
-        </DbTableCell>
-        <DbTableCell
-          sx={{
-            color: "white",
-            textOverflow: "ellipsis",
-            maxWidth: "90px",
-            minWidth: "90px",
-            textAlign: "center",
-          }}
-        >
-          {row.focus_date}
-        </DbTableCell>
-        <DbTableCell
-          sx={{
-            color: "white",
-            textOverflow: "ellipsis",
-            maxWidth: "210px",
-            minWidth: "210px",
-          }}
-        >
-          {row.content}
-        </DbTableCell>
+        <DbTableBodyCell>{row.id}</DbTableBodyCell>
+        <DbTableBodyCell>{row.focus_date}</DbTableBodyCell>
+        <DbTableBodyCell>{row.content}</DbTableBodyCell>
       </TableRow>
     ))}
   </TableBody>
@@ -100,15 +45,23 @@ const WorkforceTableBody: React.FC<WorkforceTableBodyProps> = ({
 
 const WorkforceTable: React.FC = () => {
   const [workforceData, setWorkforceData] = useState<Workforce[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const fetchWorkforceData = async () => {
       try {
         const response = await axios.get("api/workFocus/search");
         console.log("Fetched workforce data:", response.data);
+        for (let i = 0; i < response.data.length; i++) {
+          response.data[i].focus_date = new Date(
+            response.data[i].focus_date
+          ).toLocaleDateString();
+        }
         setWorkforceData(response.data);
       } catch (error) {
         console.error("Error fetching workforce data:", error);
+      } finally {
+        setIsLoading(false);
       }
     };
     fetchWorkforceData();
@@ -118,30 +71,67 @@ const WorkforceTable: React.FC = () => {
     window.location.href = "/admin#/workFocus";
   };
 
+  if (isLoading) {
+    return (
+      <Paper
+        className="animate__animated animate__zoomInRight"
+        sx={{
+          p: 2,
+          display: "flex",
+          flexDirection: "column",
+          mt: 1,
+          backgroundColor: "#003366a3",
+          boxShadow: "none",
+          border: "2px solid #1e3a8a",
+          color: "white",
+          height: "240px",
+        }}
+      >
+        <Typography variant="h6">工作重点</Typography>
+        <Typography className="text-sky-300">加载中...</Typography>
+        <Skeleton variant="text" width="40%" />
+        <Skeleton
+          variant="rectangular"
+          width="100%"
+          height={50}
+          sx={{ mt: 2 }}
+        />
+        <Skeleton
+          variant="rectangular"
+          width="100%"
+          height={50}
+          sx={{ mt: 2 }}
+        />
+      </Paper>
+    );
+  }
+
   return (
     <Paper
-      className="animate__animated animate__zoomInLeft"
+      className="animate__animated animate__zoomInRight"
       sx={{
         p: 2,
         display: "flex",
         flexDirection: "column",
-        mt: 2,
-        backgroundColor: "#003366",
+        mt: 1,
+        backgroundColor: "#003366a3",
         boxShadow: "none",
         border: "2px solid #1e3a8a",
         color: "white",
-        width: "100%",
-        marginLeft: 1,
-        zIndex: 3,
+        height: "240px",
       }}
     >
       <Box sx={{ display: "flex", alignItems: "center" }}>
         <Typography variant="h6">工作重点</Typography>
         <Button
           variant="contained"
-          color="primary"
-          sx={{ ml: "auto" }}
           onClick={handleButtonClick}
+          sx={{
+            backgroundColor: "#1e3a8aa3",
+            ml: "auto",
+            width: "40px",
+            height: "32px",
+          }}
         >
           编辑
         </Button>
@@ -151,19 +141,15 @@ const WorkforceTable: React.FC = () => {
         component={Paper}
         sx={{
           backgroundColor: "transparent",
-          marginTop: "2px",
+          marginTop: "8px",
           overflow: "hidden",
-          minWidth: "100%",
           boxShadow: "none",
-          zIndex: 3,
         }}
       >
-        <TableContainer>
-          <Table>
-            <WorkforceTableHead />
-            <WorkforceTableBody workforceData={workforceData} />
-          </Table>
-        </TableContainer>
+        <Table>
+          <WorkforceTableHead />
+          <WorkforceTableBody workforceData={workforceData} />
+        </Table>
       </TableContainer>
     </Paper>
   );

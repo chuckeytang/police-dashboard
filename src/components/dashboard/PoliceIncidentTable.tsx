@@ -7,51 +7,21 @@ import {
   TableBody,
   TableRow,
   Box,
-  Button,
   Paper,
   TableContainer,
   Typography,
+  Skeleton,
 } from "@mui/material";
-import DbTableCell from "./DbTableCell";
+import { DbTableBodyCell, DbTableHeaderCell } from "./DbTableCell";
 import { PoliceIncidentCount } from "@/types";
 import DateRangePicker from "../common/DateRangePicker";
 
 const PoliceIncidentHead: React.FC = () => (
   <TableHead>
     <TableRow>
-      <DbTableCell
-        sx={{
-          color: "lightblue",
-          textOverflow: "ellipsis",
-          maxWidth: "80px",
-          minWidth: "50px",
-          textAlign: "center",
-        }}
-      >
-        序号
-      </DbTableCell>
-      <DbTableCell
-        sx={{
-          color: "lightblue",
-          textOverflow: "ellipsis",
-          maxWidth: "140px",
-          minWidth: "140px",
-          textAlign: "center",
-        }}
-      >
-        民警
-      </DbTableCell>
-      <DbTableCell
-        sx={{
-          color: "lightblue",
-          textOverflow: "ellipsis",
-          maxWidth: "140px",
-          minWidth: "140px",
-          textAlign: "center",
-        }}
-      >
-        警情
-      </DbTableCell>
+      <DbTableHeaderCell>序号</DbTableHeaderCell>
+      <DbTableHeaderCell>民警</DbTableHeaderCell>
+      <DbTableHeaderCell>警情</DbTableHeaderCell>
     </TableRow>
   </TableHead>
 );
@@ -66,39 +36,9 @@ const RecentDutiesTableBody: React.FC<PoliceIncidentBodyProps> = ({
   <TableBody>
     {policeIncidentData.map((row, index) => (
       <TableRow key={index}>
-        <DbTableCell
-          sx={{
-            color: "white",
-            textOverflow: "ellipsis",
-            maxWidth: "80px",
-            minWidth: "50px",
-            textAlign: "center",
-          }}
-        >
-          {index + 1}
-        </DbTableCell>
-        <DbTableCell
-          sx={{
-            color: "white",
-            textOverflow: "ellipsis",
-            maxWidth: "140px",
-            minWidth: "140px",
-            textAlign: "center",
-          }}
-        >
-          {row.receiver}
-        </DbTableCell>
-        <DbTableCell
-          sx={{
-            color: "white",
-            textOverflow: "ellipsis",
-            maxWidth: "140px",
-            minWidth: "140px",
-            textAlign: "center",
-          }}
-        >
-          {row._count._all}
-        </DbTableCell>
+        <DbTableBodyCell>{index + 1}</DbTableBodyCell>
+        <DbTableBodyCell>{row.receiver}</DbTableBodyCell>
+        <DbTableBodyCell>{row._count._all}</DbTableBodyCell>
       </TableRow>
     ))}
   </TableBody>
@@ -110,12 +50,14 @@ const PoliceIncidentTable = () => {
   >([]);
   const [startDate, setStartDate] = useState<Date | null>(null);
   const [endDate, setEndDate] = useState<Date | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   const fetchIncidentData = async (
     startDate?: Date | null,
     endDate?: Date | null
   ) => {
     try {
+      setIsLoading(true);
       const response = await axios.get(
         "/api/incidentAnalysis/policeIncidentCount",
         {
@@ -128,12 +70,49 @@ const PoliceIncidentTable = () => {
       setPoliceIncidentData(response.data);
     } catch (error) {
       console.error("Error fetching incident data:", error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
   useEffect(() => {
     fetchIncidentData();
   }, []);
+
+  if (isLoading) {
+    return (
+      <Paper
+        className="animate__animated animate__zoomInRight"
+        sx={{
+          p: 2,
+          display: "flex",
+          flexDirection: "column",
+          mt: 1,
+          backgroundColor: "#003366a3",
+          boxShadow: "none",
+          border: "2px solid #1e3a8a",
+          color: "white",
+          height: "240px",
+        }}
+      >
+        <Typography variant="h6">民警-警情</Typography>
+        <Typography sx={{ color: "skyblue" }}>加载中...</Typography>
+        <Skeleton variant="text" width="40%" />
+        <Skeleton
+          variant="rectangular"
+          width="100%"
+          height={50}
+          sx={{ mt: 2 }}
+        />
+        <Skeleton
+          variant="rectangular"
+          width="100%"
+          height={50}
+          sx={{ mt: 2 }}
+        />
+      </Paper>
+    );
+  }
 
   const handleDateChange = (startDate: Date | null, endDate: Date | null) => {
     setStartDate(startDate);
@@ -150,17 +129,17 @@ const PoliceIncidentTable = () => {
         p: 2,
         display: "flex",
         flexDirection: "column",
-        mt: 2,
-        backgroundColor: "#003366",
+        mt: 1,
+        backgroundColor: "#003366a3",
         boxShadow: "none",
         border: "2px solid #1e3a8a",
         color: "white",
-        height: "30vh",
+        height: "240px",
       }}
     >
-      <Box sx={{ display: "flex", alignItems: "center" }}>
+      <Box className="flex justify-between">
         <Typography variant="h6">民警-警情</Typography>
-        <Box sx={{ ml: "auto" }}>
+        <Box>
           <DateRangePicker onDateChange={handleDateChange} />
         </Box>
       </Box>
@@ -168,9 +147,8 @@ const PoliceIncidentTable = () => {
         component={Paper}
         sx={{
           backgroundColor: "transparent",
-          marginTop: "20px",
+          marginTop: "15px",
           overflow: "hidden",
-          minWidth: "100%",
           boxShadow: "none",
         }}
       >
