@@ -94,7 +94,7 @@ const ScheduleList: React.FC<ScheduleListProps> = ({
           selectable
           onSelectSlot={handleSelectSlot}
           onSelectEvent={(event) => {
-            setSelectedDate(event.start);
+            setSelectedDate(event.start ? event.start : new Date());
             setConfirmDialogOpen(true);
           }}
           components={{

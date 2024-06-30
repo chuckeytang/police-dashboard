@@ -12,7 +12,7 @@ export interface Staff {
   updated_at: Date;
   team?: Team[]; // Optional since Staff can be part of multiple teams
   is_leader?: boolean;
-  teamMembers?: TeamMember[];
+  members?: Staff[];
   patrol_staff_assignments?: PatrolStaffAssignment[];
 }
 
@@ -23,7 +23,7 @@ export interface Team {
   created_at: Date;
   updated_at: Date;
   leader?: Staff; // Optional, as the team may not have a leader
-  teamMembers?: TeamMember[];
+  members?: Staff[];
   day_schedules?: Schedule[];
   night_schedules?: Schedule[];
 }

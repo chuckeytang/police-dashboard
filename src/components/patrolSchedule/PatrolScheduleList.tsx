@@ -49,7 +49,7 @@ const PatrolScheduleList: React.FC<PatrolScheduleListProps> = ({
     if (selected < yesterday) {
       setAlertDialogOpen(true);
     } else {
-      setSelectedDate(slot.start);
+      setSelectedDate(selected);
       setDialogOpen(true);
     }
   };
@@ -71,7 +71,7 @@ const PatrolScheduleList: React.FC<PatrolScheduleListProps> = ({
             selectable
             onSelectSlot={handleSelectSlot}
             onSelectEvent={(event) => {
-              setSelectedDate(event.start);
+              setSelectedDate(event.start ? event.start : new Date());
               setConfirmDialogOpen(true);
             }}
             components={{
