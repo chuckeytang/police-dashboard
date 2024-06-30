@@ -120,13 +120,18 @@ export interface Workforce {
 }
 
 export interface PatrolStaffAssignment {
+  id: number;
+  staff: Staff;
   shift: string;
-  staff: {
-    name: string;
-  };
 }
 
 export interface PatrolTeam {
+  id: number;
   team_name: string;
+  created_at: Date;
+  updated_at: Date;
+  vehicle: Vehicle | null;
+  members: Array<PatrolStaffAssignment>;
   patrol_staff_assignments: PatrolStaffAssignment[];
+  patrol_vehicle_assignments: PatrolVehicleAssignment[];
 }
