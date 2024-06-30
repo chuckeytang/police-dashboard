@@ -1,3 +1,4 @@
+//勤务管理板块
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import {
@@ -6,6 +7,10 @@ import {
   TableBody,
   TableHead,
   TableRow,
+  Box,
+  Button,
+  Paper,
+  Typography,
 } from "@mui/material";
 import DbTableCell from "./DbTableCell";
 import { Staff } from "@/types";
@@ -168,13 +173,59 @@ const DutyManagementTable: React.FC = () => {
     fetchStaffData();
   }, []);
 
+  const handleButtonClick = () => {
+    window.location.href = "/admin#/personnel/staff";
+  };
+
   return (
-    <TableContainer>
-      <Table>
-        <DutyManagementTableHead />
-        <DutyManagementTableBody staffData={staffData} />
-      </Table>
-    </TableContainer>
+    <Paper
+      className="animate__animated animate__zoomInLeft"
+      sx={{
+        p: 2,
+        display: "flex",
+        flexDirection: "column",
+        mt: 2,
+        backgroundColor: "#003366",
+        boxShadow: "none",
+        border: "2px solid #1e3a8a",
+        color: "white",
+        width: "100%",
+        marginLeft: 1,
+        zIndex: 3,
+      }}
+    >
+      <Box sx={{ display: "flex", alignItems: "center" }}>
+        <Typography variant="h6">勤务管理</Typography>
+        <Typography sx={{ ml: 2, fontSize: "1rem" }}>今日备勤等级:</Typography>
+        <Button
+          variant="contained"
+          color="primary"
+          sx={{ ml: "auto" }}
+          onClick={handleButtonClick}
+        >
+          编辑
+        </Button>
+      </Box>
+
+      <TableContainer
+        component={Paper}
+        sx={{
+          backgroundColor: "transparent",
+          marginTop: "20px",
+          overflow: "hidden",
+          minWidth: "100%",
+          boxShadow: "none",
+          zIndex: 3,
+        }}
+      >
+        <TableContainer>
+          <Table>
+            <DutyManagementTableHead />
+            <DutyManagementTableBody staffData={staffData} />
+          </Table>
+        </TableContainer>
+      </TableContainer>
+    </Paper>
   );
 };
 

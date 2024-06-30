@@ -1,32 +1,9 @@
 "use client";
 
 import * as React from "react";
-import {
-  Container,
-  Grid,
-  Paper,
-  Typography,
-  Box,
-  Button,
-  TableBody,
-  TableHead,
-  TableCell,
-  TableRow,
-  TableContainer,
-  Select,
-  FormControl,
-  InputLabel,
-  MenuItem,
-} from "@mui/material";
-import { PiPoliceCarFill } from "react-icons/pi";
-import { GrSchedule } from "react-icons/gr";
+import { Container, Grid, Typography, Box } from "@mui/material";
 import { HiMiniBuildingLibrary } from "react-icons/hi2";
 import "animate.css";
-import { useEffect, useState } from "react";
-import axios from "axios";
-import { useRouter } from "next/navigation";
-import DbTableCell from "@/components/dashboard/DbTableCell";
-import { IncidentAnalysis, PatrolTeam, RecentDuties, WorkFocus } from "@/types";
 import PoliceIncidentTable from "@/components/dashboard/PoliceIncidentTable";
 import RecentDutiesTable from "@/components/dashboard/RecentDutiesTable";
 import IncidentAnalysisTable from "@/components/dashboard/IncidentAnalysisTable";
@@ -35,11 +12,6 @@ import PatrolTeamTable from "@/components/dashboard/PatrolTeamTable";
 import DutyManagementTable from "@/components/dashboard/DutyManagementTable";
 
 const Dashboard = () => {
-  const router = useRouter();
-  const handleButtonClick = () => {
-    router.push(""); // 替换为你想跳转的目标URL
-  };
-
   return (
     <Container
       maxWidth={false}
@@ -61,132 +33,13 @@ const Dashboard = () => {
       <Grid container spacing={2} sx={{ zIndex: 3, padding: 2 }}>
         <Grid item xs={3}>
           {/* 勤务管理 */}
-          <Paper
-            className="animate__animated animate__zoomInLeft"
-            sx={{
-              p: 2,
-              display: "flex",
-              flexDirection: "column",
-              mt: 2,
-              backgroundColor: "#003366",
-              boxShadow: "none",
-              border: "2px solid #1e3a8a",
-              color: "white",
-              width: "100%",
-              marginLeft: 1,
-              zIndex: 3,
-            }}
-          >
-            <Box sx={{ display: "flex", alignItems: "center" }}>
-              <Typography variant="h6">勤务管理</Typography>
-              <Typography sx={{ ml: 2, fontSize: "1rem" }}>
-                今日备勤等级:
-              </Typography>
-              <Button
-                variant="contained"
-                color="primary"
-                sx={{ ml: "auto" }}
-                onClick={handleButtonClick}
-              >
-                编辑
-              </Button>
-            </Box>
-
-            <TableContainer
-              component={Paper}
-              sx={{
-                backgroundColor: "transparent",
-                marginTop: "20px",
-                overflow: "hidden",
-                minWidth: "100%",
-                boxShadow: "none",
-                zIndex: 3,
-              }}
-            >
-              <DutyManagementTable />
-            </TableContainer>
-          </Paper>
+          <DutyManagementTable />
 
           {/* 街面巡逻 */}
-          <Paper
-            className="animate__animated animate__zoomInLeft"
-            sx={{
-              p: 2,
-              display: "flex",
-              flexDirection: "column",
-              mt: 2,
-              backgroundColor: "#003366",
-              boxShadow: "none",
-              border: "2px solid #1e3a8a",
-              color: "white",
-              width: "100%",
-              marginLeft: 1,
-              zIndex: 3,
-            }}
-          >
-            <Box sx={{ display: "flex", alignItems: "center" }}>
-              <Typography variant="h6">街面巡逻</Typography>
-              <Typography sx={{ ml: 2, fontSize: "1rem" }}>
-                今日备勤车辆:
-              </Typography>
-              <Button variant="contained" color="primary" sx={{ ml: "auto" }}>
-                编辑
-              </Button>
-            </Box>
-
-            <TableContainer
-              component={Paper}
-              sx={{
-                backgroundColor: "transparent",
-                marginTop: "2px",
-                overflow: "hidden",
-                minWidth: "100%",
-                boxShadow: "none",
-                zIndex: 3,
-              }}
-            >
-              <PatrolTeamTable />
-            </TableContainer>
-          </Paper>
+          <PatrolTeamTable />
 
           {/* 工作重点 */}
-          <Paper
-            className="animate__animated animate__zoomInLeft"
-            sx={{
-              p: 2,
-              display: "flex",
-              flexDirection: "column",
-              mt: 2,
-              backgroundColor: "#003366",
-              boxShadow: "none",
-              border: "2px solid #1e3a8a",
-              color: "white",
-              width: "100%",
-              marginLeft: 1,
-              zIndex: 3,
-            }}
-          >
-            <Box sx={{ display: "flex", alignItems: "center" }}>
-              <Typography variant="h6">工作重点</Typography>
-              <Button variant="contained" color="primary" sx={{ ml: "auto" }}>
-                编辑
-              </Button>
-            </Box>
-
-            <TableContainer
-              component={Paper}
-              sx={{
-                backgroundColor: "transparent",
-                marginTop: "2px",
-                overflow: "hidden",
-                minWidth: "100%",
-                boxShadow: "none",
-                zIndex: 3,
-              }}
-            >
-              <WorkforceTable />
-            </TableContainer>
-          </Paper>
+          <WorkforceTable />
         </Grid>
 
         <Grid item xs={6} position="relative">
@@ -242,144 +95,13 @@ const Dashboard = () => {
             mt={4}
           ></Box>
 
-          <Paper
-            className="animate__animated animate__zoomInUp "
-            sx={{
-              p: 2,
-              display: "flex",
-              flexDirection: "column",
-              height: "35vh",
-              backgroundColor: "#003366",
-              boxShadow: "none",
-              border: "2px solid #1e3a8a",
-              color: "white",
-              marginTop: 3,
-            }}
-          >
-            <Box sx={{ display: "flex", alignItems: "center" }}>
-              <Typography variant="h6">警情分析</Typography>
-              <Box sx={{ ml: 4 }}>
-                <FormControl sx={{ minWidth: 120, ml: "center" }} size="small">
-                  <InputLabel id="select-label" sx={{ color: "white" }}>
-                    警情类型
-                  </InputLabel>
-                  <Select
-                    labelId="select-label"
-                    label="选择选项"
-                    sx={{
-                      color: "white",
-                      ".MuiOutlinedInput-notchedOutline": {
-                        borderColor: "white",
-                      },
-                      ".MuiSvgIcon-root": { color: "white" },
-                    }}
-                    MenuProps={{
-                      PaperProps: {
-                        sx: { backgroundColor: "#003366", color: "black" },
-                      },
-                    }}
-                  >
-                    <MenuItem value={1}>警情分析</MenuItem>
-                    <MenuItem value={2}>Every Night</MenuItem>
-                    <MenuItem value={3}>Weeknights</MenuItem>
-                    <MenuItem value={4}>Weekends</MenuItem>
-                    <MenuItem value={5}>Weekly</MenuItem>
-                  </Select>
-                </FormControl>
-              </Box>
-              <Button variant="contained" color="primary" sx={{ ml: "auto" }}>
-                编辑
-              </Button>
-            </Box>
-
-            <TableContainer
-              component={Paper}
-              sx={{
-                backgroundColor: "transparent",
-                marginTop: "15px",
-                overflow: "hidden",
-                boxShadow: "none",
-              }}
-            >
-              <IncidentAnalysisTable />
-            </TableContainer>
-          </Paper>
+          <IncidentAnalysisTable />
         </Grid>
 
         <Grid item xs={3}>
-          <Paper
-            className="animate__animated animate__zoomInRight "
-            sx={{
-              p: 2,
-              display: "flex",
-              flexDirection: "column",
-              mt: 2,
-              backgroundColor: "#003366",
-              boxShadow: "none",
-              border: "2px solid #1e3a8a",
-              color: "white",
-              height: "63vh",
-            }}
-          >
-            <Box sx={{ display: "flex", alignItems: "center" }}>
-              <Typography variant="h6">近期勤务</Typography>
-              <Button variant="contained" color="primary" sx={{ ml: "auto" }}>
-                编辑
-              </Button>
-            </Box>
-            {/* Add your content here */}
-            <TableContainer
-              component={Paper}
-              sx={{
-                backgroundColor: "transparent",
-                marginTop: "30px",
-                overflow: "hidden",
-                minWidth: "100%",
-                boxShadow: "none",
-                Width: "100%",
-              }}
-            >
-              <RecentDutiesTable />
-            </TableContainer>
-          </Paper>
+          <RecentDutiesTable />
 
-          <Paper
-            className="animate__animated animate__zoomInRight "
-            sx={{
-              p: 2,
-              display: "flex",
-              flexDirection: "column",
-              mt: 2,
-              backgroundColor: "#003366",
-              boxShadow: "none",
-              border: "2px solid #1e3a8a",
-              color: "white",
-              height: "30vh",
-            }}
-          >
-            <Box sx={{ display: "flex", alignItems: "center" }}>
-              <Typography variant="h6">民警-警情</Typography>
-              <Button variant="contained" color="primary" sx={{ ml: "auto" }}>
-                时间
-                <Box sx={{ ml: 2 }}>
-                  <GrSchedule fontSize={20} />
-                </Box>
-              </Button>
-            </Box>
-            {/* Add your content here */}
-            <TableContainer
-              component={Paper}
-              sx={{
-                backgroundColor: "transparent",
-                marginTop: "20px",
-                overflow: "hidden",
-                minWidth: "100%",
-                boxShadow: "none",
-              }}
-            >
-              <PoliceIncidentTable />
-            </TableContainer>
-          </Paper>
+          <PoliceIncidentTable />
         </Grid>
       </Grid>
     </Container>

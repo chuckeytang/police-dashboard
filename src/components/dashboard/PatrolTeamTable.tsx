@@ -1,3 +1,4 @@
+//街面巡逻板块
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import {
@@ -6,6 +7,10 @@ import {
   TableBody,
   TableHead,
   TableRow,
+  Paper,
+  Box,
+  Button,
+  Typography,
 } from "@mui/material";
 import { PiPoliceCarFill } from "react-icons/pi";
 import DbTableCell from "./DbTableCell";
@@ -156,13 +161,59 @@ const PatrolTeamTable: React.FC = () => {
     fetchPatrolTeamData();
   }, []);
 
+  const handleButtonClick = () => {
+    window.location.href = "/admin#/vehicle/vehicle";
+  };
+
   return (
-    <TableContainer>
-      <Table>
-        <PatrolTeamTableHead />
-        <PatrolTeamTableBody patrolTeamData={patrolTeamData} />
-      </Table>
-    </TableContainer>
+    <Paper
+      className="animate__animated animate__zoomInLeft"
+      sx={{
+        p: 2,
+        display: "flex",
+        flexDirection: "column",
+        mt: 2,
+        backgroundColor: "#003366",
+        boxShadow: "none",
+        border: "2px solid #1e3a8a",
+        color: "white",
+        width: "100%",
+        marginLeft: 1,
+        zIndex: 3,
+      }}
+    >
+      <Box sx={{ display: "flex", alignItems: "center" }}>
+        <Typography variant="h6">街面巡逻</Typography>
+        <Typography sx={{ ml: 2, fontSize: "1rem" }}>今日备勤车辆:</Typography>
+        <Button
+          variant="contained"
+          color="primary"
+          sx={{ ml: "auto" }}
+          onClick={handleButtonClick}
+        >
+          编辑
+        </Button>
+      </Box>
+
+      <TableContainer
+        component={Paper}
+        sx={{
+          backgroundColor: "transparent",
+          marginTop: "2px",
+          overflow: "hidden",
+          minWidth: "100%",
+          boxShadow: "none",
+          zIndex: 3,
+        }}
+      >
+        <TableContainer>
+          <Table>
+            <PatrolTeamTableHead />
+            <PatrolTeamTableBody patrolTeamData={patrolTeamData} />
+          </Table>
+        </TableContainer>
+      </TableContainer>
+    </Paper>
   );
 };
 

@@ -6,6 +6,10 @@ import {
   TableBody,
   TableHead,
   TableRow,
+  Box,
+  Button,
+  Paper,
+  Typography,
 } from "@mui/material";
 import { Workforce } from "@/types";
 import DbTableCell from "./DbTableCell";
@@ -110,13 +114,58 @@ const WorkforceTable: React.FC = () => {
     fetchWorkforceData();
   }, []);
 
+  const handleButtonClick = () => {
+    window.location.href = "/admin#/workFocus";
+  };
+
   return (
-    <TableContainer>
-      <Table>
-        <WorkforceTableHead />
-        <WorkforceTableBody workforceData={workforceData} />
-      </Table>
-    </TableContainer>
+    <Paper
+      className="animate__animated animate__zoomInLeft"
+      sx={{
+        p: 2,
+        display: "flex",
+        flexDirection: "column",
+        mt: 2,
+        backgroundColor: "#003366",
+        boxShadow: "none",
+        border: "2px solid #1e3a8a",
+        color: "white",
+        width: "100%",
+        marginLeft: 1,
+        zIndex: 3,
+      }}
+    >
+      <Box sx={{ display: "flex", alignItems: "center" }}>
+        <Typography variant="h6">工作重点</Typography>
+        <Button
+          variant="contained"
+          color="primary"
+          sx={{ ml: "auto" }}
+          onClick={handleButtonClick}
+        >
+          编辑
+        </Button>
+      </Box>
+
+      <TableContainer
+        component={Paper}
+        sx={{
+          backgroundColor: "transparent",
+          marginTop: "2px",
+          overflow: "hidden",
+          minWidth: "100%",
+          boxShadow: "none",
+          zIndex: 3,
+        }}
+      >
+        <TableContainer>
+          <Table>
+            <WorkforceTableHead />
+            <WorkforceTableBody workforceData={workforceData} />
+          </Table>
+        </TableContainer>
+      </TableContainer>
+    </Paper>
   );
 };
 
