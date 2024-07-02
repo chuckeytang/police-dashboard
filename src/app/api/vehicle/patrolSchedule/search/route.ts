@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { PrismaClient } from "@prisma/client";
+import { MESSAGES } from "@/app/api/errorMessages";
 
 const prisma = new PrismaClient();
 
@@ -42,9 +43,9 @@ export async function GET(req: NextRequest) {
 
     return NextResponse.json(patrolSchedules, { status: 200 });
   } catch (error) {
-    console.error("Error fetching patrol schedules:", error);
+    console.error(MESSAGES.GET_PATROL_SCHEDULE_FAILED, error);
     return NextResponse.json(
-      { error: "Failed to fetch patrol schedules" },
+      { error: MESSAGES.GET_PATROL_SCHEDULE_FAILED + error },
       { status: 500 }
     );
   }

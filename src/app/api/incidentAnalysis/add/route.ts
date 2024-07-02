@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { PrismaClient } from "@prisma/client";
+import { MESSAGES } from "../../errorMessages";
 
 const prisma = new PrismaClient();
 
@@ -37,7 +38,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json(newIncidentAnalysis, { status: 201 });
   } catch (error) {
     return NextResponse.json(
-      { error: "Failed to create incident analysis" },
+      { error: MESSAGES.CREATE_INCIDENT_ANALYSIS_FAILED + error },
       { status: 500 }
     );
   }

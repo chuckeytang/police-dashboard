@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { PrismaClient } from "@prisma/client";
+import { MESSAGES } from "@/app/api/errorMessages";
 
 const prisma = new PrismaClient();
 
@@ -39,7 +40,7 @@ export async function GET(req: NextRequest) {
     return NextResponse.json(vehicles, { status: 200 });
   } catch (error) {
     return NextResponse.json(
-      { error: "Failed to fetch vehicles" },
+      { error: MESSAGES.GET_VEHICLE_INFO_FAILED + error },
       { status: 500 }
     );
   }

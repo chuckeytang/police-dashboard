@@ -21,6 +21,9 @@ import {
   CircularProgress,
 } from "@mui/material";
 import { Staff, PatrolTeam, Vehicle, PatrolStaffAssignment } from "@/types";
+import { enqueueSnackbar } from "notistack";
+import ConfirmDialog from "../common/ConfirmDialog";
+import { MESSAGES } from "@/app/api/errorMessages";
 const PatrolTeamDetails = ({
   team,
   onTeamUpdate,
@@ -261,11 +264,18 @@ const PatrolTeamList = () => {
   const [selectedTeam, setSelectedTeam] = useState<PatrolTeam | null>(null);
   const [open, setOpen] = useState(false);
   const [newTeamName, setNewTeamName] = useState("");
+  const [confirmDialogOpen, setConfirmDialogOpen] = useState(false);
+  const [teamIdToDelete, setTeamIdToDelete] = useState<number | null>(null);
   const { data, total, isLoading, error, refetch } =
     useListContext<PatrolTeam>();
 
   if (error) return <div color="error">加载数据时出错: {error.message}</div>;
   if (isLoading) return <CircularProgress />;
+
+  const handleOpenConfirmDialog = (teamId: number) => {
+    setTeamIdToDelete(teamId);
+    setConfirmDialogOpen(true);
+  };
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -285,6 +295,23 @@ const PatrolTeamList = () => {
       handleClose();
     } catch (error) {
       console.error("Failed to add team:", error);
+    }
+  };
+
+  const handleDeleteTeam = async () => {
+    if (teamIdToDelete === null) return;
+
+    try {
+      const response = await axios.delete(`/api/vehicle/patrolTeam/delete`, {
+        data: { patrol_team_id: teamIdToDelete },
+      });
+      refetch();
+      enqueueSnackbar(response.data.message, { variant: "success" });
+    } catch (error: any) {
+      enqueueSnackbar(error.response.data.error, { variant: "error" });
+    } finally {
+      setConfirmDialogOpen(false);
+      setTeamIdToDelete(null);
     }
   };
 
@@ -329,6 +356,12 @@ const PatrolTeamList = () => {
                 onClick={() => setSelectedTeam(team)}
               >
                 <ListItemText primary={team.team_name} />
+                <IconButton
+                  aria-label="delete"
+                  onClick={() => handleOpenConfirmDialog(team.id)}
+                >
+                  <DeleteIcon />
+                </IconButton>
               </ListItem>
             ))
           ) : (
@@ -351,6 +384,13 @@ const PatrolTeamList = () => {
           }}
         />
       </div>
+      <ConfirmDialog
+        open={confirmDialogOpen}
+        onClose={() => setConfirmDialogOpen(false)}
+        title={MESSAGES.DELETE_PATROL_TEAM}
+        message={MESSAGES.CONFIRM_DELETE_PATROL_TEAM}
+        onConfirm={handleDeleteTeam}
+      />
     </div>
   );
 };

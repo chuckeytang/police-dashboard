@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { PrismaClient } from "@prisma/client";
+import { MESSAGES } from "@/app/api/errorMessages";
 
 const prisma = new PrismaClient();
 
@@ -46,7 +47,7 @@ export async function GET(req: NextRequest) {
   } catch (error) {
     console.error("Error fetching schedules:", error);
     return NextResponse.json(
-      { error: "Failed to fetch schedules" },
+      { error: MESSAGES.GET_TEAM_FAILED + error },
       { status: 500 }
     );
   }

@@ -3,6 +3,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { PrismaClient } from "@prisma/client";
 import { URL } from "url";
 import { connect } from "http2";
+import { MESSAGES } from "@/app/api/errorMessages";
 
 const prisma = new PrismaClient();
 
@@ -37,11 +38,6 @@ export async function PATCH(req: NextRequest) {
           }
         : undefined,
     };
-
-    console.log(
-      "Updating patrol team with data:",
-      JSON.stringify(updateData, null, 2)
-    );
 
     // 执行更新操作
     await prisma.patrolTeam.update({
@@ -85,9 +81,9 @@ export async function PATCH(req: NextRequest) {
       { status: 200 }
     );
   } catch (error) {
-    console.error("Error updating patrol team:", error);
+    console.error(MESSAGES.UPDATE_PATROL_TEAM_FAILED, error);
     return NextResponse.json(
-      { error: "Failed to update patrol team" + error },
+      { error: MESSAGES.UPDATE_PATROL_TEAM_FAILED + error },
       { status: 500 }
     );
   }

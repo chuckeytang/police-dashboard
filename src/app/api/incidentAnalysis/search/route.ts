@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { PrismaClient } from "@prisma/client";
+import { MESSAGES } from "../../errorMessages";
 
 const prisma = new PrismaClient();
 
@@ -55,7 +56,7 @@ export async function GET(req: NextRequest) {
     return NextResponse.json(incidentAnalyses, { status: 200 });
   } catch (error) {
     return NextResponse.json(
-      { error: "Failed to fetch incident analyses" },
+      { error: MESSAGES.GET_INCIDENT_ANALYSIS_FAILED + error },
       { status: 500 }
     );
   }

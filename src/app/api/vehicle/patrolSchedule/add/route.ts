@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { PrismaClient } from "@prisma/client";
+import { MESSAGES } from "@/app/api/errorMessages";
 
 const prisma = new PrismaClient();
 
@@ -17,9 +18,9 @@ export async function POST(req: NextRequest) {
     });
     return NextResponse.json(newPatrolSchedule, { status: 201 });
   } catch (error) {
-    console.error("Failed to add patrol schedule:", error);
+    console.error(MESSAGES.ADD_PATROL_SCHEDULE_FAILED, error);
     return NextResponse.json(
-      { error: "Failed to add patrol schedule" },
+      { error: MESSAGES.ADD_PATROL_SCHEDULE_FAILED + error },
       { status: 500 }
     );
   }

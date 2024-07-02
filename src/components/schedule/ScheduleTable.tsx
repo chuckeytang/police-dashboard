@@ -19,6 +19,7 @@ import { Settings as SettingsIcon } from "@mui/icons-material";
 import axios from "axios";
 import ScheduleList from "./ScheduleList"; // 确保导入路径正确
 import { PatrolTeam, Schedule } from "@/types";
+import { MESSAGES } from "@/app/api/errorMessages";
 
 interface TeamOrder {
   id: number;
@@ -173,7 +174,7 @@ const ScheduleTable = () => {
       <div className="flex justify-end mb-4">
         <IconButton onClick={() => setSmartScheduleOpen(true)} color="primary">
           <SettingsIcon />
-          <div className="text-base">自动排班</div>
+          <div className="text-base">{MESSAGES.AUDO_SCHEDULE}</div>
         </IconButton>
       </div>
       <ScheduleList
@@ -183,11 +184,11 @@ const ScheduleTable = () => {
         setConfirmDialogOpen={setConfirmDialogOpen}
       />
       <Dialog open={dialogOpen} onClose={() => setDialogOpen(false)}>
-        <DialogTitle>添加排班</DialogTitle>
+        <DialogTitle>{MESSAGES.ADD_SCHEDULE}</DialogTitle>
         <DialogContent className="flex flex-col">
           <TextField
             select
-            label="选择早班班组"
+            label={MESSAGES.SELECT_MORNING_TEAM}
             value={dayTeam}
             onChange={(e) => setDayTeam(e.target.value)}
             className="w-[200px]"
@@ -200,7 +201,7 @@ const ScheduleTable = () => {
           </TextField>
           <TextField
             select
-            label="选择晚班班组"
+            label={MESSAGES.SELECT_EVENING_TEAM}
             value={nightTeam}
             onChange={(e) => setNightTeam(e.target.value)}
             className="w-[200px]"
@@ -214,10 +215,10 @@ const ScheduleTable = () => {
         </DialogContent>
         <DialogActions>
           <Button onClick={() => setDialogOpen(false)} color="primary">
-            取消
+            {MESSAGES.CANCEL}
           </Button>
           <Button onClick={handleAddSchedule} color="primary">
-            确定
+            {MESSAGES.CONFIRM}
           </Button>
         </DialogActions>
       </Dialog>
@@ -225,16 +226,16 @@ const ScheduleTable = () => {
         open={confirmDialogOpen}
         onClose={() => setConfirmDialogOpen(false)}
       >
-        <DialogTitle>删除排班</DialogTitle>
+        <DialogTitle>{MESSAGES.DELETE_SCHEDULE}</DialogTitle>
         <DialogContent>
-          <p>你确定要删除选定日期的早班和晚班吗？</p>
+          <p>{MESSAGES.CONFIRM_DELETE_SCHDULE}</p>
         </DialogContent>
         <DialogActions>
           <Button onClick={() => setConfirmDialogOpen(false)} color="primary">
-            取消
+            {MESSAGES.CANCEL}
           </Button>
           <Button onClick={handleDeleteSchedule} color="primary">
-            确定
+            {MESSAGES.CONFIRM}
           </Button>
         </DialogActions>
       </Dialog>

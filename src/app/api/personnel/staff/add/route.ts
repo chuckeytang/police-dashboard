@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { PrismaClient } from "@prisma/client";
+import { MESSAGES } from "@/app/api/errorMessages";
 
 const prisma = new PrismaClient();
 
@@ -23,7 +24,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json(newStaff, { status: 201 });
   } catch (error) {
     return NextResponse.json(
-      { error: "Failed to create staff" },
+      { error: MESSAGES.CREATE_POLICEMAN_FAILED + error },
       { status: 500 }
     );
   }

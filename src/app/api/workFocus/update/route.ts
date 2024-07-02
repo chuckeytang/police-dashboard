@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { PrismaClient } from "@prisma/client";
+import { MESSAGES } from "../../errorMessages";
 
 const prisma = new PrismaClient();
 
@@ -17,7 +18,7 @@ export async function PUT(req: NextRequest) {
     return NextResponse.json(updatedWorkFocus, { status: 200 });
   } catch (error) {
     return NextResponse.json(
-      { error: "Failed to update work focus" },
+      { error: MESSAGES.UPDATE_WORK_FOCUS_FAILED + error },
       { status: 500 }
     );
   }

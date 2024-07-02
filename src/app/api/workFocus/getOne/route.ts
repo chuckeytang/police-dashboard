@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { PrismaClient } from "@prisma/client";
+import { MESSAGES } from "../../errorMessages";
 
 const prisma = new PrismaClient();
 
@@ -8,7 +9,10 @@ export async function GET(req: NextRequest) {
   const id = searchParams.get("id");
 
   if (!id) {
-    return NextResponse.json({ error: "ID is required" }, { status: 400 });
+    return NextResponse.json(
+      { error: MESSAGES.WORK_FOCUS_NOT_SELECTED },
+      { status: 400 }
+    );
   }
 
   try {
@@ -17,14 +21,17 @@ export async function GET(req: NextRequest) {
     });
 
     if (!workFocus) {
-      return NextResponse.json({ error: "Work focus not found" }, { status: 404 });
+      return NextResponse.json(
+        { error: MESSAGES.WORK_FOCUS_NOT_FOUND },
+        { status: 404 }
+      );
     }
 
     return NextResponse.json(workFocus, { status: 200 });
   } catch (error) {
-    console.error("Error fetching work focus:", error);
+    console.error(MESSAGES.GET_WORK_FOCUS_DETAILS_FAILED, error);
     return NextResponse.json(
-      { error: `Failed to fetch work focus: ${error}` },
+      { error: MESSAGES.GET_WORK_FOCUS_DETAILS_FAILED + error },
       { status: 500 }
     );
   }

@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { PrismaClient } from "@prisma/client";
+import { error } from "console";
+import { MESSAGES } from "@/app/api/errorMessages";
 
 const prisma = new PrismaClient();
 
@@ -8,7 +10,10 @@ export async function GET(req: NextRequest) {
   const id = searchParams.get("id");
 
   if (!id) {
-    return NextResponse.json({ error: "ID is required" }, { status: 400 });
+    return NextResponse.json(
+      { error: MESSAGES.VEHICLE_NOT_SELECTED + error },
+      { status: 400 }
+    );
   }
 
   try {
@@ -17,14 +22,17 @@ export async function GET(req: NextRequest) {
     });
 
     if (!vehicle) {
-      return NextResponse.json({ error: "Vehicle not found" }, { status: 404 });
+      return NextResponse.json(
+        { error: MESSAGES.VEHICLE_NOT_FOUND + error },
+        { status: 404 }
+      );
     }
 
     return NextResponse.json(vehicle, { status: 200 });
   } catch (error) {
-    console.error("Error fetching vehicle:", error);
+    console.error(MESSAGES.GET_VEHICLE_INFO_FAILED, error);
     return NextResponse.json(
-      { error: `Failed to fetch vehicle: ${error}` },
+      { error: MESSAGES.GET_VEHICLE_INFO_FAILED + error },
       { status: 500 }
     );
   }

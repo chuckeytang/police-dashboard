@@ -1,6 +1,7 @@
 // pages/api/vehicle/patrolTeam/search.ts
 import { NextRequest, NextResponse } from "next/server";
 import { PrismaClient } from "@prisma/client";
+import { MESSAGES } from "@/app/api/errorMessages";
 
 const prisma = new PrismaClient();
 
@@ -23,9 +24,9 @@ export async function GET(req: NextRequest) {
 
     return NextResponse.json(patrolTeams, { status: 200 });
   } catch (error) {
-    console.error("Error fetching patrol teams:", error);
+    console.error(MESSAGES.GET_PATROL_TEAM_FAILED, error);
     return NextResponse.json(
-      { error: "Failed to fetch patrol teams" },
+      { error: MESSAGES.GET_PATROL_TEAM_FAILED + error },
       { status: 500 }
     );
   }

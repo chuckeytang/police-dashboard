@@ -92,7 +92,7 @@ const PoliceIncidentTable = () => {
           boxShadow: "none",
           border: "2px solid #1e3a8a",
           color: "white",
-          height: "240px",
+          height: "285px",
         }}
       >
         <Typography variant="h6">民警-警情</Typography>
@@ -134,7 +134,7 @@ const PoliceIncidentTable = () => {
         boxShadow: "none",
         border: "2px solid #1e3a8a",
         color: "white",
-        height: "240px",
+        height: "285px",
       }}
     >
       <Box className="flex justify-between">

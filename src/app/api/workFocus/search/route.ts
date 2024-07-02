@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { PrismaClient } from "@prisma/client";
+import { MESSAGES } from "../../errorMessages";
 
 const prisma = new PrismaClient();
 
@@ -13,7 +14,7 @@ export async function GET(req: NextRequest) {
     const workFocus = await prisma.workFocus.findMany({
       where: {
         content: {
-          contains: keyword || '',
+          contains: keyword || "",
         },
       },
       orderBy: {
@@ -23,7 +24,7 @@ export async function GET(req: NextRequest) {
     return NextResponse.json(workFocus, { status: 200 });
   } catch (error) {
     return NextResponse.json(
-      { error: "Failed to fetch work focus" },
+      { error: MESSAGES.GET_WORK_FOCUS_FAILED + error },
       { status: 500 }
     );
   }

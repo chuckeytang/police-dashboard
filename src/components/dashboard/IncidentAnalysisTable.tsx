@@ -99,7 +99,7 @@ const IncidentAnalysisTable: React.FC = () => {
           boxShadow: "none",
           border: "2px solid #1e3a8a",
           color: "white",
-          height: "240px",
+          height: "285px",
         }}
       >
         <Typography variant="h6">警情分析</Typography>
@@ -133,7 +133,7 @@ const IncidentAnalysisTable: React.FC = () => {
         boxShadow: "none",
         border: "2px solid #1e3a8a",
         color: "white",
-        height: "240px",
+        height: "285px",
       }}
     >
       <Box sx={{ display: "flex", alignItems: "center" }}>

@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { PrismaClient } from "@prisma/client";
+import { MESSAGES } from "../../errorMessages";
 
 const prisma = new PrismaClient();
 
@@ -14,10 +15,13 @@ export async function DELETE(req: NextRequest) {
         },
       },
     });
-    return NextResponse.json(deletedIncidentAnalysis, { status: 201 });
+    return NextResponse.json(
+      { message: MESSAGES.DELETE_INCIDENT_ANALYSIS_SUCCESS },
+      { status: 201 }
+    );
   } catch (error) {
     return NextResponse.json(
-      { error: "Failed to delete incident analysis" },
+      { error: MESSAGES.DELETE_INCIDENT_ANALYSIS_FAILED + error },
       { status: 500 }
     );
   }

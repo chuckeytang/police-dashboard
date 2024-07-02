@@ -12,6 +12,8 @@ import {
 import axios from "axios";
 import PatrolScheduleList from "./PatrolScheduleList"; // 确保导入路径正确
 import { PatrolTeam, PatrolSchedule } from "@/types";
+import ConfirmDialog from "../common/ConfirmDialog";
+import { MESSAGES } from "@/app/api/errorMessages";
 
 const PatrolScheduleTable = () => {
   const [selectedDate, setSelectedDate] = useState<Date | null>(new Date());
@@ -112,23 +114,13 @@ const PatrolScheduleTable = () => {
           </Button>
         </DialogActions>
       </Dialog>
-      <Dialog
+      <ConfirmDialog
         open={confirmDialogOpen}
         onClose={() => setConfirmDialogOpen(false)}
-      >
-        <DialogTitle>删除排班</DialogTitle>
-        <DialogContent>
-          <p>你确定要删除选定日期的巡逻组吗？</p>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={() => setConfirmDialogOpen(false)} color="primary">
-            取消
-          </Button>
-          <Button onClick={handleDeleteSchedule} color="primary">
-            确定
-          </Button>
-        </DialogActions>
-      </Dialog>
+        title={MESSAGES.DELETE_SCHEDULE}
+        message={MESSAGES.CONFIRM_DELETE_PATROL_SCHDULE}
+        onConfirm={handleDeleteSchedule}
+      />
     </div>
   );
 };

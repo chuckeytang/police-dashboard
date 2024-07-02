@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { PrismaClient } from "@prisma/client";
 import Holidays from "date-holidays";
+import { MESSAGES } from "@/app/api/errorMessages";
 
 const prisma = new PrismaClient();
 const hd = new Holidays("CN"); // 'CN' 是中国的国家代码
@@ -137,12 +138,11 @@ export async function POST(req: NextRequest) {
       i++; // 无论是否插入排班，都递增索引以检查下一天
     }
 
-    console.log("Created schedules:", createdSchedules);
     return NextResponse.json(createdSchedules, { status: 201 });
   } catch (error) {
-    console.error("Failed to create schedules:", error);
+    console.error(MESSAGES.AUTO_TEAM_SCHEDULE_FAILED, error);
     return NextResponse.json(
-      { error: "Failed to create schedules" },
+      { error: MESSAGES.AUTO_TEAM_SCHEDULE_FAILED + error },
       { status: 500 }
     );
   }

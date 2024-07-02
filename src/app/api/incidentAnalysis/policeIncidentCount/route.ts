@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { PrismaClient } from "@prisma/client";
 import { startOfMonth } from "date-fns";
+import { MESSAGES } from "../../errorMessages";
 
 const prisma = new PrismaClient();
 
@@ -33,7 +34,7 @@ export async function GET(req: NextRequest) {
   } catch (error) {
     console.error(error);
     return NextResponse.json(
-      { error: "Failed to fetch incident counts" },
+      { error: MESSAGES.GET_POLICE_INCIDENT_STATS_FAILED + error },
       { status: 500 }
     );
   }

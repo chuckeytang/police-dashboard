@@ -152,7 +152,7 @@ const PatrolTeamTable: React.FC = () => {
           boxShadow: "none",
           border: "2px solid #1e3a8a",
           color: "white",
-          height: "364px",
+          height: "431px",
         }}
       >
         <Typography variant="h6">街面巡逻</Typography>
@@ -187,7 +187,7 @@ const PatrolTeamTable: React.FC = () => {
           boxShadow: "none",
           border: "2px solid #1e3a8a",
           color: "white",
-          height: "364px",
+          height: "431px",
         }}
       >
         <Box className="flex items-center">
@@ -223,7 +223,7 @@ const PatrolTeamTable: React.FC = () => {
         boxShadow: "none",
         border: "2px solid #1e3a8a",
         color: "white",
-        height: "364px",
+        height: "430px",
       }}
     >
       <Box className="flex items-center">

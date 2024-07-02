@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { PrismaClient } from "@prisma/client";
+import { MESSAGES } from "@/app/api/errorMessages";
 
 const prisma = new PrismaClient();
 
@@ -14,10 +15,13 @@ export async function DELETE(req: NextRequest) {
         },
       },
     });
-    return NextResponse.json(deletedSchedule, { status: 201 });
+    return NextResponse.json(
+      { message: MESSAGES.DELETE_TEAM_SCHEDULE_SUCCESS },
+      { status: 201 }
+    );
   } catch (error) {
     return NextResponse.json(
-      { error: "Failed to delete schedule" + error },
+      { error: MESSAGES.DELETE_TEAM_SCHEDULE_FAILED + error },
       { status: 500 }
     );
   }

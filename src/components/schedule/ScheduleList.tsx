@@ -6,6 +6,7 @@ import { Schedule } from "@/types";
 import CalenderToolbar from "../common/CalenderToolbar";
 import { localizer } from "../common/CalenderLocalizer";
 import AlertDialog from "../common/AlertDialog";
+import { MESSAGES } from "@/app/api/errorMessages";
 
 export interface ScheduleListProps {
   onRefetch: () => void;
@@ -113,8 +114,8 @@ const ScheduleList: React.FC<ScheduleListProps> = ({
       <AlertDialog
         open={alertDialogOpen}
         onClose={handleCloseAlertDialog}
-        title="提示"
-        message="请选择今日及以后的日期创建排班。"
+        title={MESSAGES.TIP}
+        message={MESSAGES.SELECT_FUTURE_DATE_FOR_SCHEDULE}
       />
     </div>
   );

@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { PrismaClient } from "@prisma/client";
+import { MESSAGES } from "../../errorMessages";
 
 const prisma = new PrismaClient();
 
@@ -15,7 +16,7 @@ export async function DELETE(req: NextRequest) {
     return NextResponse.json(deletedRecentDuty, { status: 200 });
   } catch (error) {
     return NextResponse.json(
-      { error: "Failed to delete recent duty" },
+      { error: MESSAGES.DELETE_RECENT_DUTIES_FAILED + error },
       { status: 500 }
     );
   }

@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { PrismaClient } from "@prisma/client";
+import { MESSAGES } from "../../errorMessages";
 
 const prisma = new PrismaClient();
 
@@ -17,7 +18,7 @@ export async function DELETE(req: NextRequest) {
     return NextResponse.json(deletedWorkFocus, { status: 201 });
   } catch (error) {
     return NextResponse.json(
-      { error: "Failed to delete work focus" },
+      { error: MESSAGES.DELETE_WORK_FOCUS_FAILED + error },
       { status: 500 }
     );
   }

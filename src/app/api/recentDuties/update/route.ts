@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { PrismaClient } from "@prisma/client";
+import { MESSAGES } from "../../errorMessages";
 
 const prisma = new PrismaClient();
 
@@ -18,7 +19,7 @@ export async function PUT(req: NextRequest) {
     return NextResponse.json(updatedRecentDuty, { status: 200 });
   } catch (error) {
     return NextResponse.json(
-      { error: "Failed to update recent duty" },
+      { error: MESSAGES.UPDATE_RECENT_DUTIES_FAILED + error },
       { status: 500 }
     );
   }

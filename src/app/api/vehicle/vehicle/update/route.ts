@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { PrismaClient } from "@prisma/client";
+import { MESSAGES } from "@/app/api/errorMessages";
 
 const prisma = new PrismaClient();
 
@@ -37,7 +38,7 @@ export async function PUT(req: NextRequest) {
     return NextResponse.json(updatedVehicle, { status: 200 });
   } catch (error) {
     return NextResponse.json(
-      { error: "Failed to update vehicle" },
+      { error: MESSAGES.UPDATE_VEHICLE_INFO_FAILED + error },
       { status: 500 }
     );
   }

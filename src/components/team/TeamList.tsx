@@ -20,6 +20,9 @@ import axios from "axios";
 import { Staff, Team } from "@/types";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { AiOutlinePlusCircle as AddIcon } from "react-icons/ai";
+import { useSnackbar } from "notistack";
+import ConfirmDialog from "../common/ConfirmDialog";
+import { MESSAGES } from "@/app/api/errorMessages";
 
 const TeamDetails = ({
   team,
@@ -217,7 +220,33 @@ const TeamList = () => {
   const [selectedTeam, setSelectedTeam] = useState<Team | null>(null);
   const [open, setOpen] = useState(false);
   const [newTeamName, setNewTeamName] = useState("");
-  const { data, total, isLoading, error, refetch } = useListContext<Team>();
+  const { data, isLoading, error, refetch } = useListContext<Team>();
+  const { enqueueSnackbar } = useSnackbar();
+  const [confirmDialogOpen, setConfirmDialogOpen] = useState(false);
+  const [teamIdToDelete, setTeamIdToDelete] = useState<number | null>(null);
+
+  const handleDeleteTeam = async () => {
+    if (teamIdToDelete === null) return;
+
+    try {
+      const response = await axios.delete(`/api/personnel/team/delete`, {
+        data: { id: teamIdToDelete },
+      });
+      refetch();
+      enqueueSnackbar(response.data.message, { variant: "success" });
+    } catch (error: any) {
+      console.error("Failed to delete team:", error);
+      enqueueSnackbar(error.response.data.error, { variant: "error" });
+    } finally {
+      setConfirmDialogOpen(false);
+      setTeamIdToDelete(null);
+    }
+  };
+
+  const handleOpenConfirmDialog = (teamId: number) => {
+    setTeamIdToDelete(teamId);
+    setConfirmDialogOpen(true);
+  };
 
   if (error) return <div color="error">加载数据时出错: {error.message}</div>;
   if (isLoading) return <Loading />;
@@ -283,6 +312,12 @@ const TeamList = () => {
               onClick={() => setSelectedTeam(team)}
             >
               <ListItemText primary={team.team_name} />
+              <IconButton
+                aria-label="delete"
+                onClick={() => handleOpenConfirmDialog(team.id)}
+              >
+                <DeleteIcon />
+              </IconButton>
             </ListItem>
           ))}
         </MuiList>
@@ -300,6 +335,13 @@ const TeamList = () => {
           }}
         />
       </div>
+      <ConfirmDialog
+        open={confirmDialogOpen}
+        onClose={() => setConfirmDialogOpen(false)}
+        title={MESSAGES.DELETE_TEAM}
+        message={MESSAGES.CONFIRM_DELETE_TEAM}
+        onConfirm={handleDeleteTeam}
+      />
     </div>
   );
 };

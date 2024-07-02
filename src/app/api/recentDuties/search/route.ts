@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { PrismaClient } from "@prisma/client";
+import { MESSAGES } from "../../errorMessages";
 
 const prisma = new PrismaClient();
 
@@ -13,8 +14,8 @@ export async function GET(req: NextRequest) {
     const recentDuties = await prisma.recentDuties.findMany({
       where: {
         OR: [
-          { content: { contains: keyword || '' } },
-          { duty_type: { contains: keyword || '' } },
+          { content: { contains: keyword || "" } },
+          { duty_type: { contains: keyword || "" } },
         ],
       },
       orderBy: {
@@ -24,7 +25,7 @@ export async function GET(req: NextRequest) {
     return NextResponse.json(recentDuties, { status: 200 });
   } catch (error) {
     return NextResponse.json(
-      { error: "Failed to fetch recent duties" },
+      { error: MESSAGES.GET_RECENT_DUTIES_FAILED + error },
       { status: 500 }
     );
   }

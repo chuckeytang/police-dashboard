@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { PrismaClient } from "@prisma/client";
+import { MESSAGES } from "../../errorMessages";
 
 const prisma = new PrismaClient();
 
@@ -82,9 +83,9 @@ export async function GET(req: NextRequest) {
 
     return NextResponse.json({ dayTeam, nightTeam }, { status: 200 });
   } catch (error) {
-    console.error("Error fetching today's staff:", error);
+    console.error(MESSAGES.GET_TODAY_TEAM_MEMBERS_FAILED, error);
     return NextResponse.json(
-      { error: "Failed to fetch today's staff" },
+      { error: MESSAGES.GET_TODAY_TEAM_MEMBERS_FAILED + error },
       { status: 500 }
     );
   }

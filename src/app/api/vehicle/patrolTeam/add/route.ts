@@ -41,9 +41,9 @@ export async function POST(req: NextRequest) {
     });
     return NextResponse.json(newPatrolTeam, { status: 201 });
   } catch (error) {
-    console.error("Failed to add patrol team:", error);
+    console.error("添加巡逻班组失败", error);
     return NextResponse.json(
-      { error: "Failed to add patrol team" },
+      { error: "添加巡逻班组失败" + error },
       { status: 500 }
     );
   }

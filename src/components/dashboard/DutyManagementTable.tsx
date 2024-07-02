@@ -113,7 +113,7 @@ const DutyManagementTable: React.FC = () => {
           boxShadow: "none",
           border: "2px solid #1e3a8a",
           color: "white",
-          height: "365px",
+          height: "430px",
         }}
       >
         <Typography variant="h6">勤务管理</Typography>
@@ -148,7 +148,7 @@ const DutyManagementTable: React.FC = () => {
           boxShadow: "none",
           border: "2px solid #1e3a8a",
           color: "white",
-          height: "365px",
+          height: "430px",
         }}
       >
         <Box sx={{ display: "flex", alignItems: "center" }}>
@@ -178,7 +178,7 @@ const DutyManagementTable: React.FC = () => {
         boxShadow: "none",
         border: "2px solid #1e3a8a",
         color: "white",
-        height: "365px",
+        height: "430px",
       }}
     >
       <Box sx={{ display: "flex", alignItems: "center" }}>

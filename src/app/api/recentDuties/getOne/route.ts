@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { PrismaClient } from "@prisma/client";
+import { MESSAGES } from "../../errorMessages";
 
 const prisma = new PrismaClient();
 
@@ -17,14 +18,17 @@ export async function GET(req: NextRequest) {
     });
 
     if (!recentDuty) {
-      return NextResponse.json({ error: "Recent duty not found" }, { status: 404 });
+      return NextResponse.json(
+        { error: "Recent duty not found" },
+        { status: 404 }
+      );
     }
 
     return NextResponse.json(recentDuty, { status: 200 });
   } catch (error) {
-    console.error("Error fetching recent duty:", error);
+    console.error(MESSAGES.GET_RECENT_DUTIES_DETAILS_FAILED, error);
     return NextResponse.json(
-      { error: `Failed to fetch recent duty: ${error}` },
+      { error: MESSAGES.GET_RECENT_DUTIES_DETAILS_FAILED + error },
       { status: 500 }
     );
   }

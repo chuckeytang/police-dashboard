@@ -51,11 +51,11 @@ const Dashboard = () => {
             定海派出所
           </div>
           <img
-            className="animate__animated animate__fadeIn absolute top-32 left-0 w-full h-full max-w-[960px] max-h-[440px] rounded-lg transform scale-150"
+            className="animate__animated animate__fadeIn absolute top-32 left-0 w-full h-full max-w-[960px] max-h-[440px] rounded-lg transform scale-x-[120%] scale-y-[120%]"
             src="/source/bg.jpg"
             alt="map"
           />
-          <div className="w-full h-[496px]"></div>
+          <div className="w-full h-[585px]"></div>
           <IncidentAnalysisTable />
         </Grid>
 

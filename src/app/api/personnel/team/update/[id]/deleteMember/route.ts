@@ -1,6 +1,7 @@
 // pages/api/personnel/team/update/[id]/deleteMember.ts
 import { NextRequest, NextResponse } from "next/server";
 import { PrismaClient } from "@prisma/client";
+import { MESSAGES } from "@/app/api/errorMessages";
 
 const prisma = new PrismaClient();
 
@@ -11,7 +12,7 @@ export async function PATCH(req: NextRequest) {
 
   if (!id || !member_id) {
     return NextResponse.json(
-      { error: "Missing team id or member id" },
+      { error: MESSAGES.MEMBER_NOT_IN_TEAM },
       { status: 400 }
     );
   }
@@ -44,9 +45,9 @@ export async function PATCH(req: NextRequest) {
 
     return NextResponse.json({ ...updatedTeam, members }, { status: 200 });
   } catch (error) {
-    console.error("Failed to delete member:", error);
+    console.error(MESSAGES.DELETE_TEAM_MEMBER_FAILED, error);
     return NextResponse.json(
-      { error: "Failed to delete member" },
+      { error: MESSAGES.DELETE_TEAM_MEMBER_FAILED + error },
       { status: 500 }
     );
   }

@@ -17,7 +17,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json(newRecentDuty, { status: 201 });
   } catch (error) {
     return NextResponse.json(
-      { error: "Failed to create recent duty" },
+      { error: "创建近期勤务失败" + error },
       { status: 500 }
     );
   }
