@@ -236,7 +236,7 @@ const TeamList = () => {
       enqueueSnackbar(response.data.message, { variant: "success" });
     } catch (error: any) {
       console.error("Failed to delete team:", error);
-      enqueueSnackbar(error.response.data.error, { variant: "error" });
+      enqueueSnackbar(error.body.error, { variant: "error" });
     } finally {
       setConfirmDialogOpen(false);
       setTeamIdToDelete(null);

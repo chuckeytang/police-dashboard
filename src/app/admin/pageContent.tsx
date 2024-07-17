@@ -30,6 +30,8 @@ import RecentDutiesShow from "@/components/recentDuties/RecentDutiesShow";
 import Loading from "@/components/common/Loading";
 import { CustomDashboardMenuItem } from "@/components/common/CustomButtons";
 import i18nProvider from "@/components/common/i18nProvider";
+import CreateTeam from "@/components/team/CreateTeam";
+import CreatePatrolTeam from "@/components/patrolTeam/PatrolTeamCreate";
 
 interface CustomMenuItemProps {
   primaryText: string;
@@ -112,6 +114,7 @@ const AdminPageContent = () => (
     <Resource
       name="personnel/team"
       list={TeamList}
+      create={CreateTeam}
       options={{ label: "排班管理" }}
     />
     <Resource
@@ -130,6 +133,7 @@ const AdminPageContent = () => (
     <Resource
       name="vehicle/patrolTeam"
       list={PatrolTeamList}
+      create={CreatePatrolTeam}
       options={{ label: "巡逻勤组" }}
     />
     <Resource

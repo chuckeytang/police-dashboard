@@ -8,7 +8,11 @@ import {
   TextInput,
   SelectInput,
   FilterProps,
-  Title,
+  useNotify,
+  useListContext,
+  BulkDeleteButton,
+  useDataProvider,
+  Button,
 } from "react-admin";
 
 interface Staff {
@@ -21,6 +25,7 @@ interface Staff {
   contact: string;
   vehicle?: string;
 }
+import { useSnackbar } from "notistack";
 
 const StaffFilter = (props: FilterProps) => (
   <Filter {...props}>
@@ -56,10 +61,32 @@ const StaffFilter = (props: FilterProps) => (
   </Filter>
 );
 
+const CustomBulkDeleteButton = (props: any) => {
+  const notify = useNotify();
+  const { selectedIds, resource, refetch } = useListContext();
+  const { enqueueSnackbar } = useSnackbar();
+  const dataProvider = useDataProvider();
+
+  const handleDelete = async () => {
+    try {
+      const response = await dataProvider.deleteMany(resource, {
+        ids: selectedIds,
+      });
+      enqueueSnackbar("删除成功", { variant: "success" });
+      refetch();
+    } catch (error: any) {
+      console.error("Failed to delete staff:", error);
+      enqueueSnackbar(error.body.error, { variant: "error" });
+    }
+  };
+
+  return <Button label="删除" onClick={handleDelete} {...props} />;
+};
+
 const StaffList = () => {
   return (
     <List filters={<StaffFilter children={undefined} />}>
-      <Datagrid>
+      <Datagrid bulkActionButtons={<CustomBulkDeleteButton />}>
         <TextField source="code" label="编号" />
         <TextField source="police_number" label="警号" />
         <TextField source="name" label="姓名" />
