@@ -5,13 +5,12 @@ import { MESSAGES } from "@/app/api/errorMessages";
 const prisma = new PrismaClient();
 
 export async function POST(req: NextRequest) {
-  const { code, police_number, name, position, department, contact, vehicle } =
+  const { police_number, name, position, department, contact, vehicle } =
     await req.json();
 
   try {
     const newStaff = await prisma.staff.create({
       data: {
-        code,
         police_number,
         name,
         position,

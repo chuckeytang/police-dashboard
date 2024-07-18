@@ -10,7 +10,6 @@ const VehicleCreate = () => {
   return (
     <Create>
       <SimpleForm>
-        <TextInput source="code" label="编号" />
         <TextInput source="plate_number" label="车牌号" />
         <SelectInput
           source="vehicle_type"

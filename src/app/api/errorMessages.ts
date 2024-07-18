@@ -33,6 +33,8 @@ export const MESSAGES = {
   UPDATE_RECENT_DUTIES_FAILED: "更新近期勤务失败",
   CREATE_POLICEMAN_FAILED: "创建警员失败",
   DELETE_POLICEMAN_FAILED: "删除警员失败",
+  DELETE_POLICEMAN_FAILED_IN_USE:
+    "删除警员失败，警员仍在勤务组或巡逻组中，请先将警员从勤务组或巡逻组中移除",
   GET_POLICEMAN_DETAILS_FAILED: "获取警员详情失败",
   GET_POLICEMAN_FAILED: "获取警员失败",
   UPDATE_POLICEMAN_FAILED: "更新警员失败",

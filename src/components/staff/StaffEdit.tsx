@@ -1,10 +1,10 @@
 import { Edit, SimpleForm, TextInput } from "react-admin";
+import EditToolbar from "../common/EditToolbar";
 
 const StaffEdit = () => {
   return (
     <Edit>
-      <SimpleForm>
-        <TextInput source="code" label="编号" />
+      <SimpleForm toolbar={<EditToolbar />}>
         <TextInput source="police_number" label="警号" />
         <TextInput source="name" label="姓名" />
         <TextInput source="position" label="职务/警衔" />

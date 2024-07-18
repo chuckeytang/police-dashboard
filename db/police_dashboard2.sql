@@ -1,4 +1,4 @@
-INSERT INTO `Staff` (`id`, `code`, `police_number`, `name`, `position`, `department`, `contact`, `vehicle`, `created_at`, `updated_at`, `skills`) VALUES
+INSERT INTO `Staff` (`id`, `police_number`, `name`, `position`, `department`, `contact`, `vehicle`, `created_at`, `updated_at`, `skills`) VALUES
 (1, '01', 'ZP00001', '秦壮保', '主任', '刑侦科', '18876787654', '陕A-00001', '2024-06-06 16:14:33', '2024-06-06 16:14:33', JSON_ARRAY('英语', '法律', '编程')),
 (2, '02', 'ZP00002', '钱勤筠', '科长', '技术科', '18876787654', '陕A-00002', '2024-06-06 16:14:33', '2024-06-06 16:14:33', JSON_ARRAY('驾驶', '射击', '英语')),
 (3, '03', 'ZP00003', '张颢启', '科长', '刑侦科', '18876787654', '陕A-00003', '2024-06-06 16:14:33', '2024-06-06 16:14:33', JSON_ARRAY('法律', '谈判', '编程')),

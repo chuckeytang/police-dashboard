@@ -6,7 +6,6 @@ const prisma = new PrismaClient();
 
 export async function POST(req: NextRequest) {
   const {
-    code,
     plate_number,
     vehicle_type,
     brand_model,
@@ -21,7 +20,6 @@ export async function POST(req: NextRequest) {
   try {
     const newVehicle = await prisma.vehicle.create({
       data: {
-        code,
         plate_number,
         vehicle_type,
         brand_model,

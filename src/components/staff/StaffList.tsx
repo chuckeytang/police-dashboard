@@ -17,7 +17,6 @@ import {
 
 interface Staff {
   id: number;
-  code: string;
   police_number: string;
   name: string;
   position: string;
@@ -87,7 +86,6 @@ const StaffList = () => {
   return (
     <List filters={<StaffFilter children={undefined} />}>
       <Datagrid bulkActionButtons={<CustomBulkDeleteButton />}>
-        <TextField source="code" label="编号" />
         <TextField source="police_number" label="警号" />
         <TextField source="name" label="姓名" />
         <TextField source="position" label="职务/警衔" />

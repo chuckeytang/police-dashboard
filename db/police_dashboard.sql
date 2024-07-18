@@ -215,7 +215,6 @@ COMMIT;
 DROP TABLE IF EXISTS `Staff`;
 CREATE TABLE `Staff` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `code` varchar(10) COLLATE utf8mb4_unicode_ci NOT NULL,
   `police_number` varchar(10) COLLATE utf8mb4_unicode_ci NOT NULL,
   `name` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
   `position` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -231,16 +230,16 @@ CREATE TABLE `Staff` (
 -- Records of Staff
 -- ----------------------------
 BEGIN;
-INSERT INTO `Staff` (`id`, `code`, `police_number`, `name`, `position`, `department`, `contact`, `vehicle`, `created_at`, `updated_at`) VALUES (1, '01', 'ZP00001', '秦壮保', '主任', '刑侦科', '18876787654', '陕A-00001', '2024-06-06 16:14:33', '2024-06-06 16:14:33');
-INSERT INTO `Staff` (`id`, `code`, `police_number`, `name`, `position`, `department`, `contact`, `vehicle`, `created_at`, `updated_at`) VALUES (2, '02', 'ZP00002', '钱勤笛', '科长', '技术科', '18876787654', '陕A-00001', '2024-06-06 16:14:33', '2024-06-06 16:14:33');
-INSERT INTO `Staff` (`id`, `code`, `police_number`, `name`, `position`, `department`, `contact`, `vehicle`, `created_at`, `updated_at`) VALUES (3, '03', 'ZP00003', '张颖启', '科长', '刑侦科', '18876787654', '陕A-00001', '2024-06-06 16:14:33', '2024-06-06 16:14:33');
-INSERT INTO `Staff` (`id`, `code`, `police_number`, `name`, `position`, `department`, `contact`, `vehicle`, `created_at`, `updated_at`) VALUES (4, '04', 'ZP00004', '雷琳', '民警', '刑侦科', '18876787654', '陕A-00001', '2024-06-06 16:14:33', '2024-06-06 16:14:33');
-INSERT INTO `Staff` (`id`, `code`, `police_number`, `name`, `position`, `department`, `contact`, `vehicle`, `created_at`, `updated_at`) VALUES (5, '05', 'ZP00005', '吴川宜', '民警', '技术科', '18876787654', '陕A-00001', '2024-06-06 16:14:33', '2024-06-06 16:14:33');
-INSERT INTO `Staff` (`id`, `code`, `police_number`, `name`, `position`, `department`, `contact`, `vehicle`, `created_at`, `updated_at`) VALUES (6, '06', 'ZP00006', '钱勤笛', '科长', '技术科', '18876787654', '陕A-00001', '2024-06-06 16:14:33', '2024-06-06 16:14:33');
-INSERT INTO `Staff` (`id`, `code`, `police_number`, `name`, `position`, `department`, `contact`, `vehicle`, `created_at`, `updated_at`) VALUES (7, '07', 'ZP00007', '张颖启', '科长', '刑侦科', '18876787654', '陕A-00001', '2024-06-06 16:14:33', '2024-06-06 16:14:33');
-INSERT INTO `Staff` (`id`, `code`, `police_number`, `name`, `position`, `department`, `contact`, `vehicle`, `created_at`, `updated_at`) VALUES (8, '08', 'ZP00008', '雷琳', '民警', '刑侦科', '18876787654', NULL, '2024-06-06 16:14:33', '2024-06-06 16:14:33');
-INSERT INTO `Staff` (`id`, `code`, `police_number`, `name`, `position`, `department`, `contact`, `vehicle`, `created_at`, `updated_at`) VALUES (9, '09', 'ZP00009', '吴川宜', '民警', '技术科', '18876787654', '陕A-00001', '2024-06-06 16:14:33', '2024-06-06 16:14:33');
-INSERT INTO `Staff` (`id`, `code`, `police_number`, `name`, `position`, `department`, `contact`, `vehicle`, `created_at`, `updated_at`) VALUES (10, '10', 'ZP00010', '吴川宜', '民警', '技术科', '18876787654', '陕A-00001', '2024-06-06 16:14:33', '2024-06-06 16:14:33');
+INSERT INTO `Staff` (`id`, `police_number`, `name`, `position`, `department`, `contact`, `vehicle`, `created_at`, `updated_at`) VALUES (1, 'ZP00001', '秦壮保', '主任', '刑侦科', '18876787654', '陕A-00001', '2024-06-06 16:14:33', '2024-06-06 16:14:33');
+INSERT INTO `Staff` (`id`, `police_number`, `name`, `position`, `department`, `contact`, `vehicle`, `created_at`, `updated_at`) VALUES (2, 'ZP00002', '钱勤笛', '科长', '技术科', '18876787654', '陕A-00001', '2024-06-06 16:14:33', '2024-06-06 16:14:33');
+INSERT INTO `Staff` (`id`, `police_number`, `name`, `position`, `department`, `contact`, `vehicle`, `created_at`, `updated_at`) VALUES (3, 'ZP00003', '张颖启', '科长', '刑侦科', '18876787654', '陕A-00001', '2024-06-06 16:14:33', '2024-06-06 16:14:33');
+INSERT INTO `Staff` (`id`, `police_number`, `name`, `position`, `department`, `contact`, `vehicle`, `created_at`, `updated_at`) VALUES (4, 'ZP00004', '雷琳', '民警', '刑侦科', '18876787654', '陕A-00001', '2024-06-06 16:14:33', '2024-06-06 16:14:33');
+INSERT INTO `Staff` (`id`, `police_number`, `name`, `position`, `department`, `contact`, `vehicle`, `created_at`, `updated_at`) VALUES (5, 'ZP00005', '吴川宜', '民警', '技术科', '18876787654', '陕A-00001', '2024-06-06 16:14:33', '2024-06-06 16:14:33');
+INSERT INTO `Staff` (`id`, `police_number`, `name`, `position`, `department`, `contact`, `vehicle`, `created_at`, `updated_at`) VALUES (6, 'ZP00006', '钱勤笛', '科长', '技术科', '18876787654', '陕A-00001', '2024-06-06 16:14:33', '2024-06-06 16:14:33');
+INSERT INTO `Staff` (`id`, `police_number`, `name`, `position`, `department`, `contact`, `vehicle`, `created_at`, `updated_at`) VALUES (7, 'ZP00007', '张颖启', '科长', '刑侦科', '18876787654', '陕A-00001', '2024-06-06 16:14:33', '2024-06-06 16:14:33');
+INSERT INTO `Staff` (`id`, `police_number`, `name`, `position`, `department`, `contact`, `vehicle`, `created_at`, `updated_at`) VALUES (8, 'ZP00008', '雷琳', '民警', '刑侦科', '18876787654', NULL, '2024-06-06 16:14:33', '2024-06-06 16:14:33');
+INSERT INTO `Staff` (`id`, `police_number`, `name`, `position`, `department`, `contact`, `vehicle`, `created_at`, `updated_at`) VALUES (9, 'ZP00009', '吴川宜', '民警', '技术科', '18876787654', '陕A-00001', '2024-06-06 16:14:33', '2024-06-06 16:14:33');
+INSERT INTO `Staff` (`id`, `police_number`, `name`, `position`, `department`, `contact`, `vehicle`, `created_at`, `updated_at`) VALUES (10, 'ZP00010', '吴川宜', '民警', '技术科', '18876787654', '陕A-00001', '2024-06-06 16:14:33', '2024-06-06 16:14:33');
 COMMIT;
 
 -- ----------------------------
@@ -301,7 +300,6 @@ COMMIT;
 DROP TABLE IF EXISTS `Vehicle`;
 CREATE TABLE `Vehicle` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `code` varchar(10) COLLATE utf8mb4_unicode_ci NOT NULL,
   `plate_number` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
   `vehicle_type` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
   `brand_model` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -322,16 +320,16 @@ CREATE TABLE `Vehicle` (
 -- Records of Vehicle
 -- ----------------------------
 BEGIN;
-INSERT INTO `Vehicle` (`id`, `code`, `plate_number`, `vehicle_type`, `brand_model`, `status`, `usage_status`, `department`, `user_id`, `borrow_time`, `return_time`, `created_at`, `updated_at`) VALUES (1, '01', '陕A-00032', '轿车', '比亚迪', '完好', '使用中', '刑侦科', 1, '2024-04-11 09:02:09', '2024-04-11 09:02:09', '2024-06-06 16:34:39', '2024-06-06 16:34:39');
-INSERT INTO `Vehicle` (`id`, `code`, `plate_number`, `vehicle_type`, `brand_model`, `status`, `usage_status`, `department`, `user_id`, `borrow_time`, `return_time`, `created_at`, `updated_at`) VALUES (2, '02', '陕A-00032', '货车', '五菱宏光', '完好', '空闲', NULL, NULL, NULL, NULL, '2024-06-06 16:34:39', '2024-06-06 16:34:39');
-INSERT INTO `Vehicle` (`id`, `code`, `plate_number`, `vehicle_type`, `brand_model`, `status`, `usage_status`, `department`, `user_id`, `borrow_time`, `return_time`, `created_at`, `updated_at`) VALUES (3, '03', '陕A-00032', '摩托车', '东风风尚', '损坏', '空闲', NULL, NULL, NULL, NULL, '2024-06-06 16:34:39', '2024-06-06 16:34:39');
-INSERT INTO `Vehicle` (`id`, `code`, `plate_number`, `vehicle_type`, `brand_model`, `status`, `usage_status`, `department`, `user_id`, `borrow_time`, `return_time`, `created_at`, `updated_at`) VALUES (4, '04', '陕A-00032', '轿车', '吉利', '损坏', '使用中', '刑侦科', 4, '2024-04-11 09:02:09', '2024-04-11 09:02:09', '2024-06-06 16:34:39', '2024-06-06 16:34:39');
-INSERT INTO `Vehicle` (`id`, `code`, `plate_number`, `vehicle_type`, `brand_model`, `status`, `usage_status`, `department`, `user_id`, `borrow_time`, `return_time`, `created_at`, `updated_at`) VALUES (5, '05', '陕A-00032', 'SUV', '比亚迪', '完好', '空闲', NULL, NULL, NULL, NULL, '2024-06-06 16:34:39', '2024-06-06 16:34:39');
-INSERT INTO `Vehicle` (`id`, `code`, `plate_number`, `vehicle_type`, `brand_model`, `status`, `usage_status`, `department`, `user_id`, `borrow_time`, `return_time`, `created_at`, `updated_at`) VALUES (6, '06', '陕A-00032', 'SUV', '吉利', '完好', '空闲', NULL, NULL, NULL, NULL, '2024-06-06 16:34:39', '2024-06-06 16:34:39');
-INSERT INTO `Vehicle` (`id`, `code`, `plate_number`, `vehicle_type`, `brand_model`, `status`, `usage_status`, `department`, `user_id`, `borrow_time`, `return_time`, `created_at`, `updated_at`) VALUES (7, '07', '陕A-00032', '轿车', '五菱宏光', '损坏', '空闲', NULL, NULL, NULL, NULL, '2024-06-06 16:34:39', '2024-06-06 16:34:39');
-INSERT INTO `Vehicle` (`id`, `code`, `plate_number`, `vehicle_type`, `brand_model`, `status`, `usage_status`, `department`, `user_id`, `borrow_time`, `return_time`, `created_at`, `updated_at`) VALUES (8, '08', '陕A-00032', 'SUV', '东风风尚', '完好', '空闲', NULL, NULL, NULL, NULL, '2024-06-06 16:34:39', '2024-06-06 16:34:39');
-INSERT INTO `Vehicle` (`id`, `code`, `plate_number`, `vehicle_type`, `brand_model`, `status`, `usage_status`, `department`, `user_id`, `borrow_time`, `return_time`, `created_at`, `updated_at`) VALUES (9, '09', '陕A-00032', '轿车', '比亚迪', '完好', '使用中', '刑侦科', 5, '2024-04-11 09:02:09', '2024-04-11 09:02:09', '2024-06-06 16:34:39', '2024-06-06 16:34:39');
-INSERT INTO `Vehicle` (`id`, `code`, `plate_number`, `vehicle_type`, `brand_model`, `status`, `usage_status`, `department`, `user_id`, `borrow_time`, `return_time`, `created_at`, `updated_at`) VALUES (10, '10', '陕A-00032', '轿车', '比亚迪', '完好', '使用中', '刑侦科', 5, '2024-04-11 09:02:09', '2024-04-11 09:02:09', '2024-06-06 16:34:39', '2024-06-06 16:34:39');
+INSERT INTO `Vehicle` (`id`, `plate_number`, `vehicle_type`, `brand_model`, `status`, `usage_status`, `department`, `user_id`, `borrow_time`, `return_time`, `created_at`, `updated_at`) VALUES (1, '陕A-00032', '轿车', '比亚迪', '完好', '使用中', '刑侦科', 1, '2024-04-11 09:02:09', '2024-04-11 09:02:09', '2024-06-06 16:34:39', '2024-06-06 16:34:39');
+INSERT INTO `Vehicle` (`id`, `plate_number`, `vehicle_type`, `brand_model`, `status`, `usage_status`, `department`, `user_id`, `borrow_time`, `return_time`, `created_at`, `updated_at`) VALUES (2, '陕A-00032', '货车', '五菱宏光', '完好', '空闲', NULL, NULL, NULL, NULL, '2024-06-06 16:34:39', '2024-06-06 16:34:39');
+INSERT INTO `Vehicle` (`id`, `plate_number`, `vehicle_type`, `brand_model`, `status`, `usage_status`, `department`, `user_id`, `borrow_time`, `return_time`, `created_at`, `updated_at`) VALUES (3, '陕A-00032', '摩托车', '东风风尚', '损坏', '空闲', NULL, NULL, NULL, NULL, '2024-06-06 16:34:39', '2024-06-06 16:34:39');
+INSERT INTO `Vehicle` (`id`, `plate_number`, `vehicle_type`, `brand_model`, `status`, `usage_status`, `department`, `user_id`, `borrow_time`, `return_time`, `created_at`, `updated_at`) VALUES (4, '陕A-00032', '轿车', '吉利', '损坏', '使用中', '刑侦科', 4, '2024-04-11 09:02:09', '2024-04-11 09:02:09', '2024-06-06 16:34:39', '2024-06-06 16:34:39');
+INSERT INTO `Vehicle` (`id`, `plate_number`, `vehicle_type`, `brand_model`, `status`, `usage_status`, `department`, `user_id`, `borrow_time`, `return_time`, `created_at`, `updated_at`) VALUES (5, '陕A-00032', 'SUV', '比亚迪', '完好', '空闲', NULL, NULL, NULL, NULL, '2024-06-06 16:34:39', '2024-06-06 16:34:39');
+INSERT INTO `Vehicle` (`id`, `plate_number`, `vehicle_type`, `brand_model`, `status`, `usage_status`, `department`, `user_id`, `borrow_time`, `return_time`, `created_at`, `updated_at`) VALUES (6, '陕A-00032', 'SUV', '吉利', '完好', '空闲', NULL, NULL, NULL, NULL, '2024-06-06 16:34:39', '2024-06-06 16:34:39');
+INSERT INTO `Vehicle` (`id`, `plate_number`, `vehicle_type`, `brand_model`, `status`, `usage_status`, `department`, `user_id`, `borrow_time`, `return_time`, `created_at`, `updated_at`) VALUES (7, '陕A-00032', '轿车', '五菱宏光', '损坏', '空闲', NULL, NULL, NULL, NULL, '2024-06-06 16:34:39', '2024-06-06 16:34:39');
+INSERT INTO `Vehicle` (`id`, `plate_number`, `vehicle_type`, `brand_model`, `status`, `usage_status`, `department`, `user_id`, `borrow_time`, `return_time`, `created_at`, `updated_at`) VALUES (8, '陕A-00032', 'SUV', '东风风尚', '完好', '空闲', NULL, NULL, NULL, NULL, '2024-06-06 16:34:39', '2024-06-06 16:34:39');
+INSERT INTO `Vehicle` (`id`, `plate_number`, `vehicle_type`, `brand_model`, `status`, `usage_status`, `department`, `user_id`, `borrow_time`, `return_time`, `created_at`, `updated_at`) VALUES (9, '陕A-00032', '轿车', '比亚迪', '完好', '使用中', '刑侦科', 5, '2024-04-11 09:02:09', '2024-04-11 09:02:09', '2024-06-06 16:34:39', '2024-06-06 16:34:39');
+INSERT INTO `Vehicle` (`id`, `plate_number`, `vehicle_type`, `brand_model`, `status`, `usage_status`, `department`, `user_id`, `borrow_time`, `return_time`, `created_at`, `updated_at`) VALUES (10, '陕A-00032', '轿车', '比亚迪', '完好', '使用中', '刑侦科', 5, '2024-04-11 09:02:09', '2024-04-11 09:02:09', '2024-06-06 16:34:39', '2024-06-06 16:34:39');
 COMMIT;
 
 -- ----------------------------

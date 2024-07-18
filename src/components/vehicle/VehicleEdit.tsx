@@ -5,12 +5,12 @@ import {
   SelectInput,
   DateTimeInput,
 } from "react-admin";
+import EditToolbar from "../common/EditToolbar";
 
 const VehicleEdit = () => {
   return (
     <Edit>
-      <SimpleForm>
-        <TextInput source="code" label="编号" />
+      <SimpleForm toolbar={<EditToolbar />}>
         <TextInput source="plate_number" label="车牌号" />
         <SelectInput
           source="vehicle_type"

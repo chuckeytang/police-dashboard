@@ -10,7 +10,6 @@ const VehicleShow = () => {
   return (
     <Show>
       <SimpleShowLayout>
-        <TextField source="code" label="编号" />
         <TextField source="plate_number" label="车牌号" />
         <TextField source="vehicle_type" label="车辆类型" />
         <TextField source="brand_model" label="品牌型号" />

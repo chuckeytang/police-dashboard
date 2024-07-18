@@ -1,7 +1,6 @@
 -- CreateTable
 CREATE TABLE `Staff` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
-    `code` VARCHAR(191) NOT NULL,
     `police_number` VARCHAR(191) NOT NULL,
     `name` VARCHAR(191) NOT NULL,
     `position` VARCHAR(191) NOT NULL,
@@ -17,7 +16,6 @@ CREATE TABLE `Staff` (
 -- CreateTable
 CREATE TABLE `DutyManagement` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
-    `code` VARCHAR(191) NOT NULL,
     `police_number` VARCHAR(191) NOT NULL,
     `name` VARCHAR(191) NOT NULL,
     `position` VARCHAR(191) NOT NULL,
@@ -33,7 +31,6 @@ CREATE TABLE `DutyManagement` (
 -- CreateTable
 CREATE TABLE `Vehicle` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
-    `code` VARCHAR(191) NOT NULL,
     `plate_number` VARCHAR(191) NOT NULL,
     `vehicle_type` VARCHAR(191) NOT NULL,
     `brand_model` VARCHAR(191) NOT NULL,

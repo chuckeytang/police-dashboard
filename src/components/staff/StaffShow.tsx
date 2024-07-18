@@ -10,7 +10,6 @@ const StaffShow = () => {
   return (
     <Show>
       <SimpleShowLayout>
-        <TextField source="code" label="编号" />
         <TextField source="police_number" label="警号" />
         <TextField source="name" label="姓名" />
         <TextField source="position" label="职务/警衔" />

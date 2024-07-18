@@ -34,7 +34,6 @@ async function main() {
   // 创建20个staff记录
   const staffData = [
     {
-      code: "01",
       police_number: "ZP00001",
       name: "秦壮保",
       position: "主任",
@@ -44,7 +43,6 @@ async function main() {
       skills: ["英语", "法律", "编程"],
     },
     {
-      code: "02",
       police_number: "ZP00002",
       name: "钱勤筠",
       position: "科长",
@@ -54,7 +52,6 @@ async function main() {
       skills: ["驾驶", "射击", "英语"],
     },
     {
-      code: "03",
       police_number: "ZP00003",
       name: "张颢启",
       position: "科长",
@@ -64,7 +61,6 @@ async function main() {
       skills: ["法律", "谈判", "编程"],
     },
     {
-      code: "04",
       police_number: "ZP00004",
       name: "雷琳",
       position: "民警",
@@ -74,7 +70,6 @@ async function main() {
       skills: ["射击", "驾驶", "英语"],
     },
     {
-      code: "05",
       police_number: "ZP00005",
       name: "吴川宜",
       position: "民警",
@@ -84,7 +79,6 @@ async function main() {
       skills: ["编程", "驾驶", "谈判"],
     },
     {
-      code: "06",
       police_number: "ZP00006",
       name: "孙英",
       position: "科长",
@@ -94,7 +88,6 @@ async function main() {
       skills: ["驾驶", "英语", "编程"],
     },
     {
-      code: "07",
       police_number: "ZP00007",
       name: "李彬",
       position: "科长",
@@ -104,7 +97,6 @@ async function main() {
       skills: ["法律", "驾驶", "谈判"],
     },
     {
-      code: "08",
       police_number: "ZP00008",
       name: "赵伟",
       position: "民警",
@@ -114,7 +106,6 @@ async function main() {
       skills: ["射击", "驾驶", "英语"],
     },
     {
-      code: "09",
       police_number: "ZP00009",
       name: "周晓",
       position: "民警",
@@ -124,7 +115,6 @@ async function main() {
       skills: ["编程", "驾驶", "谈判"],
     },
     {
-      code: "10",
       police_number: "ZP00010",
       name: "王磊",
       position: "民警",
@@ -134,7 +124,6 @@ async function main() {
       skills: ["驾驶", "英语", "法律"],
     },
     {
-      code: "11",
       police_number: "ZP00011",
       name: "刘畅",
       position: "主任",
@@ -144,7 +133,6 @@ async function main() {
       skills: ["英语", "法律", "编程"],
     },
     {
-      code: "12",
       police_number: "ZP00012",
       name: "陈浩",
       position: "科长",
@@ -154,7 +142,6 @@ async function main() {
       skills: ["驾驶", "射击", "英语"],
     },
     {
-      code: "13",
       police_number: "ZP00013",
       name: "丁磊",
       position: "科长",
@@ -164,7 +151,6 @@ async function main() {
       skills: ["法律", "谈判", "编程"],
     },
     {
-      code: "14",
       police_number: "ZP00014",
       name: "黄丽",
       position: "民警",
@@ -174,7 +160,6 @@ async function main() {
       skills: ["射击", "驾驶", "英语"],
     },
     {
-      code: "15",
       police_number: "ZP00015",
       name: "韩梅",
       position: "民警",
@@ -184,7 +169,6 @@ async function main() {
       skills: ["编程", "驾驶", "谈判"],
     },
     {
-      code: "16",
       police_number: "ZP00016",
       name: "张强",
       position: "科长",
@@ -194,7 +178,6 @@ async function main() {
       skills: ["驾驶", "英语", "编程"],
     },
     {
-      code: "17",
       police_number: "ZP00017",
       name: "李四",
       position: "科长",
@@ -204,7 +187,6 @@ async function main() {
       skills: ["法律", "驾驶", "谈判"],
     },
     {
-      code: "18",
       police_number: "ZP00018",
       name: "王五",
       position: "民警",
@@ -214,7 +196,6 @@ async function main() {
       skills: ["射击", "驾驶", "英语"],
     },
     {
-      code: "19",
       police_number: "ZP00019",
       name: "赵六",
       position: "民警",
@@ -224,7 +205,6 @@ async function main() {
       skills: ["编程", "驾驶", "谈判"],
     },
     {
-      code: "20",
       police_number: "ZP00020",
       name: "钱七",
       position: "民警",
@@ -238,7 +218,6 @@ async function main() {
   const staffPromises = staffData.map((staff) =>
     prisma.staff.create({
       data: {
-        code: staff.code,
         police_number: staff.police_number,
         name: staff.name,
         position: staff.position,
@@ -333,7 +312,6 @@ async function main() {
   // 创建20个vehicle记录
   const vehicleData = [
     {
-      code: "01",
       plate_number: "陕A-00932",
       vehicle_type: "轿车",
       brand_model: "比亚迪",
@@ -345,7 +323,6 @@ async function main() {
       return_time: new Date(2024, 3, 11, 9, 2, 9),
     },
     {
-      code: "02",
       plate_number: "陕A-00932",
       vehicle_type: "货车",
       brand_model: "五菱宏光",
@@ -357,7 +334,6 @@ async function main() {
       return_time: null,
     },
     {
-      code: "03",
       plate_number: "陕A-00932",
       vehicle_type: "摩托车",
       brand_model: "东风风尚",
@@ -369,7 +345,6 @@ async function main() {
       return_time: null,
     },
     {
-      code: "04",
       plate_number: "陕A-00932",
       vehicle_type: "轿车",
       brand_model: "吉利",
@@ -381,7 +356,6 @@ async function main() {
       return_time: new Date(2024, 3, 11, 9, 2, 9),
     },
     {
-      code: "05",
       plate_number: "陕A-00932",
       vehicle_type: "SUV",
       brand_model: "比亚迪",
@@ -393,7 +367,6 @@ async function main() {
       return_time: null,
     },
     {
-      code: "06",
       plate_number: "陕A-00932",
       vehicle_type: "轿车",
       brand_model: "比亚迪",
@@ -405,7 +378,6 @@ async function main() {
       return_time: new Date(2024, 3, 11, 9, 2, 9),
     },
     {
-      code: "07",
       plate_number: "陕A-00932",
       vehicle_type: "货车",
       brand_model: "五菱宏光",
@@ -417,7 +389,6 @@ async function main() {
       return_time: null,
     },
     {
-      code: "08",
       plate_number: "陕A-00932",
       vehicle_type: "摩托车",
       brand_model: "东风风尚",
@@ -429,7 +400,6 @@ async function main() {
       return_time: null,
     },
     {
-      code: "09",
       plate_number: "陕A-00932",
       vehicle_type: "轿车",
       brand_model: "吉利",
@@ -441,7 +411,6 @@ async function main() {
       return_time: new Date(2024, 3, 11, 9, 2, 9),
     },
     {
-      code: "10",
       plate_number: "陕A-00932",
       vehicle_type: "SUV",
       brand_model: "比亚迪",
@@ -453,7 +422,6 @@ async function main() {
       return_time: null,
     },
     {
-      code: "11",
       plate_number: "陕A-00932",
       vehicle_type: "SUV",
       brand_model: "吉利",
@@ -465,7 +433,6 @@ async function main() {
       return_time: null,
     },
     {
-      code: "12",
       plate_number: "陕A-00932",
       vehicle_type: "轿车",
       brand_model: "五菱宏光",
@@ -477,7 +444,6 @@ async function main() {
       return_time: null,
     },
     {
-      code: "13",
       plate_number: "陕A-00932",
       vehicle_type: "SUV",
       brand_model: "东风风尚",
@@ -489,7 +455,6 @@ async function main() {
       return_time: null,
     },
     {
-      code: "14",
       plate_number: "陕A-00932",
       vehicle_type: "轿车",
       brand_model: "比亚迪",
@@ -501,7 +466,6 @@ async function main() {
       return_time: new Date(2024, 3, 11, 9, 2, 9),
     },
     {
-      code: "15",
       plate_number: "陕A-00932",
       vehicle_type: "轿车",
       brand_model: "比亚迪",
@@ -513,7 +477,6 @@ async function main() {
       return_time: new Date(2024, 3, 11, 9, 2, 9),
     },
     {
-      code: "16",
       plate_number: "陕A-00932",
       vehicle_type: "SUV",
       brand_model: "比亚迪",
@@ -525,7 +488,6 @@ async function main() {
       return_time: null,
     },
     {
-      code: "17",
       plate_number: "陕A-00932",
       vehicle_type: "轿车",
       brand_model: "吉利",
@@ -537,7 +499,6 @@ async function main() {
       return_time: null,
     },
     {
-      code: "18",
       plate_number: "陕A-00932",
       vehicle_type: "货车",
       brand_model: "五菱宏光",
@@ -549,7 +510,6 @@ async function main() {
       return_time: null,
     },
     {
-      code: "19",
       plate_number: "陕A-00932",
       vehicle_type: "摩托车",
       brand_model: "东风风尚",
@@ -561,7 +521,6 @@ async function main() {
       return_time: null,
     },
     {
-      code: "20",
       plate_number: "陕A-00932",
       vehicle_type: "轿车",
       brand_model: "比亚迪",
@@ -577,7 +536,6 @@ async function main() {
   const vehiclePromises = vehicleData.map((vehicle) =>
     prisma.vehicle.create({
       data: {
-        code: vehicle.code,
         plate_number: vehicle.plate_number,
         vehicle_type: vehicle.vehicle_type,
         brand_model: vehicle.brand_model,
@@ -683,7 +641,6 @@ async function main() {
   }
 
   console.log("WorkFocus 数据创建完成");
-
 
   // 创建一些 IncidentAnalysis 数据
   const incidentAnalysisData = [

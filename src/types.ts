@@ -1,6 +1,5 @@
 export interface Staff {
   id: number;
-  code: string;
   police_number: string;
   name: string;
   position: string;
@@ -38,7 +37,6 @@ export interface TeamMember {
 
 export interface Vehicle {
   id: number;
-  code: string;
   plate_number: string;
   vehicle_type: string;
   brand_model: string;
