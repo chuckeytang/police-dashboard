@@ -98,6 +98,25 @@ const dataProvider: DataProvider = {
     } as CreateResult<RecordType>;
   },
 
+  createMany: async <RecordType extends RaRecord = RaRecord>(
+    resource: string,
+    params: { data: RecordType[] }
+  ) => {
+    const url = `${apiUrl}/${resource}/createMany`;
+    const options = {
+      method: "POST",
+      body: JSON.stringify(params.data),
+    };
+    const response = await httpClient(url, options);
+    const json = await response.json;
+    return {
+      data: json.success.map((item: any, index: number) => ({
+        ...params.data[index],
+        id: item.id,
+      })),
+    } as CreateResult<RecordType>;
+  },
+
   delete: async (resource, params) =>
     httpClient(`${apiUrl}/${resource}/delete`, {
       method: "DELETE",

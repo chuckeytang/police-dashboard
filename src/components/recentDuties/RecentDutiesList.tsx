@@ -9,7 +9,15 @@ import {
   TextInput,
   SelectInput,
   FilterProps,
+  TopToolbar,
+  CreateButton,
 } from "react-admin";
+import {
+  CustomExportButton,
+  ImportButton,
+  RecentDutiesTemplateButton,
+  StaffTemplateButton,
+} from "../common/CustomButtons";
 
 const RecentDutiesFilter = (props: FilterProps) => (
   <Filter {...props}>
@@ -24,7 +32,17 @@ const RecentDutiesFilter = (props: FilterProps) => (
 
 const RecentDutiesList = () => {
   return (
-    <List filters={<RecentDutiesFilter children={undefined} />}>
+    <List
+      actions={
+        <TopToolbar>
+          <CreateButton />
+          <CustomExportButton resource="recentDuties" label="导出" />
+          <RecentDutiesTemplateButton />
+          <ImportButton resource="recentDuties" label="导入" />
+        </TopToolbar>
+      }
+      filters={<RecentDutiesFilter children={undefined} />}
+    >
       <Datagrid>
         <DateField source="duty_date" label="日期" />
         <TextField source="duty_type" label="勤务类型" />

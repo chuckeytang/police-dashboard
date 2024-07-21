@@ -8,7 +8,15 @@ import {
   TextInput,
   SelectInput,
   FilterProps,
+  TopToolbar,
+  CreateButton,
 } from "react-admin";
+import {
+  CustomExportButton,
+  ImportButton,
+  StaffTemplateButton,
+  VehicleTemplateButton,
+} from "../common/CustomButtons";
 
 interface Vehicle {
   id: number;
@@ -82,7 +90,17 @@ const VehicleFilter = (props: FilterProps) => (
 
 const VehicleList = () => {
   return (
-    <List filters={<VehicleFilter children={undefined} />}>
+    <List
+      actions={
+        <TopToolbar>
+          <CreateButton />
+          <CustomExportButton resource="vehicle/vehicle" label="导出" />
+          <VehicleTemplateButton />
+          <ImportButton resource="vehicle/vehicle" label="导入" />
+        </TopToolbar>
+      }
+      filters={<VehicleFilter children={undefined} />}
+    >
       <Datagrid>
         <TextField source="plate_number" label="车牌号" />
         <TextField source="vehicle_type" label="车辆类型" />

@@ -8,7 +8,15 @@ import {
   Filter,
   TextInput,
   FilterProps,
+  TopToolbar,
+  CreateButton,
 } from "react-admin";
+import {
+  CustomExportButton,
+  ImportButton,
+  StaffTemplateButton,
+  WorkFocusTemplateButton,
+} from "../common/CustomButtons";
 
 const WorkFocusFilter = (props: FilterProps) => (
   <Filter {...props}>
@@ -23,7 +31,17 @@ const WorkFocusFilter = (props: FilterProps) => (
 
 const WorkFocusList = () => {
   return (
-    <List filters={<WorkFocusFilter children={undefined} />}>
+    <List
+      actions={
+        <TopToolbar>
+          <CreateButton />
+          <CustomExportButton resource="workFocus" label="导出" />
+          <WorkFocusTemplateButton />
+          <ImportButton resource="workFocus" label="导入" />
+        </TopToolbar>
+      }
+      filters={<WorkFocusFilter children={undefined} />}
+    >
       <Datagrid>
         <DateField source="focus_date" label="日期" />
         <TextField source="content" label="内容" />

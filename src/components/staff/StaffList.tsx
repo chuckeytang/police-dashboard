@@ -10,9 +10,10 @@ import {
   FilterProps,
   useNotify,
   useListContext,
-  BulkDeleteButton,
   useDataProvider,
   Button,
+  TopToolbar,
+  CreateButton,
 } from "react-admin";
 
 interface Staff {
@@ -25,6 +26,11 @@ interface Staff {
   vehicle?: string;
 }
 import { useSnackbar } from "notistack";
+import {
+  CustomExportButton,
+  ImportButton,
+  StaffTemplateButton,
+} from "../common/CustomButtons";
 
 const StaffFilter = (props: FilterProps) => (
   <Filter {...props}>
@@ -84,7 +90,17 @@ const CustomBulkDeleteButton = (props: any) => {
 
 const StaffList = () => {
   return (
-    <List filters={<StaffFilter children={undefined} />}>
+    <List
+      actions={
+        <TopToolbar>
+          <CreateButton />
+          <CustomExportButton resource="personnel/staff" label="导出" />
+          <StaffTemplateButton />
+          <ImportButton resource="personnel/staff" label="导入" />
+        </TopToolbar>
+      }
+      filters={<StaffFilter children={undefined} />}
+    >
       <Datagrid bulkActionButtons={<CustomBulkDeleteButton />}>
         <TextField source="police_number" label="警号" />
         <TextField source="name" label="姓名" />

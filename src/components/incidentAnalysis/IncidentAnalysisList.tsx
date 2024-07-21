@@ -10,7 +10,15 @@ import {
   DateInput,
   SelectInput,
   FilterProps,
+  TopToolbar,
+  CreateButton,
 } from "react-admin";
+import {
+  CustomExportButton,
+  ImportButton,
+  IncidentAnalysisTemplateButton,
+  StaffTemplateButton,
+} from "../common/CustomButtons";
 
 const IncidentAnalysisFilter = (props: FilterProps) => (
   <Filter {...props}>
@@ -38,7 +46,17 @@ const IncidentAnalysisFilter = (props: FilterProps) => (
 
 const IncidentAnalysisList = () => {
   return (
-    <List filters={<IncidentAnalysisFilter children={undefined} />}>
+    <List
+      actions={
+        <TopToolbar>
+          <CreateButton />
+          <CustomExportButton resource="incidentAnalysis" label="导出" />
+          <IncidentAnalysisTemplateButton />
+          <ImportButton resource="incidentAnalysis" label="导入" />
+        </TopToolbar>
+      }
+      filters={<IncidentAnalysisFilter children={undefined} />}
+    >
       <Datagrid>
         <TextField source="incident_number" label="警情编号" />
         <TextField source="receiver" label="接警员" />
