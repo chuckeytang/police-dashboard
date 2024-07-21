@@ -1,5 +1,4 @@
-//警情分析板块
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import axios from "axios";
 import {
   TableContainer,
@@ -57,6 +56,7 @@ const IncidentAnalysisTable: React.FC = () => {
   const [analysisData, setAnalysisData] = useState<IncidentAnalysis[]>([]);
   const [selectedCategory, setSelectedCategory] = useState("");
   const [isLoading, setIsLoading] = useState(true);
+  const tableContainerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const fetchAnalysisData = async (incident_category = "") => {
@@ -75,6 +75,26 @@ const IncidentAnalysisTable: React.FC = () => {
     };
     fetchAnalysisData(selectedCategory);
   }, [selectedCategory]);
+
+  useEffect(() => {
+    const scrollSpeed = 30; // pixels per second
+
+    const scroll = () => {
+      if (tableContainerRef.current) {
+        tableContainerRef.current.scrollTop += scrollSpeed / 60;
+        if (
+          tableContainerRef.current.scrollTop +
+            tableContainerRef.current.clientHeight >=
+          tableContainerRef.current.scrollHeight
+        ) {
+          tableContainerRef.current.scrollTop = 0;
+        }
+      }
+    };
+
+    const interval = setInterval(scroll, 1000 / 60);
+    return () => clearInterval(interval);
+  }, [isLoading]);
 
   const handleCategoryChange = (
     event: SelectChangeEvent<typeof selectedCategory>
@@ -200,7 +220,9 @@ const IncidentAnalysisTable: React.FC = () => {
           marginTop: "15px",
           overflow: "hidden",
           boxShadow: "none",
+          flex: 1,
         }}
+        ref={tableContainerRef}
       >
         <TableContainer>
           <Table>

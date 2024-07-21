@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import axios from "axios";
 import {
   TableContainer,
@@ -100,6 +100,7 @@ const PatrolTeamTable: React.FC = () => {
   const [vehicleData, setVehicleData] = useState<Vehicle[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [noDuty, setNoDuty] = useState(false);
+  const tableContainerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const fetchPatrolTeamData = async () => {
@@ -135,6 +136,26 @@ const PatrolTeamTable: React.FC = () => {
     fetchPatrolTeamData();
   }, []);
 
+  useEffect(() => {
+    const scrollSpeed = 30; // pixels per second
+
+    const scroll = () => {
+      if (tableContainerRef.current) {
+        tableContainerRef.current.scrollTop += scrollSpeed / 60;
+        if (
+          tableContainerRef.current.scrollTop +
+            tableContainerRef.current.clientHeight >=
+          tableContainerRef.current.scrollHeight
+        ) {
+          tableContainerRef.current.scrollTop = 0;
+        }
+      }
+    };
+
+    const interval = setInterval(scroll, 1000 / 60);
+    return () => clearInterval(interval);
+  }, [isLoading]);
+
   const handleButtonClick = () => {
     window.location.href = "/admin#/vehicle/vehicle";
   };
@@ -162,13 +183,13 @@ const PatrolTeamTable: React.FC = () => {
           variant="rectangular"
           width="100%"
           height={50}
-          className="mt-2"
+          sx={{ mt: 2 }}
         />
         <Skeleton
           variant="rectangular"
           width="100%"
           height={50}
-          className="mt-2"
+          sx={{ mt: 2 }}
         />
       </Paper>
     );
@@ -245,7 +266,14 @@ const PatrolTeamTable: React.FC = () => {
 
       <TableContainer
         component={Paper}
-        className="bg-transparent mt-2 overflow-hidden shadow-none"
+        sx={{
+          backgroundColor: "transparent",
+          marginTop: "15px",
+          overflow: "hidden",
+          boxShadow: "none",
+          flex: 1,
+        }}
+        ref={tableContainerRef}
       >
         <TableContainer>
           <Table>
@@ -263,7 +291,14 @@ const PatrolTeamTable: React.FC = () => {
 
       <TableContainer
         component={Paper}
-        className="bg-transparent mt-2 overflow-hidden shadow-none"
+        sx={{
+          backgroundColor: "transparent",
+          marginTop: "15px",
+          overflow: "hidden",
+          boxShadow: "none",
+          flex: 1,
+        }}
+        ref={tableContainerRef}
       >
         <TableContainer>
           <Table>

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import axios from "axios";
 import {
   TableContainer,
@@ -46,6 +46,7 @@ const WorkforceTableBody: React.FC<WorkforceTableBodyProps> = ({
 const WorkforceTable: React.FC = () => {
   const [workforceData, setWorkforceData] = useState<Workforce[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const tableContainerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const fetchWorkforceData = async () => {
@@ -66,6 +67,26 @@ const WorkforceTable: React.FC = () => {
     };
     fetchWorkforceData();
   }, []);
+
+  useEffect(() => {
+    const scrollSpeed = 30; // pixels per second
+
+    const scroll = () => {
+      if (tableContainerRef.current) {
+        tableContainerRef.current.scrollTop += scrollSpeed / 60;
+        if (
+          tableContainerRef.current.scrollTop +
+            tableContainerRef.current.clientHeight >=
+          tableContainerRef.current.scrollHeight
+        ) {
+          tableContainerRef.current.scrollTop = 0;
+        }
+      }
+    };
+
+    const interval = setInterval(scroll, 1000 / 60);
+    return () => clearInterval(interval);
+  }, [isLoading]);
 
   const handleButtonClick = () => {
     window.location.href = "/admin#/workFocus";
@@ -88,7 +109,7 @@ const WorkforceTable: React.FC = () => {
         }}
       >
         <Typography variant="h6">工作重点</Typography>
-        <Typography className="text-sky-300">加载中...</Typography>
+        <Typography sx={{ color: "skyblue" }}>加载中...</Typography>
         <Skeleton variant="text" width="40%" />
         <Skeleton
           variant="rectangular"
@@ -144,7 +165,9 @@ const WorkforceTable: React.FC = () => {
           marginTop: "8px",
           overflow: "hidden",
           boxShadow: "none",
+          flex: 1,
         }}
+        ref={tableContainerRef}
       >
         <Table>
           <WorkforceTableHead />

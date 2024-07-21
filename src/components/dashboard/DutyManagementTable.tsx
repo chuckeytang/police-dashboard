@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import axios from "axios";
 import {
   TableContainer,
@@ -13,7 +13,7 @@ import {
   Skeleton,
 } from "@mui/material";
 import { DbTableBodyCell, DbTableCell, DbTableHeaderCell } from "./DbTableCell";
-import { Staff, Team } from "@/types";
+import { Staff } from "@/types";
 
 const DutyManagementTableHead: React.FC<{ leaders: Staff[] }> = ({
   leaders,
@@ -58,6 +58,7 @@ const DutyManagementTable: React.FC = () => {
   const [leaders, setLeaders] = useState<Staff[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [noDuty, setNoDuty] = useState(false);
+  const tableContainerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const fetchStaffData = async () => {
@@ -96,6 +97,26 @@ const DutyManagementTable: React.FC = () => {
     fetchStaffData();
   }, []);
 
+  useEffect(() => {
+    const scrollSpeed = 30; // pixels per second
+
+    const scroll = () => {
+      if (tableContainerRef.current) {
+        tableContainerRef.current.scrollTop += scrollSpeed / 60;
+        if (
+          tableContainerRef.current.scrollTop +
+            tableContainerRef.current.clientHeight >=
+          tableContainerRef.current.scrollHeight
+        ) {
+          tableContainerRef.current.scrollTop = 0;
+        }
+      }
+    };
+
+    const interval = setInterval(scroll, 1000 / 60);
+    return () => clearInterval(interval);
+  }, [isLoading]);
+
   const handleButtonClick = () => {
     window.location.href = "/admin#/personnel/staff";
   };
@@ -123,13 +144,13 @@ const DutyManagementTable: React.FC = () => {
           variant="rectangular"
           width="100%"
           height={50}
-          className="mt-2"
+          sx={{ mt: 2 }}
         />
         <Skeleton
           variant="rectangular"
           width="100%"
           height={50}
-          className="mt-2"
+          sx={{ mt: 2 }}
         />
       </Paper>
     );
@@ -200,7 +221,9 @@ const DutyManagementTable: React.FC = () => {
           marginTop: "15px",
           overflow: "hidden",
           boxShadow: "none",
+          flex: 1,
         }}
+        ref={tableContainerRef}
       >
         <TableContainer>
           <Table>

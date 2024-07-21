@@ -1,5 +1,4 @@
-//近期勤务板块
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import axios from "axios";
 import {
   TableContainer,
@@ -13,7 +12,7 @@ import {
   Typography,
   Skeleton,
 } from "@mui/material";
-import { DbTableBodyCell, DbTableCell, DbTableHeaderCell } from "./DbTableCell";
+import { DbTableBodyCell, DbTableHeaderCell } from "./DbTableCell";
 import { RecentDuties } from "@/types";
 
 const RecentDutiesTableHead: React.FC = () => (
@@ -47,6 +46,7 @@ const RecentDutiesTableBody: React.FC<RecentDutiesTableBodyProps> = ({
 const RecentDutiesTable: React.FC = () => {
   const [recentData, setRecentData] = useState<RecentDuties[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const tableContainerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const fetchRecentData = async () => {
@@ -67,6 +67,26 @@ const RecentDutiesTable: React.FC = () => {
     };
     fetchRecentData();
   }, []);
+
+  useEffect(() => {
+    const scrollSpeed = 30; // pixels per second
+
+    const scroll = () => {
+      if (tableContainerRef.current) {
+        tableContainerRef.current.scrollTop += scrollSpeed / 60;
+        if (
+          tableContainerRef.current.scrollTop +
+            tableContainerRef.current.clientHeight >=
+          tableContainerRef.current.scrollHeight
+        ) {
+          tableContainerRef.current.scrollTop = 0;
+        }
+      }
+    };
+
+    const interval = setInterval(scroll, 1000 / 60);
+    return () => clearInterval(interval);
+  }, [isLoading]);
 
   const handleButtonClick = () => {
     window.location.href = "/admin#/recentDuties";
@@ -127,7 +147,12 @@ const RecentDutiesTable: React.FC = () => {
         <Button
           variant="contained"
           onClick={handleButtonClick}
-          className="bg-[#1e3a8aa3] ml-auto w-10 h-8"
+          sx={{
+            backgroundColor: "#1e3a8aa3",
+            ml: "auto",
+            width: "40px",
+            height: "32px",
+          }}
         >
           编辑
         </Button>
@@ -139,7 +164,9 @@ const RecentDutiesTable: React.FC = () => {
           marginTop: "15px",
           overflow: "hidden",
           boxShadow: "none",
+          flex: 1,
         }}
+        ref={tableContainerRef}
       >
         <TableContainer>
           <Table>

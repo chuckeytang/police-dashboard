@@ -1,5 +1,4 @@
-//民警-警情板块
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import axios from "axios";
 import {
   Table,
@@ -51,6 +50,7 @@ const PoliceIncidentTable = () => {
   const [startDate, setStartDate] = useState<Date | null>(null);
   const [endDate, setEndDate] = useState<Date | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const tableContainerRef = useRef<HTMLDivElement>(null);
 
   const fetchIncidentData = async (
     startDate?: Date | null,
@@ -78,6 +78,34 @@ const PoliceIncidentTable = () => {
   useEffect(() => {
     fetchIncidentData();
   }, []);
+
+  useEffect(() => {
+    const scrollSpeed = 30; // pixels per second
+
+    const scroll = () => {
+      if (tableContainerRef.current) {
+        tableContainerRef.current.scrollTop += scrollSpeed / 60;
+        if (
+          tableContainerRef.current.scrollTop +
+            tableContainerRef.current.clientHeight >=
+          tableContainerRef.current.scrollHeight
+        ) {
+          tableContainerRef.current.scrollTop = 0;
+        }
+      }
+    };
+
+    const interval = setInterval(scroll, 1000 / 60);
+    return () => clearInterval(interval);
+  }, [isLoading]);
+
+  const handleDateChange = (startDate: Date | null, endDate: Date | null) => {
+    setStartDate(startDate);
+    setEndDate(endDate);
+    if (startDate && endDate) {
+      fetchIncidentData(startDate, endDate);
+    }
+  };
 
   if (isLoading) {
     return (
@@ -114,14 +142,6 @@ const PoliceIncidentTable = () => {
     );
   }
 
-  const handleDateChange = (startDate: Date | null, endDate: Date | null) => {
-    setStartDate(startDate);
-    setEndDate(endDate);
-    if (startDate && endDate) {
-      fetchIncidentData(startDate, endDate);
-    }
-  };
-
   return (
     <Paper
       className="animate__animated animate__zoomInRight"
@@ -150,7 +170,9 @@ const PoliceIncidentTable = () => {
           marginTop: "15px",
           overflow: "hidden",
           boxShadow: "none",
+          flex: 1,
         }}
+        ref={tableContainerRef}
       >
         <Table>
           <PoliceIncidentHead />
