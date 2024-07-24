@@ -34,16 +34,25 @@ const ScheduleList: React.FC<ScheduleListProps> = ({
   if (isLoading) return <Loading />;
 
   const events = data
+
     .map((schedule) => [
       {
-        title: `早班: ${schedule.day_team.team_name}`,
+        title: `早班: ${
+          schedule.day_team?.team_name ||
+          schedule.night_team?.team_name ||
+          "未指定"
+        }`,
         start: new Date(schedule.schedule_date),
         end: new Date(schedule.schedule_date),
         allDay: true,
         desc: "早班",
       },
       {
-        title: `晚班: ${schedule.night_team.team_name}`,
+        title: `晚班: ${
+          schedule.night_team?.team_name ||
+          schedule.day_team?.team_name ||
+          "未指定"
+        }`,
         start: new Date(schedule.schedule_date),
         end: new Date(schedule.schedule_date),
         allDay: true,

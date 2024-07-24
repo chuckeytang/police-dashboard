@@ -92,13 +92,13 @@ model PatrolStaffAssignment {
 
 model Schedule {
   id             Int      @id @default(autoincrement())
-  day_team_id    Int
-  night_team_id  Int
+  day_team_id    Int?
+  night_team_id  Int?
   schedule_date  DateTime
   created_at     DateTime @default(now())
   updated_at     DateTime @default(now()) @updatedAt
-  day_team       Team     @relation("DayTeam", fields: [day_team_id], references: [id])
-  night_team     Team     @relation("NightTeam", fields: [night_team_id], references: [id])
+  day_team       Team?     @relation("DayTeam", fields: [day_team_id], references: [id])
+  night_team     Team?     @relation("NightTeam", fields: [night_team_id], references: [id])
 }
 
 model PatrolSchedule {
