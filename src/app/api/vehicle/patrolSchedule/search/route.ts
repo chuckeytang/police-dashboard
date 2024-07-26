@@ -41,7 +41,10 @@ export async function GET(req: NextRequest) {
       );
     }
 
-    return NextResponse.json(patrolSchedules, { status: 200 });
+    return NextResponse.json(
+      { data: patrolSchedules, total: 0 },
+      { status: 200 }
+    );
   } catch (error) {
     console.error(MESSAGES.GET_PATROL_SCHEDULE_FAILED, error);
     return NextResponse.json(

@@ -24,8 +24,8 @@ const dataProvider: DataProvider = {
     const url = `${apiUrl}/${resource}/search?${stringify(query)}`;
     const { json } = await httpClient(url);
     return {
-      data: json,
-      total: json.length,
+      data: json.data,
+      total: json.total,
     };
   },
 

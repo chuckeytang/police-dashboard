@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { PrismaClient } from "@prisma/client";
 import { MESSAGES } from "../../errorMessages";
+import { setNoCacheHeaders } from "../../utils/cacheControl";
 
 const prisma = new PrismaClient();
 
@@ -25,12 +26,15 @@ export async function GET(req: NextRequest) {
         night_team: true,
       },
     });
+    console.log("schedule:", schedule);
 
     if (!schedule) {
-      return NextResponse.json(
+      const response = NextResponse.json(
         { message: "No schedule found for today" },
         { status: 404 }
       );
+      setNoCacheHeaders(response);
+      return response;
     }
 
     let dayTeam = null;
@@ -90,18 +94,24 @@ export async function GET(req: NextRequest) {
 
     // 如果日班和夜班都为空，返回错误
     if (!dayTeam && !nightTeam) {
-      return NextResponse.json(
+      const response = NextResponse.json(
         { message: "Both day and night teams are empty for today" },
         { status: 404 }
       );
+      setNoCacheHeaders(response);
+      return response;
     }
 
-    return NextResponse.json({ dayTeam, nightTeam }, { status: 200 });
+    const response = NextResponse.json({ dayTeam, nightTeam }, { status: 200 });
+    setNoCacheHeaders(response);
+    return response;
   } catch (error) {
     console.error(MESSAGES.GET_TODAY_TEAM_MEMBERS_FAILED, error);
-    return NextResponse.json(
+    const response = NextResponse.json(
       { error: MESSAGES.GET_TODAY_TEAM_MEMBERS_FAILED + error },
       { status: 500 }
     );
+    setNoCacheHeaders(response);
+    return response;
   }
 }

@@ -62,10 +62,10 @@ const ScheduleTable = () => {
   useEffect(() => {
     const fetchTeams = async () => {
       const response = await axios.get("/api/personnel/team/search");
-      setAllTeams(response.data);
+      setAllTeams(response.data.data);
 
       // 初始化 dayOrder 和 nightOrder 为班组的 ID
-      const initialOrder = response.data.map(
+      const initialOrder = response.data.data.map(
         (team: { id: number; team_name: string }, index: number) => ({
           id: team.id,
           name: team.team_name,

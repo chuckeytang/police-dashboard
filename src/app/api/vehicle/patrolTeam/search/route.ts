@@ -22,7 +22,7 @@ export async function GET(req: NextRequest) {
       },
     });
 
-    return NextResponse.json(patrolTeams, { status: 200 });
+    return NextResponse.json({ data: patrolTeams, total: 0 }, { status: 200 });
   } catch (error) {
     console.error(MESSAGES.GET_PATROL_TEAM_FAILED, error);
     return NextResponse.json(

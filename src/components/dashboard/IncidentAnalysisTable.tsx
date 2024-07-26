@@ -66,7 +66,7 @@ const IncidentAnalysisTable: React.FC = () => {
           params: { incident_category },
         });
         console.log("Fetched incident analysis data:", response.data);
-        setAnalysisData(response.data);
+        setAnalysisData(response.data.data);
       } catch (error) {
         console.error("Error fetching incident analysis data:", error);
       } finally {

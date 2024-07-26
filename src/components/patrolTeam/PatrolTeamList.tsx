@@ -56,13 +56,13 @@ const PatrolTeamDetails = ({
     // 获取所有的工作人员列表，用于下拉菜单
     const fetchStaffs = async () => {
       const response = await axios.get("/api/personnel/staff/search");
-      setAllStaffs(response.data);
+      setAllStaffs(response.data.data);
     };
 
     // 获取所有的车辆列表，用于下拉菜单
     const fetchVehicles = async () => {
       const response = await axios.get("/api/vehicle/vehicle/search");
-      setAllVehicles(response.data);
+      setAllVehicles(response.data.data);
     };
 
     fetchStaffs();

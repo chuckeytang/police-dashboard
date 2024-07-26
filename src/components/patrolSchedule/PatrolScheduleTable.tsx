@@ -27,7 +27,7 @@ const PatrolScheduleTable = () => {
     // 获取所有的巡逻组
     const fetchTeams = async () => {
       const response = await axios.get("/api/vehicle/patrolTeam/search");
-      setAllTeams(response.data);
+      setAllTeams(response.data.data);
     };
 
     fetchTeams();

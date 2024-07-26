@@ -53,12 +53,12 @@ const WorkforceTable: React.FC = () => {
       try {
         const response = await axios.get("api/workFocus/search");
         console.log("Fetched workforce data:", response.data);
-        for (let i = 0; i < response.data.length; i++) {
-          response.data[i].focus_date = new Date(
-            response.data[i].focus_date
+        for (let i = 0; i < response.data.data.length; i++) {
+          response.data.data[i].focus_date = new Date(
+            response.data.data[i].focus_date
           ).toLocaleDateString();
         }
-        setWorkforceData(response.data);
+        setWorkforceData(response.data.data);
       } catch (error) {
         console.error("Error fetching workforce data:", error);
       } finally {

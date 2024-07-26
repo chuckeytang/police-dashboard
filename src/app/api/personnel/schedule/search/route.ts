@@ -23,6 +23,15 @@ export async function GET(req: NextRequest) {
           night_team: true,
         },
       });
+
+      if (!schedules) {
+        return NextResponse.json(
+          { error: `Schedule with id ${scheduleId} not found` },
+          { status: 404 }
+        );
+      }
+
+      return NextResponse.json({ data: schedules }, { status: 200 });
     } else if (startDate && endDate) {
       schedules = await prisma.schedule.findMany({
         where: {
@@ -36,14 +45,27 @@ export async function GET(req: NextRequest) {
           night_team: true,
         },
       });
+
+      // 计算总数
+      const total = await prisma.schedule.count({
+        where: {
+          schedule_date: {
+            gte: new Date(startDate),
+            lte: new Date(endDate),
+          },
+        },
+      });
+
+      return NextResponse.json(
+        { data: schedules, total: total },
+        { status: 200 }
+      );
     } else {
       return NextResponse.json(
         { error: "Missing required query parameters: start, end or id" },
         { status: 400 }
       );
     }
-
-    return NextResponse.json(schedules, { status: 200 });
   } catch (error) {
     console.error("Error fetching schedules:", error);
     return NextResponse.json(

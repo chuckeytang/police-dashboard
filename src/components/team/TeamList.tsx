@@ -44,7 +44,7 @@ const TeamDetails = ({
     // 获取所有的工作人员列表，用于下拉菜单
     const fetchStaffs = async () => {
       const response = await axios.get("/api/personnel/staff/search");
-      setAllStaffs(response.data);
+      setAllStaffs(response.data.data);
     };
 
     fetchStaffs();

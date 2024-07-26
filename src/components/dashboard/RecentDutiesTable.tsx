@@ -52,12 +52,12 @@ const RecentDutiesTable: React.FC = () => {
     const fetchRecentData = async () => {
       try {
         const response = await axios.get("/api/recentDuties/search");
-        for (let i = 0; i < response.data.length; i++) {
-          response.data[i].duty_date = new Date(
-            response.data[i].duty_date
+        for (let i = 0; i < response.data.data.length; i++) {
+          response.data.data[i].duty_date = new Date(
+            response.data.data[i].duty_date
           ).toLocaleDateString();
         }
-        console.log("Fetched recent duties data:", response.data);
+        console.log("Fetched recent duties data:", response.data.data);
         setRecentData(response.data);
       } catch (error) {
         console.error("Error fetching recent duties data:", error);
