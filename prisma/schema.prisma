@@ -11,11 +11,11 @@ model Staff {
   id            Int       @id @default(autoincrement())
   police_number String
   name          String
-  position      String
-  department    String
-  contact       String
+  position      String?
+  department    String?
+  contact       String?
   vehicle       String?
-  skills        Json
+  skills        Json?
   created_at    DateTime  @default(now())
   updated_at    DateTime  @updatedAt
   Team          Team[]    @relation("TeamLeader")
@@ -46,10 +46,10 @@ model TeamMember {
 model Vehicle {
   id           Int       @id @default(autoincrement())
   plate_number String
-  vehicle_type String
-  brand_model  String
-  status       String
-  usage_status String
+  vehicle_type String?
+  brand_model  String?
+  status       String?
+  usage_status String?
   department   String?
   user_id      Int?
   borrow_time  DateTime?
@@ -122,15 +122,15 @@ model IncidentAnalysis {
   id                Int      @id @default(autoincrement()) // 唯一标识符
   incident_number   String   // 事件单编号
   receiver          String   // 接警员
-  report_time       DateTime // 报警时间
-  contact_number    String   // 联系电话
+  report_time       DateTime? // 报警时间
+  contact_number    String?   // 联系电话
   reporter          String   // 报警人
-  incident_category String   // 警情类别
-  report_source     String   // 报警案由
-  incident_location String   // 事发地址
-  incident_details  String   // 事件详情
-  incident_status   String   // 事件状态
-  response_time     DateTime // 处警时间
+  incident_category String?   // 警情类别
+  report_source     String?   // 报警案由
+  incident_location String?   // 事发地址
+  incident_details  String?   // 事件详情
+  incident_status   String?   // 事件状态
+  response_time     DateTime? // 处警时间
   created_at        DateTime @default(now()) // 创建时间
   updated_at        DateTime @updatedAt      // 更新时间
 }

@@ -11,7 +11,7 @@ const VehicleEdit = () => {
   return (
     <Edit>
       <SimpleForm toolbar={<EditToolbar />}>
-        <TextInput source="plate_number" label="车牌号" />
+        <TextInput source="plate_number" label="*车牌号" />
         <SelectInput
           source="vehicle_type"
           label="车辆类型"

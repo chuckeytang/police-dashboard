@@ -4,8 +4,8 @@ const WorkFocusCreate = () => {
   return (
     <Create>
       <SimpleForm>
-        <DateInput source="focus_date" label="日期" />
-        <TextInput source="content" label="内容" />
+        <DateInput source="focus_date" label="*日期" />
+        <TextInput source="content" label="*内容" />
       </SimpleForm>
     </Create>
   );

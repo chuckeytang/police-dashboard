@@ -33,53 +33,68 @@ export async function GET(req: NextRequest) {
       );
     }
 
-    // 获取日班和夜班团队成员
-    const dayTeamMembers = await prisma.teamMember.findMany({
-      where: {
-        team_id: schedule.day_team_id,
-      },
-      include: {
-        staff: true,
-      },
-    });
+    let dayTeam = null;
+    let nightTeam = null;
 
-    const nightTeamMembers = await prisma.teamMember.findMany({
-      where: {
-        team_id: schedule.night_team_id,
-      },
-      include: {
-        staff: true,
-      },
-    });
+    // 获取日班团队成员和领导
+    if (schedule.day_team_id && schedule.day_team) {
+      const dayTeamMembers = await prisma.teamMember.findMany({
+        where: {
+          team_id: schedule.day_team_id,
+        },
+        include: {
+          staff: true,
+        },
+      });
 
-    // 获取日班和夜班领导
-    const dayTeamLeader = await prisma.staff.findUnique({
-      where: {
-        id: schedule.day_team.leader_id
-          ? schedule.day_team.leader_id
-          : undefined,
-      },
-    });
+      const dayTeamLeader = schedule.day_team.leader_id
+        ? await prisma.staff.findUnique({
+            where: {
+              id: schedule.day_team.leader_id,
+            },
+          })
+        : null;
 
-    const nightTeamLeader = await prisma.staff.findUnique({
-      where: {
-        id: schedule.night_team.leader_id
-          ? schedule.night_team.leader_id
-          : undefined,
-      },
-    });
+      dayTeam = {
+        team_name: schedule.day_team.team_name,
+        leader: dayTeamLeader,
+        members: dayTeamMembers.map((member: any) => member.staff),
+      };
+    }
 
-    const dayTeam = {
-      team_name: schedule.day_team.team_name,
-      leader: dayTeamLeader,
-      members: dayTeamMembers.map((member) => member.staff),
-    };
+    // 获取夜班团队成员和领导
+    if (schedule.night_team_id && schedule.night_team) {
+      const nightTeamMembers = await prisma.teamMember.findMany({
+        where: {
+          team_id: schedule.night_team_id,
+        },
+        include: {
+          staff: true,
+        },
+      });
 
-    const nightTeam = {
-      team_name: schedule.night_team.team_name,
-      leader: nightTeamLeader,
-      members: nightTeamMembers.map((member) => member.staff),
-    };
+      const nightTeamLeader = schedule.night_team.leader_id
+        ? await prisma.staff.findUnique({
+            where: {
+              id: schedule.night_team.leader_id,
+            },
+          })
+        : null;
+
+      nightTeam = {
+        team_name: schedule.night_team.team_name,
+        leader: nightTeamLeader,
+        members: nightTeamMembers.map((member: any) => member.staff),
+      };
+    }
+
+    // 如果日班和夜班都为空，返回错误
+    if (!dayTeam && !nightTeam) {
+      return NextResponse.json(
+        { message: "Both day and night teams are empty for today" },
+        { status: 404 }
+      );
+    }
 
     return NextResponse.json({ dayTeam, nightTeam }, { status: 200 });
   } catch (error) {

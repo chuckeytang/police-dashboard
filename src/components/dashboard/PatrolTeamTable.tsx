@@ -43,7 +43,7 @@ const PatrolTeamTableBody: React.FC<PatrolTeamTableBodyProps> = ({
         </DbTableBodyCell>
         <DbTableBodyCell>{row.team_name}</DbTableBodyCell>
         <DbTableBodyCell>
-          <div className="flex truncate space-x-1 w-[60px]">
+          <div className="flex flex-col truncate space-x-1 w-[60px]">
             {row.patrol_staff_assignments &&
               row.patrol_staff_assignments
                 .filter((member) => member.shift === "早班")
@@ -53,7 +53,7 @@ const PatrolTeamTableBody: React.FC<PatrolTeamTableBodyProps> = ({
           </div>
         </DbTableBodyCell>
         <DbTableBodyCell>
-          <div className="flex truncate space-x-1 w-[60px]">
+          <div className="flex flex-col truncate space-x-1 w-[60px]">
             {row.patrol_staff_assignments &&
               row.patrol_staff_assignments
                 .filter((member) => member.shift === "中班")
@@ -63,7 +63,7 @@ const PatrolTeamTableBody: React.FC<PatrolTeamTableBodyProps> = ({
           </div>
         </DbTableBodyCell>
         <DbTableBodyCell>
-          <div className="flex truncate space-x-1 w-[60px]">
+          <div className="flex flex-col truncate space-x-1 w-[60px]">
             {row.patrol_staff_assignments &&
               row.patrol_staff_assignments
                 .filter((member) => member.shift === "晚班")
@@ -271,7 +271,6 @@ const PatrolTeamTable: React.FC = () => {
           marginTop: "15px",
           overflow: "hidden",
           boxShadow: "none",
-          flex: 1,
         }}
         ref={tableContainerRef}
       >
@@ -293,10 +292,8 @@ const PatrolTeamTable: React.FC = () => {
         component={Paper}
         sx={{
           backgroundColor: "transparent",
-          marginTop: "15px",
           overflow: "hidden",
           boxShadow: "none",
-          flex: 1,
         }}
         ref={tableContainerRef}
       >

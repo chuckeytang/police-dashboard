@@ -4,8 +4,8 @@ const IncidentAnalysisCreate = () => {
   return (
     <Create>
       <SimpleForm>
-        <TextInput source="incident_number" label="警情编号" />
-        <TextInput source="receiver" label="接警员" />
+        <TextInput source="incident_number" label="*警情编号" />
+        <TextInput source="receiver" label="*接警员" />
         <DateInput source="report_time" label="报警时间" />
         <TextInput source="contact_number" label="联系电话" />
         <TextInput source="reporter" label="报警人" />
