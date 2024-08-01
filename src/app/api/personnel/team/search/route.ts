@@ -1,9 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { MESSAGES } from "@/app/api/errorMessages";
-import { number } from "react-admin";
 
 export async function GET(req: NextRequest) {
+  const { searchParams } = new URL(req.url); // placeholder for npm run build not building static page
   try {
     const teams = await prisma.team.findMany({
       include: {

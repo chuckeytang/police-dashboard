@@ -4,6 +4,7 @@ import { prisma } from "@/lib/prisma";
 import { MESSAGES } from "@/app/api/errorMessages";
 
 export async function GET(req: NextRequest) {
+  const { searchParams } = new URL(req.url); // placeholder for npm run build not building static page
   try {
     const patrolTeams = await prisma.patrolTeam.findMany({
       include: {

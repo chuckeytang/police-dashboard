@@ -4,6 +4,7 @@ import { prisma } from "@/lib/prisma";
 import { MESSAGES } from "@/app/api/errorMessages";
 
 export async function GET(req: NextRequest) {
+  const { searchParams } = new URL(req.url); // placeholder for npm run build not building static page
   const today = new Date();
   today.setHours(0, 0, 0, 0); // 设置为当天的开始时间
 

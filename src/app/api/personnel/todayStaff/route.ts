@@ -4,6 +4,7 @@ import { MESSAGES } from "../../errorMessages";
 import { setNoCacheHeaders } from "../../utils/cacheControl";
 
 export async function GET(req: NextRequest) {
+  const { searchParams } = new URL(req.url); // placeholder for npm run build not building static page
   const today = new Date();
   today.setHours(0, 0, 0, 0); // 设置为当天的开始时间
 
@@ -24,7 +25,7 @@ export async function GET(req: NextRequest) {
         night_team: true,
       },
     });
-    console.log("schedule:", schedule);
+    console.log("schedule1:", schedule);
 
     if (!schedule) {
       const response = NextResponse.json(
