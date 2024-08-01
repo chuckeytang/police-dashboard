@@ -1,9 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
-import { PrismaClient } from "@prisma/client";
-import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
+import { prisma } from "@/lib/prisma";
 import { MESSAGES } from "@/app/api/errorMessages";
-
-const prisma = new PrismaClient();
 
 export async function DELETE(req: NextRequest) {
   const { id } = await req.json();

@@ -1,11 +1,9 @@
 // pages/api/vehicle/patrolTeam/update/[id].ts
 import { NextRequest, NextResponse } from "next/server";
-import { PrismaClient } from "@prisma/client";
+import { prisma } from "@/lib/prisma";
 import { URL } from "url";
 import { connect } from "http2";
 import { MESSAGES } from "@/app/api/errorMessages";
-
-const prisma = new PrismaClient();
 
 export async function PATCH(req: NextRequest) {
   const url = new URL(req.url);

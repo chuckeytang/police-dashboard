@@ -1,9 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
-import { PrismaClient } from "@prisma/client";
+import { prisma } from "@/lib/prisma";
 import Holidays from "date-holidays";
 import { MESSAGES } from "@/app/api/errorMessages";
-
-const prisma = new PrismaClient();
 const hd = new Holidays("CN"); // 'CN' 是中国的国家代码
 
 interface TeamOrder {

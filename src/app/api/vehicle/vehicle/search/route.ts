@@ -1,8 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
-import { PrismaClient } from "@prisma/client";
+import { prisma } from "@/lib/prisma";
 import { MESSAGES } from "@/app/api/errorMessages";
-
-const prisma = new PrismaClient();
 
 export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
@@ -14,7 +12,7 @@ export async function GET(req: NextRequest) {
   const sort = searchParams.get("_sort") || "id";
   const order = searchParams.get("_order") || "ASC";
   const start = parseInt(searchParams.get("_start") || "0", 10);
-  const end = parseInt(searchParams.get("_end") || "10", 10);
+  const end = parseInt(searchParams.get("_end") || "1000", 10);
   const take = end - start;
   const skip = start;
 

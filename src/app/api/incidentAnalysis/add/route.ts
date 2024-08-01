@@ -1,8 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
-import { PrismaClient } from "@prisma/client";
-import { MESSAGES } from "../../errorMessages";
-
-const prisma = new PrismaClient();
+import { prisma } from "@/lib/prisma";
+import { MESSAGES } from "@/app/api/errorMessages";
 
 export async function POST(req: NextRequest) {
   const {

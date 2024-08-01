@@ -1,8 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
-import { PrismaClient } from "@prisma/client";
+import { prisma } from "@/lib/prisma";
 import { MESSAGES } from "../../errorMessages";
-
-const prisma = new PrismaClient();
 
 export async function PUT(req: NextRequest) {
   const { id, duty_date, duty_type, content } = await req.json();

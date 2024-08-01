@@ -58,7 +58,7 @@ const RecentDutiesTable: React.FC = () => {
           ).toLocaleDateString();
         }
         console.log("Fetched recent duties data:", response.data.data);
-        setRecentData(response.data);
+        setRecentData(response.data.data);
       } catch (error) {
         console.error("Error fetching recent duties data:", error);
       } finally {

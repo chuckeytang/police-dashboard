@@ -1,8 +1,7 @@
-import { PrismaClient, Staff } from "@prisma/client";
+import { Staff } from "@prisma/client";
 import { addDays, startOfMonth, endOfMonth } from "date-fns";
 import mysql from "mysql2/promise";
-
-const prisma = new PrismaClient();
+import { prisma } from "@/lib/prisma";
 
 async function main() {
   // 连接 MySQL 服务器（不指定数据库）

@@ -1,9 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
-import { PrismaClient } from "@prisma/client";
+import { prisma } from "@/lib/prisma";
 import { MESSAGES } from "../../errorMessages";
 import { setNoCacheHeaders } from "../../utils/cacheControl";
-
-const prisma = new PrismaClient();
 
 export async function GET(req: NextRequest) {
   const today = new Date();
