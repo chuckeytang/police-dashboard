@@ -25,7 +25,6 @@ export async function GET(req: NextRequest) {
         night_team: true,
       },
     });
-    console.log("schedule1:", schedule);
 
     if (!schedule) {
       const response = NextResponse.json(

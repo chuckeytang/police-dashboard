@@ -43,7 +43,6 @@ export async function GET(req: NextRequest) {
           night_team: true,
         },
       });
-      console.log("schedule2:", schedules);
 
       // 计算总数
       const total = await prisma.schedule.count({

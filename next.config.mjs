@@ -2,7 +2,7 @@
 const nextConfig = {
   reactStrictMode: false,
   experimental: {
-    appDir: true, // 确保启用 appDir 模式
+    appDir: true,
   },
   webpack: (config, { buildId, dev, isServer, defaultLoaders, webpack }) => {
     if (dev) {

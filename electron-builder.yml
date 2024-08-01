@@ -1,0 +1,12 @@
+appId: com.policedashboard.app
+productName: PBApp
+files:
+  - .next/**/*
+  - node_modules/**/*
+  - package.json
+directories:
+  output: dist
+win:
+  target:
+    - nsis
+    - portable
