@@ -11,7 +11,7 @@
     "seed": "ts-node -P tsconfig.seed.json prisma/seed.ts",
     "electron-dev": "concurrently \"npm run dev\" \"npm run electron\"",
     "electron": "wait-on http://localhost:3000 && electron .",
-    "dist": "electron-builder"
+    "dist": "cross-env ELECTRON_BUILDER_BINARIES_MIRROR=https://npmmirror.com/mirrors/electron-builder-binaries/ electron-builder"
   },
   "dependencies": {
     "@emotion/react": "^11.11.4",
@@ -21,7 +21,7 @@
     "@mui/material": "^5.15.21",
     "@mui/x-date-pickers": "^7.8.0",
     "@mui/x-date-pickers-pro": "^7.8.0",
-    "@prisma/client": "^5.15.0",
+    "@prisma/client": "^5.17.0",
     "@types/date-fns": "^2.6.0",
     "animate.css": "^4.1.1",
     "axios": "^1.7.2",
@@ -58,6 +58,10 @@
     "@types/react-big-calendar": "^1.8.9",
     "@types/react-dom": "^18",
     "autoprefixer": "^10.4.19",
+    "cross-env": "^7.0.3",
+    "electron": "^31.3.1",
+    "electron-builder": "^24.13.3",
+    "electron-is-dev": "^3.0.1",
     "eslint": "^8",
     "eslint-config-next": "14.2.3",
     "postcss": "^8.4.38",
@@ -67,9 +71,6 @@
     "typescript": "^5",
     "vite": "^2.4.4",
     "vite-plugin-react": "^4.0.1",
-    "electron": "^31.3.1",
-    "electron-builder": "^24.13.3",
-    "electron-is-dev": "^3.0.1",
     "wait-on": "^7.2.0"
   },
   "build": {
@@ -83,6 +84,9 @@
     "win": {
       "target": "nsis",
       "icon": "./src/app/icon.ico"
+    },
+    "electronDownload": {
+      "mirror": "https://npmmirror.com/mirrors/electron/"
     }
   }
 }

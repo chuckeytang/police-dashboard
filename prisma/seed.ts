@@ -1,14 +1,14 @@
 import { Staff } from "@prisma/client";
 import { addDays, startOfMonth, endOfMonth } from "date-fns";
 import mysql from "mysql2/promise";
-import { prisma } from "@/lib/prisma";
+import { prisma } from "../src/lib/prisma";
 
 async function main() {
   // 连接 MySQL 服务器（不指定数据库）
   const connection = await mysql.createConnection({
     host: "localhost",
     user: "root",
-    password: "casino123", // 使用你设置的 MySQL root 用户密码
+    password: "chuangpao360", // 使用你设置的 MySQL root 用户密码
   });
 
   // 创建数据库（如果不存在）

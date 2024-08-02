@@ -12,6 +12,10 @@ import PatrolTeamTable from "@/components/dashboard/PatrolTeamTable";
 import DutyManagementTable from "@/components/dashboard/DutyManagementTable";
 
 const Dashboard = () => {
+  React.useEffect(() => {
+    console.log('HomePage loaded');
+  }, []);
+  
   return (
     <Container
       maxWidth={false}

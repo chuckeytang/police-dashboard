@@ -10,3 +10,6 @@ win:
   target:
     - nsis
     - portable
+publish:
+  provider: generic
+  url: https://npmmirror.com/mirrors/electron/
