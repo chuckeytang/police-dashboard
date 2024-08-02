@@ -1,11 +1,5 @@
-"use client";
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-import "./globals.css";
-import ClientProviders from "./client_providers";
-import { useEffect } from "react";
-
-const inter = Inter({ subsets: ["latin"] });
+import ClientLayout from "./clientLayout";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -14,27 +8,12 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
-  
-  useEffect(() => {
-    // 捕获未捕获的异常
-    window.addEventListener('error', (event) => {
-      console.error('Renderer process error:', event.error);
-    });
-
-    // 捕获 Promise 中未捕获的拒绝
-    window.addEventListener('unhandledrejection', (event) => {
-      console.error('Unhandled rejection:', event.reason);
-    });
-  }, []);
-  
+}) {
   return (
     <html lang="en">
-      <body className={inter.className}>
-        <ClientProviders>{children}</ClientProviders>
-      </body>
+      <ClientLayout>{children}</ClientLayout>
     </html>
   );
 }

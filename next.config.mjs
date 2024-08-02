@@ -1,12 +1,9 @@
-import path from 'path';
-import { fileURLToPath } from 'url';
+import path from "path";
+import { fileURLToPath } from "url";
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: false,
-  experimental: {
-    appDir: true,
-  },
   webpack: (config, { buildId, dev, isServer, defaultLoaders, webpack }) => {
     if (dev) {
       config.devtool = "eval-source-map"; // 推荐用于开发环境
@@ -16,7 +13,7 @@ const nextConfig = {
 
     // Electron specific settings
     if (!isServer) {
-      config.target = 'electron-renderer';
+      config.target = "electron-renderer";
     }
 
     // Resolve __dirname
@@ -24,7 +21,7 @@ const nextConfig = {
     const __dirname = path.dirname(__filename);
 
     // Alias for easier imports (optional)
-    config.resolve.alias['@'] = path.resolve(__dirname, 'src');
+    config.resolve.alias["@"] = path.resolve(__dirname, "src");
 
     return config;
   },
